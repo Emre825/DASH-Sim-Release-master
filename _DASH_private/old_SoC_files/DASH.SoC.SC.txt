@@ -1,0 +1,55 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+#   Always add MEMORY last as a special resource, which will be used for communication 
+#   and does not support any functionality
+# The the following one (or two) line(s) must have the attributes below
+# if want to specify the capacity do it at the second line. if not include this line, the default value is 1
+# The format: add_new_resource $resource_type (string) $resource_id (int) $num_of_supported_functionality (int)
+#             capacity $capacity (int) 
+#             $functionality_name (string) $execution_time (float) $power_consumption (float)
+#
+# Example: The following lines add a new CPU with ID=0, that can run 3 different tasks and
+#          the capacity is 1           
+#          
+#          add_new_resource CPU 0 3
+#          capacity 1
+#          scrambler 12 14
+#          reed_solomon_encoder 15 16
+#          bpsk_modulation 18 30
+#
+# After adding resources, use keyword comm_band to add communication bandwidth 
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#                    
+#          comm_band 0 1 5
+
+add_new_resource A53 0 16
+capacity 1
+scrambler 2 22
+viterbi_encoder 21 23
+viterbi_puncturing 3 24
+interleaver 5 20
+qpsk_modulation 11 18
+crc 2 17
+upsampling 18 20
+fir_filter 46 29
+match_correlation 36 36
+filter 46 46
+payload_extraction 6 6
+qpsk_demodulation 58 58
+deinterleaver 6 6
+viterbi_depuncturing 3 3
+viterbi_decoder 2 2
+descrambler 2 2
+ 
+add_new_resource MEMORY 1 1
+None 0 0
+
+
+comm_band 0 0 100
+comm_band 1 1 0
+comm_band 0 1 100

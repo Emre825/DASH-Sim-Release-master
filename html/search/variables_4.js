@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['edp_1085',['EDP',['../classheft_1_1_rank_metric.html#a503230c7b5b0410b68b8f5129e5c6895',1,'heft::RankMetric']]],
+  ['edp_5fabs_1086',['EDP_ABS',['../classheft_1_1_op_mode.html#a1c6e95664981509802f32896790e5c77',1,'heft::OpMode']]],
+  ['edp_5frel_1087',['EDP_REL',['../classheft_1_1_op_mode.html#a86d7867ee178132202bf658429653348',1,'heft::OpMode']]],
+  ['eft_1088',['EFT',['../classheft_1_1_op_mode.html#a572875e73aa1710f596b961e7e4a9fca',1,'heft::OpMode']]],
+  ['enable_5fdtpm_5fthrottling_1089',['enable_DTPM_throttling',['../namespacecommon.html#a473a945419cb0019cd212c0e83a20cac',1,'common']]],
+  ['enable_5fnum_5fcores_5fprediction_1090',['enable_num_cores_prediction',['../namespacecommon.html#ad2144550c33e30d82fffc3a6c7f9d3bd',1,'common']]],
+  ['enable_5freal_5ftime_5fconstraints_1091',['enable_real_time_constraints',['../namespacecommon.html#ae255f7f4aab1d999bb6e2865adaacfc9',1,'common']]],
+  ['enable_5fregression_5fpolicy_1092',['enable_regression_policy',['../namespacecommon.html#a024e5cdf569ef6f965c914ad5ba701f6',1,'common']]],
+  ['enable_5fthermal_5fmanagement_1093',['enable_thermal_management',['../namespacecommon.html#aa6ab81590cf0db9446b2e9b1c9c29caf',1,'common']]],
+  ['enable_5fthrottling_1094',['enable_throttling',['../namespacecommon.html#a71b08dc4f8183d43a09589544a9d8959',1,'common']]],
+  ['enabled_1095',['enabled',['../classprocessing__element_1_1_p_e.html#abbd0c3eff67019d54317f9351d6fa40a',1,'processing_element::PE']]],
+  ['end_1096',['end',['../namespacedagger__accuracy.html#a19e0fc36e635c28337cab30948afdcb9',1,'dagger_accuracy.end()'],['../namespaceexectime__dagger.html#ac5e0b92330c7863ea2e4e2834e3e2210',1,'exectime_dagger.end()'],['../namespacegen__list.html#a4e74c751ce7cc6337593031e12048fe9',1,'gen_list.end()'],['../namespaceget__exectime__dagger.html#ae633f794fc6ca2f2490d8a18ecbc9516',1,'get_exectime_dagger.end()'],['../namespacereport__accuracy.html#aeaed3caa4ea846c220fd75cb7f9d5729',1,'report_accuracy.end()']]],
+  ['energy_1097',['ENERGY',['../classheft_1_1_op_mode.html#a47d42971563a29a3f921a714d0c62049',1,'heft::OpMode']]],
+  ['energy_5fconsumption_1098',['energy_consumption',['../classcommon_1_1_perf_statics.html#ae510704989235baa2eefd03daf213ab0',1,'common::PerfStatics']]],
+  ['env_1099',['env',['../class_d_a_s_h___sim__core_1_1_simulation_manager.html#ab527d3249ba07f0c85f1c357a575dfde',1,'DASH_Sim_core.SimulationManager.env()'],['../class_d_t_p_m_1_1_d_t_p_mmodule.html#adf0df3a1bb935ee06226a6569b2cc372',1,'DTPM.DTPMmodule.env()'],['../classjob__generator_1_1_job_generator.html#a0dc94e3854db93c34151558499cf5526',1,'job_generator.JobGenerator.env()'],['../classprocessing__element_1_1_p_e.html#a1e17f921aff254ce9f95855a161a56ab',1,'processing_element.PE.env()'],['../classscheduler_1_1_scheduler.html#a744dec537d9794fc9fe0780bc7d4fabc',1,'scheduler.Scheduler.env()'],['../namespacetrain.html#a2d40df687edea369ea4563d8fadc4fb0',1,'train.env()']]],
+  ['error_1100',['error',['../namespaceplot___i_l_s__dagger.html#aebc92b2432d845a9d10ce4403a79f74c',1,'plot_ILS_dagger']]],
+  ['est_1101',['est',['../classcommon_1_1_tasks.html#ac764dd7875fd060a4d9cc78c701f9563',1,'common::Tasks']]],
+  ['exe_5ftime_1102',['exe_time',['../namespaceexectime.html#a4369ebc782e4e3896dfbe5831c08146f',1,'exectime.exe_time()'],['../namespaceplot___i_l_s.html#af691ab653424826c1fbb7b0f3e2d12dc',1,'plot_ILS.exe_time()'],['../namespaceplot___i_l_s__dagger.html#aa7d944d183c4387bc3fab785eb00fad3',1,'plot_ILS_dagger.exe_time()']]],
+  ['exe_5ftimes_1103',['exe_times',['../namespaceexectime.html#ac2de35d6d4f225dc68fdff17ac339aad',1,'exectime.exe_times()'],['../namespaceplot___i_l_s.html#a755f53ae832219b80cc5b7311e1bcd60',1,'plot_ILS.exe_times()'],['../namespaceplot___i_l_s__dagger.html#a8d645fc4a5c5c208e6e40799b8474b32',1,'plot_ILS_dagger.exe_times()']]],
+  ['exec_5ftime_1104',['exec_time',['../namespaceexectime__dagger.html#a80e048cb9f873120dcaa0f734457b64a',1,'exectime_dagger.exec_time()'],['../namespaceget__exectime__dagger.html#af7743f47bf79713a1c2a7172d2d0373d',1,'get_exectime_dagger.exec_time()']]],
+  ['exectime_5fd_1105',['exectime_d',['../namespaceexectime__dagger.html#a2d9fa5fb335a46bcc0d239a72fb7948e',1,'exectime_dagger.exectime_d()'],['../namespaceget__exectime__dagger.html#ad32f5bac00fef49fd4a958413ad58574',1,'get_exectime_dagger.exectime_d()']]],
+  ['executable_1106',['executable',['../classcommon_1_1_task_queues.html#ad37b75ece680acc19bb437ec548b0862',1,'common::TaskQueues']]],
+  ['execution_5ftime_1107',['execution_time',['../classcommon_1_1_perf_statics.html#aa51573b7009243191f3ea483f910d3a3',1,'common::PerfStatics']]],
+  ['execution_5fwait_5ftimes_1108',['execution_wait_times',['../classcommon_1_1_tasks.html#adfc56e4dd02784e09a84f9d681cb6533',1,'common::Tasks']]],
+  ['exist_5fok_1109',['exist_ok',['../namespacetrain.html#ac3ec1cd3c670ad646fec107fc9b06837',1,'train']]]
+];

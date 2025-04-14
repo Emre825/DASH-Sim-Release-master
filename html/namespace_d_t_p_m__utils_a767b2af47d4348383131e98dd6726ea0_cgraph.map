@@ -1,0 +1,20 @@
+<map id="DTPM_utils.create_dataset_IL_DTPM" name="DTPM_utils.create_dataset_IL_DTPM">
+<area shape="rect" id="node1" title="Create the dataset used for the IL DTPM policies." alt="" coords="5,121,217,168"/>
+<area shape="rect" id="node2" href="$namespace_d_t_p_m__policies.html#af07d973088cfe7873324ca30a30f52b2" title="DAgger algorithm &#45; used by the IL&#45;based policies." alt="" coords="266,67,513,97"/>
+<area shape="rect" id="node3" href="$namespace_d_a_s_h___sim__utils.html#a12301b830278c9ed9494270c6557afd3" title="Get the current system state." alt="" coords="306,121,473,168"/>
+<area shape="rect" id="node5" href="$namespace_d_t_p_m__utils.html#a7a7c5a77471e4cf2477cc0a8df97b8d0" title="Update datasets with current temperature profiles." alt="" coords="265,227,513,273"/>
+<area shape="rect" id="node4" href="$namespace_d_a_s_h___sim__utils.html#a81bf122c328aabd024615f567c736e1b" title="Get the cluster utilization." alt="" coords="593,103,760,149"/>
+<area shape="rect" id="node6" href="$namespace_d_t_p_m__utils.html#a4e13030d9ca8f69b59ccaa9347f29a5e" title="Predict the power for all clusters based on the inputs." alt="" coords="586,173,767,220"/>
+<area shape="rect" id="node17" href="$namespace_d_t_p_m__power__models.html#abddd7e05302d27a6bee489f31db0c9a9" title="Predict the temperature N_steps ahead." alt="" coords="561,244,792,291"/>
+<area shape="rect" id="node18" href="$namespace_d_t_p_m__utils.html#a0037071bb37f4eb231443e6ceaba9012" title="Perform the pure&#45;Python equivalent of in&#45;place sed substitution: e.g., ‘sed &#45;i &#45;e &#39;s/’${pattern}&#39;/&#39;${..." alt="" coords="581,315,773,345"/>
+<area shape="rect" id="node7" href="$namespace_d_t_p_m__power__models.html#a33aef80593b650e23f5b1f79dd878e4a" title="Based on the maximum frequency, voltage, and measured power dissipation, compute the capacitance C ti..." alt="" coords="840,103,1083,149"/>
+<area shape="rect" id="node9" href="$namespace_d_t_p_m__power__models.html#abd99e7ecc4a5cea6d0c1184e512b7424" title="Get the voltage of the OPP that satisfies the defined constant frequency." alt="" coords="1141,41,1347,88"/>
+<area shape="rect" id="node13" href="$namespace_d_t_p_m__power__models.html#a745d2c5771fd1b2bda1ef599bdc2b362" title="Compute the dynamic power dissipation for the current task based on the current state of the PE." alt="" coords="840,173,1083,220"/>
+<area shape="rect" id="node14" href="$namespace_d_t_p_m__power__models.html#af8b8111dffef911ea6338fe31fb371c8" title="Compute the static power dissipation of the PE." alt="" coords="840,244,1083,291"/>
+<area shape="rect" id="node15" href="$namespace_d_t_p_m__power__models.html#aa395bf114a31df88ad5f3e7513b8a08e" title="Get the power consumption of the current PE." alt="" coords="857,315,1066,361"/>
+<area shape="rect" id="node8" href="$namespace_d_t_p_m__power__models.html#a72eb1a0883aa9da4fab60acadd6b13dd" title="Convert frequency from MHz to Hz." alt="" coords="1141,112,1347,159"/>
+<area shape="rect" id="node12" href="$namespace_d_t_p_m__power__models.html#a9842c48a1a666626749170428c3ac8eb" title="Convert voltage from mV to V." alt="" coords="1141,183,1347,229"/>
+<area shape="rect" id="node10" href="$namespace_d_t_p_m__power__models.html#a48124965f0c4bbd3cf98990f4ad9808c" title="Get the maximum frequency of a cluster." alt="" coords="1405,5,1611,52"/>
+<area shape="rect" id="node11" href="$namespace_d_t_p_m__power__models.html#af43bd1deddf711c2f85f1256bfd94a55" title="Get the minimum frequency of a cluster." alt="" coords="1405,76,1611,123"/>
+<area shape="rect" id="node16" href="$namespace_d_a_s_h___sim__utils.html#a99aab56376ce5ff66032d442e5a09b46" title="Get the number of tasks that are being executed." alt="" coords="1131,315,1357,361"/>
+</map>

@@ -1,0 +1,296 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+# Always add MEMORY last as a special resource, which will be used for communication 
+# and does not support any functionality
+# The the following lines must have the attributes below
+# The format: add_new_resource $resource_type (string)  $resource_name (string) $resource_id (int) $capacity (int) $num_of_supported_functionality (int) 
+#             $functionality_name (string) $execution_time (float) $power_consumption (float)
+# Note: for type, use the following abbreviations
+#       central processing unit --> CPU
+#       accelerator             --> ACC
+#       memory                  --> MEM
+#
+# Example: The following lines add a new CPU with name=P1, ID=0, capacity=1 and
+#          that can run 3 different tasks and          
+#          
+#          add_new_resource CPU P1 0 1 3
+#          scrambler 12 14
+#          reed_solomon_encoder 15 16
+#          bpsk_modulation 18 30
+#
+# After adding resources, use keyword comm_band to add communication bandwidth 
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#                    
+#          comm_band 0 1 5
+
+add_new_resource BIG A72_0 0 4 61 performance
+opp 600 900
+opp 800 950
+opp 1000 1000
+opp 1200 1037
+opp 1400 1100
+opp 1600 1175
+opp 1800 1300
+opp 2000 1362
+trip_freq 1600 1000 600
+power_profile 1000 0.85 1.30 1.58 1.78
+PG_profile 1000 0.59 0.96 1.35 1.78
+power_profile 2000 3.32 5.05 6.15 6.91
+PG_profile 2000 2.29 3.73 5.23 6.91
+scrambler_encoder 10 10
+interleaver_1 4 4 
+qpsk_1 8 8
+pilot_insertion_1 3 3
+ifft_1 118 118
+crc_1 3 3
+interleaver_2 4 4
+qpsk_2 8 8
+pilot_insertion_2 3 3
+ifft_2 118 118
+crc_2 3 3
+interleaver_3 4 4
+qpsk_3 8 8
+pilot_insertion_3 3 3
+ifft_3 118 118
+crc_3 3 3
+interleaver_4 4 4
+qpsk_4 8 8
+pilot_insertion_4 3 3
+ifft_4 118 118
+crc_4 3 3
+interleaver_5 4 4
+qpsk_5 8 8
+pilot_insertion_5 3 3
+ifft_5 118 118
+crc_5 3 3
+end 0 0
+match_filter 5 5
+payload_extraction_1 4 4
+fft_1 114 114
+pilot_1 4 4
+qpsk_demodulation_1 95 95
+deinterleaver_1 9 9
+format_conversion_1 4 4
+payload_extraction_2 4 4
+fft_2 114 114
+pilot_2 4 4
+qpsk_demodulation_2 95 95
+deinterleaver_2 9 9
+format_conversion_2 4 4
+payload_extraction_3 4 4
+fft_3 114 114
+pilot_3 4 4
+qpsk_demodulation_3 95 95
+deinterleaver_3 9 9
+format_conversion_3 4 4
+payload_extraction_4 4 4
+fft_4 114 114
+pilot_4 4 4
+qpsk_demodulation_4 95 95
+deinterleaver_4 9 9
+format_conversion_4 4 4
+payload_extraction_5 4 4
+fft_5 114 114
+pilot_5 4 4
+qpsk_demodulation_5 95 95
+deinterleaver_5 9 9
+format_conversion_5 4 4
+viterbi_decoder 739 20
+descrambler 2 2
+message_decode 39 39
+
+
+
+add_new_resource LTL A53_0 1 4 61 performance
+opp 500 962
+opp 800 1075
+opp 1100 1200
+opp 1400 1300
+trip_freq -1 1200 600
+power_profile 1000 0.19 0.29 0.35 0.40
+PG_profile 1000 0.13 0.23 0.31 0.40
+power_profile 1400 0.39 0.59 0.72 0.81
+PG_profile 1400 0.27 0.46 0.63 0.81
+scrambler_encoder 22 22
+interleaver_1 10 10 
+qpsk_1 15 15
+pilot_insertion_1 5 5
+ifft_1 296 296
+crc_1 5 5
+interleaver_2 10 10
+qpsk_2 15 15
+pilot_insertion_2 5 5
+ifft_2 296 296
+crc_2 5 5
+interleaver_3 10 10
+qpsk_3 15 15
+pilot_insertion_3 5 5
+ifft_3 296 296
+crc_3 5 5
+interleaver_4 10 10
+qpsk_4 15 15
+pilot_insertion_4 5 5
+ifft_4 296 296
+crc_4 5 5
+interleaver_5 10 10 
+qpsk_5 15 15
+pilot_insertion_5 5 5
+ifft_5 296 296
+crc_5 5 5
+end 0 0
+match_filter 16 16
+payload_extraction_1 8 8
+fft_1 289 289
+pilot_1 6 6
+qpsk_demodulation_1 191 191
+deinterleaver_1 16 16
+format_conversion_1 7 7
+payload_extraction_2 8 8
+fft_2 289 289
+pilot_2 6 6
+qpsk_demodulation_2 191 191
+deinterleaver_2 16 16
+format_conversion_2 7 7
+payload_extraction_3 8 8
+fft_3 289 289
+pilot_3 6 6
+qpsk_demodulation_3 191 191
+deinterleaver_3 16 16
+format_conversion_3 7 7
+payload_extraction_4 8 8
+fft_4 289 289
+pilot_4 6 6
+qpsk_demodulation_4 191 191
+deinterleaver_4 16 16
+format_conversion_4 7 7
+payload_extraction_5 8 8
+fft_5 289 289
+pilot_5 6 6
+qpsk_demodulation_5 191 191
+deinterleaver_5 16 16
+format_conversion_5 7 7
+viterbi_decoder 1828 20
+descrambler 3 3
+message_decode 90 90
+
+
+
+add_new_resource ACC SCE_0 2 1 1 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.050
+PG_profile 1000 0.050
+scrambler_encoder 8 8
+
+add_new_resource ACC SCE_1 3 1 1 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.050
+PG_profile 1000 0.050
+scrambler_encoder 8 8
+
+add_new_resource ACC FFT_0 4 1 10 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.0913
+PG_profile 1000 0.0913
+ifft_1 16 16
+ifft_2 16 16
+ifft_3 16 16
+ifft_4 16 16
+ifft_5 16 16
+fft_1 12 12
+fft_2 12 12
+fft_3 12 12
+fft_4 12 12
+fft_5 12 12
+
+add_new_resource ACC FFT_1 5 1 10 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.0913
+PG_profile 1000 0.0913
+ifft_1 16 16
+ifft_2 16 16
+ifft_3 16 16
+ifft_4 16 16
+ifft_5 16 16
+fft_1 12 12
+fft_2 12 12
+fft_3 12 12
+fft_4 12 12
+fft_5 12 12
+
+add_new_resource ACC FFT_2 6 1 10 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.0913
+PG_profile 1000 0.0913
+ifft_1 16 16
+ifft_2 16 16
+ifft_3 16 16
+ifft_4 16 16
+ifft_5 16 16
+fft_1 12 12
+fft_2 12 12
+fft_3 12 12
+fft_4 12 12
+fft_5 12 12
+
+add_new_resource ACC FFT_3 7 1 10 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.0913
+PG_profile 1000 0.0913
+ifft_1 16 16
+ifft_2 16 16
+ifft_3 16 16
+ifft_4 16 16
+ifft_5 16 16
+fft_1 12 12
+fft_2 12 12
+fft_3 12 12
+fft_4 12 12
+fft_5 12 12
+
+add_new_resource ACC VIT_0 8 1 1 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.05885
+PG_profile 1000 0.05885
+viterbi_decoder 2 2
+
+add_new_resource ACC VIT_1 9 1 1 performance
+opp 1000 900
+trip_freq -1 -1 -1
+power_profile 1000 0.05885
+PG_profile 1000 0.05885
+viterbi_decoder 2 2
+
+add_new_resource MEM MEMORY 10 1 1 none
+None 0 0
+
+comm_band 0 0 100
+comm_band 1 1 100
+comm_band 2 2 100
+comm_band 3 3 100
+comm_band 4 4 100
+comm_band 5 5 100
+comm_band 6 6 100
+comm_band 7 7 100
+comm_band 8 8 100
+comm_band 9 9 100
+#comm_band 10 10 0
+comm_band 10 10 100
+comm_band 11 11 100
+comm_band 12 12 100
+comm_band 13 13 100
+comm_band 14 14 100
+comm_band 15 15 100
+comm_band 16 16 0
+

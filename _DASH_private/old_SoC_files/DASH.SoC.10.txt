@@ -1,0 +1,81 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+# Always add MEMORY last as a special resource, which will be used for communication 
+# and does not support any functionality
+# The the following lines must have the attributes below
+# The format: add_new_resource $resource_type (string)  $resource_name (string) $resource_id (int) $capacity (int) $num_of_supported_functionality (int) 
+#             $functionality_name (string) $execution_time (float) $power_consumption (float)
+# Note: for type, use the following abbreviations
+#       central processing unit --> CPU
+#       accelerator             --> ACC
+#       memory                  --> MEM
+#
+# Supported DVFS settings: 'ondemand', 'performance', 'powersave', 'constant-<x>, where <x> is a given frequency', 'none'
+#
+# Example: The following lines add a new CPU with name=P1, ID=0, capacity=1 and
+#          that can run 3 different tasks and           
+#          
+#          add_new_resource CPU P1 0 1 3
+#          scrambler 12 14
+#          reed_solomon_encoder 15 16
+#          bpsk_modulation 18 30
+#
+# After adding resources, use keyword comm_band to add communication bandwidth 
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#                    
+#          comm_band 0 1 5
+
+add_new_resource CPU CPU 0 1 10 performance
+opp 1330 700
+opp 1940 800
+opp 2500 900
+opp 3000 1000
+task_0 30 22
+task_1 25 23
+task_2 23 24
+task_3 16 20
+task_4 20 18
+task_5 25 17
+task_6 18 20
+task_7 32 29
+task_8 14 15
+task_9 29 18
+
+add_new_resource ACC FFT 1 1 2 performance
+opp 1330 700
+opp 1940 800
+opp 2500 900
+opp 3000 1000
+task_2 5 4
+task_3 4 5
+
+add_new_resource ACC FRAME_DETECTOR 2 1 2 performance
+opp 1330 700
+opp 1940 800
+opp 2500 900
+opp 3000 1000
+task_4 10 9
+task_5 12 8
+
+#add_new_resource ACC VITERBI_DECODER 3 1 2 performance
+#task_7 16 9
+#task_8 7 8
+
+add_new_resource MEM MEMORY 3 1 1 none
+None 0 0
+
+
+comm_band 0 0 100
+comm_band 1 1 100
+comm_band 2 2 100
+comm_band 3 3 0
+#comm_band 4 4 0                                                                                                                                                                                                                                                 
+comm_band 0 3 2
+comm_band 1 3 2
+comm_band 2 3 2
+#comm_band 3 4 2

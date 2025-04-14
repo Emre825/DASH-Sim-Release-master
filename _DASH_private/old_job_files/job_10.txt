@@ -1,0 +1,71 @@
+# Configuration file of the Tasks
+# Lines that start with "#" are comments
+# Start adding task using the keyword: add_new_tasks
+# The the following two (or three) lines must have the attributes below
+# $task_name (string) $task_id (int) $task_predecessors (list)
+# $task_name (string) HEAD (or TAIL), if the task is the head or tail of the task graph
+# $task_name (string) $earliest_start (int) $deadline (int)
+# The format: add_new_tasks $num_of_tasks (int)
+#             $task_name (string) $task_id (int) $task_predecessors (list)
+#             $task_name (string) HEAD (string)  
+#             $task_name (string) $earliest_start (int) $deadline (int)
+# Example: The following lines add a new task with ID=0, and
+#          predecessor for this task is task with ID=2
+#          (empty list means there is no dependency)
+#          This task is the head of the task graph
+#          earliest start time and deadline are 0 and 10, respectively
+#
+#          add_new_tasks 1
+#          scrambler 0 2
+#          scrambler HEAD
+#          scrambler earliest_start 0 deadline 10
+#
+# After adding tasks, use keyword comm_vol to add communication volume for
+# the tasks that have dependencies 
+# The format: comm_vol $source_id (int) $destination_id (int) volume (int)
+# Example: The following line adds communication volume between task 0 (source)
+#          and task 1 (destination)
+#                    
+#          comm_vol 0 1 5
+
+job_name 10
+add_new_tasks 10
+task_0 0 
+task_0 HEAD
+task_0 earliest_start 0 deadline 0
+task_1 1 0
+task_1 earliest_start 0 deadline 0
+task_2 2 0
+task_2 earliest_start 0 deadline 0
+task_3 3 0
+task_3 earliest_start 0 deadline 0
+task_4 4 0
+task_4 earliest_start 0 deadline 0
+task_5 5 0
+task_5 earliest_start 0 deadline 0
+task_6 6 1 2 3
+task_6 earliest_start 0 deadline 0
+task_7 7 4 5
+task_7 earliest_start 0 deadline 0
+task_8 8 6
+task_8 earliest_start 0 deadline 0
+task_9 9 7 8
+task_9 TAIL
+task_9 earliest_start 0 deadline 0
+
+
+comm_vol 0 1 2
+comm_vol 0 2 2
+comm_vol 0 3 2
+comm_vol 0 4 2
+comm_vol 0 5 2
+comm_vol 1 6 2
+comm_vol 2 6 2
+comm_vol 3 6 2
+comm_vol 4 7 2
+comm_vol 5 7 2
+comm_vol 6 8 2
+comm_vol 7 9 2
+comm_vol 8 9 2
+
+

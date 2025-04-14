@@ -1,0 +1,97 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+# Always add MEMORY last as a special resource, which will be used for communication
+# and does not support any functionality
+# The the following lines must have the attributes below
+# The format: add_new_resource $resource_type (string)  $resource_name (string) $resource_id (int) $capacity (int) $num_of_supported_functionality (int)
+#             $functionality_name (string) $execution_time (float) $power_consumption (float)
+# Note: for type, use the following abbreviations
+#       central processing unit --> CPU
+#       accelerator             --> ACC
+#       memory                  --> MEM
+#
+# Example: The following lines add a new CPU with name=P1, ID=0, capacity=1 and
+#          that can run 3 different tasks and
+#
+#          add_new_resource CPU P1 0 1 3
+#          scrambler 12 14
+#          reed_solomon_encoder 15 16
+#          bpsk_modulation 18 30
+#
+# After adding resources, use keyword comm_band to add communication bandwidth
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#
+#          comm_band 0 1 5
+
+add_new_resource LTL A53 1 4 16 constant-600
+opp 600 1000
+opp 800 1075
+opp 1000 1150
+opp 1200 1250
+opp 1400 1300
+trip_freq -1 1200 600
+power_profile 0.34 0.52 0.63 0.71
+PG_profile 0.25 0.41 0.55 0.71
+scrambler_encoder 22
+interleaver 10
+qpsk_modulation 15
+pilot_insertion 5
+ifft 296
+crc 5
+match_filter 16
+payload_extraction 8
+fft 289
+pilot 6
+qpsk_demodulation 191
+deinterleaver 16
+format_conversion 7
+viterbi_decoder 1828
+descrambler 3
+message_decode 90
+
+add_new_resource BIG A72 0 4 16 constant-600
+opp 600 900
+opp 800 950
+opp 1000 1000
+opp 1200 1037
+opp 1400 1100
+opp 1600 1175
+opp 1800 1300
+opp 2000 1362
+trip_freq 1600 1000 600
+power_profile 3.38 5.18 6.32 7.12
+PG_profile 2.31 3.87 5.51 7.12
+scrambler_encoder 10
+interleaver 4
+qpsk_modulation 8
+pilot_insertion 3
+ifft 118
+crc 3
+match_filter 5
+payload_extraction 4
+fft 114
+pilot 4
+qpsk_demodulation 95
+deinterleaver 9
+format_conversion 4
+viterbi_decoder 739
+descrambler 2
+message_decode 39
+
+add_new_resource MEM MEMORY 2 1 1 none
+None 0
+
+comm_band 0 0 10000
+comm_band 0 1 1000
+comm_band 0 2 1000
+
+comm_band 1 0 1000
+comm_band 1 1 10000
+comm_band 1 2 1000
+
+comm_band 2 2 0

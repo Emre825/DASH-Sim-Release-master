@@ -1,0 +1,17 @@
+<map id="DTPM_power_models.get_min_freq" name="DTPM_power_models.get_min_freq">
+<area shape="rect" id="node1" title="Get the minimum frequency of a cluster." alt="" coords="1687,266,1892,313"/>
+<area shape="rect" id="node2" href="$class_d_t_p_m_1_1_d_t_p_mmodule.html#a38fbce7c41656d9daaaa8e8842b8303c" title="Responsible for updating the PE utilization and temperature, and invoking tracing,..." alt="" coords="545,77,805,107"/>
+<area shape="rect" id="node4" href="$namespace_d_t_p_m__power__models.html#abd99e7ecc4a5cea6d0c1184e512b7424" title="Get the voltage of the OPP that satisfies the defined constant frequency." alt="" coords="1433,266,1639,313"/>
+<area shape="rect" id="node10" href="$namespace_d_t_p_m__policies.html#a3f92bcd9808660d5c7a0b9d14a7fbea5" title="Initialize the frequency for the given cluster." alt="" coords="1169,358,1359,405"/>
+<area shape="rect" id="node3" href="$class_d_t_p_m_1_1_d_t_p_mmodule.html#aa81ced9a4c7d45399464937d39f690d2" title="Check all PEs and, for those that are idle, adjust the frequency and power accordingly." alt="" coords="268,69,497,115"/>
+<area shape="rect" id="node5" href="$namespace_d_t_p_m__power__models.html#a33aef80593b650e23f5b1f79dd878e4a" title="Based on the maximum frequency, voltage, and measured power dissipation, compute the capacitance C ti..." alt="" coords="1143,235,1385,282"/>
+<area shape="rect" id="node6" href="$namespace_d_t_p_m__utils.html#a4e13030d9ca8f69b59ccaa9347f29a5e" title="Predict the power for all clusters based on the inputs." alt="" coords="883,297,1065,343"/>
+<area shape="rect" id="node12" href="$namespace_d_t_p_m__power__models.html#a94089a6a0f58f9fe8f950adb500f8028" title="Set a given frequency to the respective clusters." alt="" coords="1162,134,1366,181"/>
+<area shape="rect" id="node9" href="$classprocessing__element_1_1_p_e.html#a44a465eb3d56f655125a9d90f42e16d9" title="Run this PE to execute a given task." alt="" coords="5,305,220,335"/>
+<area shape="rect" id="node7" href="$namespace_d_t_p_m__utils.html#a7a7c5a77471e4cf2477cc0a8df97b8d0" title="Update datasets with current temperature profiles." alt="" coords="551,297,799,343"/>
+<area shape="rect" id="node8" href="$namespace_d_t_p_m__utils.html#a767b2af47d4348383131e98dd6726ea0" title="Create the dataset used for the IL DTPM policies." alt="" coords="277,297,489,343"/>
+<area shape="rect" id="node11" href="$class_d_a_s_h___sim__core_1_1_simulation_manager.html#ad15c74dffe0798248f9e95e6a485ec99" title="Implement the basic run method that will be called periodically in each simulation &quot;tick&quot;." alt="" coords="863,419,1085,466"/>
+<area shape="rect" id="node13" href="$namespace_d_t_p_m__policies.html#a7bf865664cbbc41ba53932a720b378f6" title="DyPO policy (https://dl.acm.org/doi/10.1145/3126530)" alt="" coords="886,33,1062,79"/>
+<area shape="rect" id="node14" href="$namespace_d_t_p_m__power__models.html#adbbdb88f910d369ef2d1a3022c540bf0" title="Apply throttling if the temperature exceeds the trip points." alt="" coords="853,103,1095,150"/>
+<area shape="rect" id="node15" href="$namespace_d_t_p_m__policies.html#af2d18aa3967a5c0e388e32c411c81fc6" title="HiLITE IL policy (https://ieeexplore.ieee.org/document/9085952)" alt="" coords="877,174,1071,221"/>
+</map>

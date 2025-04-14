@@ -1,0 +1,410 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+# Always add MEMORY last as a special resource, which will be used for communication
+# and does not support any functionality
+# The following lines must have the attributes below
+# The format: add_new_resource $resource_type (string)  $resource_name (string) $resource_id (int) $capacity (int) $num_of_supported_functionality (int) $DVFS_mode (string)
+#             $functionality_name (string) $execution_time (float)
+# Note: for type, use the following abbreviations
+#       central processing unit --> CPU
+#       Arm LITTLE cluster      --> LTL
+#       Arm big cluster         --> BIG
+#       accelerator             --> ACC
+#       memory                  --> MEM
+#
+# opp $frequency (int - MHz) $voltage (int - mV), defines the Operating Performance Points (OPPs) with frequency and voltage tuples
+#
+# trip_freq $trip_1 $trip_2 $trip_3 ..., defines the frequencies that are set at each trip point if throttling is enabled. "-1" means that the frequency is not modified
+#
+# power_profile $frequency $power_1 $power_2 $power_3 ... $power_max_capacity
+# e.g., power_profile 1000 0.19 0.29 0.35 0.40. At 1GHz, the power for 1 core is 0.19W, 2 cores is 0.29W, and so on.
+#
+# PG_profile $frequency $power_1 $power_2 $power_3 ... $power_max_capacity
+#
+# Example: The following lines add a new CPU with name=P1, ID=0, capacity=1 and
+#          that can run 3 different tasks using "performance" DVFS mode
+#
+#          add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 1 num_supported_functionalities 3 DVFS_mode performance
+#          opp 1000 1150
+#          trip_freq -1 -1 -1
+#          power_profile 1000 0.1
+#          PG_profile 1000 0.1
+#          scrambler 12
+#          reed_solomon_encoder 15
+#          bpsk_modulation 18
+#
+# After adding resources, use keyword comm_band to add communication bandwidth
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#
+#          comm_band 0 1 5
+
+add_new_resource resource_type LTL resource_name A7 resource_ID 0 capacity 4 num_supported_functionalities 94 DVFS_mode performance
+mesh_information A7 9 29.92 24 cornflowerblue
+opp 600 1000
+opp 800 1075
+opp 1000 1150
+opp 1200 1250
+opp 1400 1300
+trip_freq -1 1200 600
+DTPM_trip_freq 1200 1000 600
+power_profile 1000 0.19 0.29 0.35 0.40
+PG_profile 1000 0.13 0.23 0.31 0.40
+power_profile 1400 0.39 0.59 0.72 0.81
+PG_profile 1400 0.27 0.46 0.63 0.81
+scrambler_encoder 22000
+interleaver_1 10000
+qpsk_1 15000
+pilot_insertion_1 5000
+ifft_1 296000
+crc_1 5000
+interleaver_2 10000
+qpsk_2 15000
+pilot_insertion_2 5000
+ifft_2 296000
+crc_2 5000
+interleaver_3 10000
+qpsk_3 15000
+pilot_insertion_3 5000
+ifft_3 296000
+crc_3 5000
+interleaver_4 10000
+qpsk_4 15000
+pilot_insertion_4 5000
+ifft_4 296000
+crc_4 5000
+interleaver_5 10000
+qpsk_5 15000
+pilot_insertion_5 5000
+ifft_5 296000
+crc_5 5000
+end 0
+match_filter 16000
+payload_extraction_1 8000
+fft_1 289000
+pilot_1 6000
+qpsk_demodulation_1 191000
+deinterleaver_1 16000
+format_conversion_1 7000
+payload_extraction_2 8000
+fft_2 289000
+pilot_2 6000
+qpsk_demodulation_2 191000
+deinterleaver_2 16000
+format_conversion_2 7000
+payload_extraction_3 8000
+fft_3 289000
+pilot_3 6000
+qpsk_demodulation_3 191000
+deinterleaver_3 16000
+format_conversion_3 7000
+payload_extraction_4 8000
+fft_4 289000
+pilot_4 6000
+qpsk_demodulation_4 191000
+deinterleaver_4 16000
+format_conversion_4 7000
+payload_extraction_5 8000
+fft_5 289000
+pilot_5 6000
+qpsk_demodulation_5 191000
+deinterleaver_5 16000
+format_conversion_5 7000
+viterbi_decoder 1828000
+descrambler 3000
+message_decode 90000
+ST 0
+LFM 90000
+xcorr_fft0 150000
+xcorr_fft1 150000
+xcorr_vector_complex_conj_mul 75000
+xcorr_ifft 150000
+max_detect 20000
+scrambler 6000
+viterbi_encoder 31000
+viterbi_puncturing 6000
+interleaver 10000
+qpsk_modulation 27000
+crc 5000
+upsampling 42000
+fir_filter 30000
+match_correlation 30000
+filter 30000
+payload_extraction 14000
+qpsk_demodulation 240000
+deinterleaver 20000
+viterbi_depuncturing 5000
+viterbi_decoder 3130000
+descrambler 5000
+start_task 0
+message_signal 0
+cover_signal 0
+CMM_1 240000
+hermitian_opt 23000
+CMM_2 240000
+matrix_opts 25000
+matrix_multiplication 17000
+CMM_3 210000
+matrix_subtraction 72000
+
+add_new_resource resource_type BIG resource_name A15 resource_ID 1 capacity 4 num_supported_functionalities 94 DVFS_mode performance
+mesh_information A15 10 43.12 34.5 cornflowerblue
+opp 600 900
+opp 800 950
+opp 1000 1000
+opp 1200 1037
+opp 1400 1100
+opp 1600 1175
+opp 1800 1300
+opp 2000 1362
+trip_freq 1600 1000 600
+DTPM_trip_freq 1200 1000 600
+power_profile 1000 0.85 1.30 1.58 1.78
+PG_profile 1000 0.59 0.96 1.35 1.78
+power_profile 2000 3.32 5.05 6.15 6.91
+PG_profile 2000 2.29 3.73 5.23 6.91
+scrambler_encoder 10000
+interleaver_1 4000
+qpsk_1 8000
+pilot_insertion_1 3000
+ifft_1 118000
+crc_1 3000
+interleaver_2 4000
+qpsk_2 8000
+pilot_insertion_2 3000
+ifft_2 118000
+crc_2 3000
+interleaver_3 4000
+qpsk_3 8000
+pilot_insertion_3 3000
+ifft_3 118000
+crc_3 3000
+interleaver_4 4000
+qpsk_4 8000
+pilot_insertion_4 3000
+ifft_4 118000
+crc_4 3000
+interleaver_5 4000
+qpsk_5 8000
+pilot_insertion_5 3000
+ifft_5 118000
+crc_5 3000
+end 0
+match_filter 5000
+payload_extraction_1 4000
+fft_1 114000
+pilot_1 4000
+qpsk_demodulation_1 95000
+deinterleaver_1 9000
+format_conversion_1 4000
+payload_extraction_2 4000
+fft_2 114000
+pilot_2 4000
+qpsk_demodulation_2 95000
+deinterleaver_2 9000
+format_conversion_2 4000
+payload_extraction_3 4000
+fft_3 114000
+pilot_3 4000
+qpsk_demodulation_3 95000
+deinterleaver_3 9000
+format_conversion_3 4000
+payload_extraction_4 4000
+fft_4 114000
+pilot_4 4000
+qpsk_demodulation_4 95000
+deinterleaver_4 9000
+format_conversion_4 4000
+payload_extraction_5 4000
+fft_5 114000
+pilot_5 4000
+qpsk_demodulation_5 95000
+deinterleaver_5 9000
+format_conversion_5 4000
+viterbi_decoder 739000
+descrambler 2000
+message_decode 39000
+ST 0
+LFM 60000
+xcorr_fft0 60000
+xcorr_fft1 60000
+xcorr_vector_complex_conj_mul 6000
+xcorr_ifft 60000
+max_detect 20000
+scrambler 2000
+viterbi_encoder 9000
+viterbi_puncturing 3000
+interleaver 3000
+qpsk_modulation 8000
+crc 2000
+upsampling 9000
+fir_filter 20000
+match_correlation 20000
+filter 20000
+payload_extraction 3000
+qpsk_demodulation 96000
+deinterleaver 7000
+viterbi_depuncturing 3000
+viterbi_decoder 987000
+descrambler 2000
+start_task 0
+message_signal 0
+cover_signal 0
+CMM_1 54000
+hermitian_opt 6000
+CMM_2 54000
+matrix_opts 8000
+matrix_multiplication 5000
+CMM_3 44000
+matrix_subtraction 16000
+
+add_new_resource resource_type ACC resource_name DAP resource_ID 2 capacity 10 num_supported_functionalities 17 DVFS_mode performance
+mesh_information DAP 5 11.4 9.12 gold
+acc_supported_configs matrix_mul FFT-512 FFT-128 FIR
+opp 1000 900
+trip_freq -1 -1 -1
+CMM_1 98 matrix_mul
+CMM_2 98 matrix_mul
+CMM_3 98 matrix_mul
+fir_filter 66 FIR
+xcorr_fft0 1024 FFT-512
+xcorr_fft1 1024 FFT-512
+xcorr_ifft 1024 FFT-512
+ifft_1 256 FFT-128
+ifft_2 256 FFT-128
+ifft_3 256 FFT-128
+ifft_4 256 FFT-128
+ifft_5 256 FFT-128
+fft_1 256 FFT-128
+fft_2 256 FFT-128
+fft_3 256 FFT-128
+fft_4 256 FFT-128
+fft_5 256 FFT-128
+
+add_new_resource resource_type ACC resource_name DAP resource_ID 3 capacity 10 num_supported_functionalities 17 DVFS_mode performance
+mesh_information DAP 5 11.4 9.12 gold
+acc_supported_configs matrix_mul FFT-512 FFT-128 FIR
+opp 1000 900
+trip_freq -1 -1 -1
+CMM_1 98 matrix_mul
+CMM_2 98 matrix_mul
+CMM_3 98 matrix_mul
+fir_filter 66 FIR
+xcorr_fft0 1024 FFT-512
+xcorr_fft1 1024 FFT-512
+xcorr_ifft 1024 FFT-512
+ifft_1 256 FFT-128
+ifft_2 256 FFT-128
+ifft_3 256 FFT-128
+ifft_4 256 FFT-128
+ifft_5 256 FFT-128
+fft_1 256 FFT-128
+fft_2 256 FFT-128
+fft_3 256 FFT-128
+fft_4 256 FFT-128
+fft_5 256 FFT-128
+
+add_new_resource resource_type ACC resource_name FFT resource_ID 4 capacity 4 num_supported_functionalities 13 DVFS_mode performance
+mesh_information FFT 6 10.24 8.2 gold
+acc_supported_configs Stream-128 Stream-512
+opp 1000 900
+trip_freq -1 -1 -1
+xcorr_fft0 1024 Stream-512
+xcorr_fft1 1024 Stream-512
+xcorr_ifft 1024 Stream-512
+ifft_1 256 Stream-128
+ifft_2 256 Stream-128
+ifft_3 256 Stream-128
+ifft_4 256 Stream-128
+ifft_5 256 Stream-128
+fft_1 256 Stream-128
+fft_2 256 Stream-128
+fft_3 256 Stream-128
+fft_4 256 Stream-128
+fft_5 256 Stream-128
+
+add_new_resource resource_type ACC resource_name FEC resource_ID 5 capacity 1 num_supported_functionalities 1 DVFS_mode performance
+mesh_information FEC 0 45.4 36.3 gold
+acc_supported_configs viterbi_decoder
+opp 1000 900
+trip_freq -1 -1 -1
+viterbi_decoder 20 viterbi_decoder
+
+add_new_resource resource_type ACC resource_name FIR resource_ID 6 capacity 4 num_supported_functionalities 1 DVFS_mode performance
+acc_supported_configs Stream
+opp 1000 900
+trip_freq -1 -1 -1
+fir_filter 10 Stream
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 7 capacity 1 num_supported_functionalities 1 DVFS_mode none
+mesh_information MC 4 15.8 12.6 pink
+None 0
+
+add_new_resource resource_type CAC resource_name CACHE_1 resource_ID 6 capacity 1 num_supported_functionalities 1 DVFS_mode none
+mesh_information LLC-1 4 18.2 14.56 palegreen
+None 0
+
+add_new_resource resource_type CAC resource_name CACHE_2 resource_ID 7 capacity 1 num_supported_functionalities 1 DVFS_mode none
+mesh_information LLC-2 1 18.2 14.56 palegreen
+None 0
+
+add_new_resource resource_type CAC resource_name CACHE_3 resource_ID 8 capacity 1 num_supported_functionalities 1 DVFS_mode none
+mesh_information LLC-3 9 18.2 14.56 palegreen
+None 0
+
+add_new_resource resource_type CAC resource_name CACHE_4 resource_ID 9 capacity 1 num_supported_functionalities 1 DVFS_mode none
+mesh_information LLC-4 10 18.1 14.56 palegreen
+None 0
+
+# comm_band when the source and destination are the same PE
+comm_band_self 10000
+
+# comm_band for all clusters
+comm_band 0 0 1000
+comm_band 0 1 1000
+comm_band 0 2 1000
+comm_band 0 3 10
+comm_band 0 4 10
+comm_band 0 5 1000
+comm_band 0 6 1000
+comm_band 0 7 1000
+
+comm_band 1 1 1000
+comm_band 1 2 1000
+comm_band 1 3 10
+comm_band 1 4 10
+comm_band 1 5 1000
+comm_band 1 6 1000
+comm_band 1 7 1000
+
+comm_band 2 2 1000
+comm_band 2 3 10
+comm_band 2 4 10
+comm_band 2 5 1000
+comm_band 2 6 1000
+comm_band 2 7 1000
+
+comm_band 3 3 1000
+comm_band 3 4 10
+comm_band 3 5 1000
+comm_band 3 6 1000
+comm_band 3 7 1000
+
+comm_band 4 4 1000
+comm_band 4 5 1000
+comm_band 4 6 1000
+comm_band 4 7 1000
+
+comm_band 5 5 1000
+comm_band 5 6 1000
+comm_band 5 7 1000
+
+comm_band 6 6 1000
+comm_band 6 7 1000
+
+comm_band 7 7 0
+

@@ -1,0 +1,69 @@
+# Configuration file of the Tasks
+# Lines that start with "#" are comments
+# Start adding task using the keyword: add_new_tasks
+# The the following three lines must have the attributes below
+# $task_name (string) $task_id (int) $task_predecessors (list)
+# $task_name (string) HEAD (TAIL), if the task is the head or tail of the task graph
+# $task_name (string) $earliest_start (int) $deadline (int)
+# The format: add_new_tasks $num_of_tasks (int)
+#             $task_name (string) $task_id (int) $task_predecessors (list)
+#             $task_name (string) HEAD (string)  
+#             $task_name (string) $earliest_start (int) $deadline (int)
+# Example: The following lines add a new task with ID=0, and
+#          predecessor for this task is task with ID=2
+#          (empty list means there is no dependency)
+#          This task is the head of the task graph
+#          earliest start time and deadline are 0 and 10, respectively
+#
+#          add_new_tasks 1
+#          scrambler 0 2
+#          scrambler HEAD
+#          scrambler earliest_start 0 deadline 10
+#
+# After adding tasks, use keyword comm_vol to add communication volume for
+# the tasks that have dependencies 
+# The format: comm_vol $source_id (int) $destination_id (int) volume (int)
+# Example: The following line adds communication volume between task 0 (source)
+#          and task 1 (destination)
+#                    
+#          comm_vol 0 1 5
+
+job_name ACUMEN 32
+add_new_tasks 9
+
+block1 0
+block1 HEAD
+block1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+task2 1 0
+task2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block3 2 1
+blokc3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0 
+block4 3 1 2
+block4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block5 4 0
+block5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block6 5 4
+block6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block7 6 5
+block7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block8 7 3 4 5
+block8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block9 8 0 2 7
+block9 TAIL
+block9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+
+
+comm_vol 0 1 37
+comm_vol 1 2 37
+comm_vol 1 3 37
+comm_vol 2 3 37
+comm_vol 0 4 37
+comm_vol 4 5 37
+comm_vol 5 6 37
+comm_vol 3 7 37
+comm_vol 4 7 37
+comm_vol 5 7 37
+comm_vol 0 8 37
+comm_vol 2 8 37
+comm_vol 7 8 37
