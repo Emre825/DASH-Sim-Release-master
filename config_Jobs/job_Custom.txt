@@ -1,0 +1,44 @@
+job_name example 64
+add_new_tasks 11
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+scrambler_encoder 1 0
+scrambler_encoder earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+fft_1 2 0 
+fft_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block3 3 1
+block3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+interleaver_1 4 1 2 
+interleaver_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+xcorr_vector_complex_conj_mul 5 2
+xcorr_vector_complex_conj_mul earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+pilot_1 6 2
+pilot_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+crc_1 7 6
+crc_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+max_detect 8 5 
+max_detect earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+descrambler 9 3 4 5
+descrambler earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+FT 10 7 8 9
+FT TAIL
+FT earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+
+comm_vol 0 1 0
+comm_vol 0 2 0
+comm_vol 1 3 90
+comm_vol 1 4 120
+comm_vol 2 4 150
+comm_vol 2 5 120
+comm_vol 2 6 100
+comm_vol 6 7 110
+comm_vol 5 8 180
+comm_vol 3 9 60
+comm_vol 4 9 70
+comm_vol 5 9 90
+comm_vol 7 10 0
+comm_vol 8 10 0
+comm_vol 9 10 0
+
