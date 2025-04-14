@@ -666,7 +666,7 @@ class Scheduler:
         for task in common.TaskQueues.executable.list:
             executing_resource = self.resource_matrix.list[task.PE_ID]
             task_id = task.ID
-            if len(running_tasks[task.PE_ID]) is not 0:
+            if len(running_tasks[task.PE_ID]) != 0:
                 task_start = running_tasks[task.PE_ID][-1].end
             else:
                 task_start = self.env.now
@@ -748,7 +748,7 @@ class Scheduler:
         for task in common.TaskQueues.executable.list:
             executing_resource = self.resource_matrix.list[task.PE_ID]
             task_id = task.ID
-            if len(running_tasks[task.PE_ID]) is not 0:
+            if len(running_tasks[task.PE_ID]) != 0:
                 task_start = running_tasks[task.PE_ID][-1].end
             else:
                 task_start = self.env.now

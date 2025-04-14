@@ -159,7 +159,7 @@ class JobGenerator:
                         task_id = task.ID
                         # TODO: This is an implicit scheduling decision that the scheduler doesn't question
                         # The task hasn't started yet, so assume it will after the last task in this PE's queue
-                        if len(running_tasks[task.PE_ID]) is not 0:
+                        if len(running_tasks[task.PE_ID]) != 0:
                             task_start = running_tasks[task.PE_ID][-1].end
                         else:
                             task_start = self.env.now
@@ -184,7 +184,7 @@ class JobGenerator:
                         op_mode = heft.OpMode(common.config.get('HEFT SCHEDULER', 'heft_opMode', fallback='EFT'))
 
                     # Remove placeholder source/sink nodes from the last time the graph was merged so they don't continually accumulate with each iteration
-                    if len(outstanding_dag) is not 0:
+                    if len(outstanding_dag) != 0:
                         outstanding_dag.remove_node(max(outstanding_dag) - 1)
                         outstanding_dag.remove_node(max(outstanding_dag))
 
