@@ -605,80 +605,80 @@ class Scheduler:
         This DAG is then passed through the full HEFT algorithm on each scheduling epoch.
         @param list_of_ready: the list of ready tasks that need to be scheduled
         '''
-        if not list_of_ready:
+        if not list_of_ready: # if it is empty
             return
-        computation_dict = {}
+        computation_dict = {} # key is task id, value is a list of performance values for the task on diff. processors in the system. Each value in the list represents the execution time of the task on a specific PE.
         power_dict = {}
-        dag = nx.DiGraph()
-        for task in list_of_ready:
-            dag.add_node(task.ID)
-            computation_dict[task.ID] = []
-            power_dict[task.ID] = []
-            for cluster in common.ClusterManager.cluster_list:
+        dag = nx.DiGraph() # initialize a graph with edges, name or graph attributes
+        for task in list_of_ready: # for each task in the list of ready tasks
+            dag.add_node(task.ID) # add a node/task to the graph from the list of ready 
+            computation_dict[task.ID] = [] # an empty list is initialized for the task
+            power_dict[task.ID] = [] 
+            for cluster in common.ClusterManager.cluster_list: # for each cluster in the system; for example BIG, LTL. Those are clusters. Their capacity indicates how many cores there are in that cluster.
                 current_power = cluster.current_power_cluster
-                for resource_idx in cluster.PE_list:
-                    resource = self.resource_matrix.list[resource_idx]
-                    if task.name in resource.supported_functionalities:
-                        perf_index = resource.supported_functionalities.index(task.name)
+                for resource_idx in cluster.PE_list: # for each core/pe in the cluster, it finds the index of that core.
+                    resource = self.resource_matrix.list[resource_idx] # from the index, it finds the resource 
+                    if task.name in resource.supported_functionalities: # checks if the task is supported by the resource 
+                        perf_index = resource.supported_functionalities.index(task.name) # if it supports, corresponding performance value is retrieved and appended to the list of that task in the computation_dict.
                         computation_dict[task.ID].append(resource.performance[perf_index])
                         power_dict[task.ID].append(current_power / len(cluster.PE_list))
                     else:
-                        computation_dict[task.ID].append(np.inf)
+                        computation_dict[task.ID].append(np.inf) # if it is not supported, it appends infinity to indicate that the task cannot be executed on that PE.
                         power_dict[task.ID].append(np.inf)
 
 
-        merge_method = dag_merge.MergeMethod[common.config.get('HEFT SCHEDULER', 'heft_mergeMethod', fallback='COMMON_ENTRY_EXIT')]
+        merge_method = dag_merge.MergeMethod[common.config.get('HEFT SCHEDULER', 'heft_mergeMethod', fallback='COMMON_ENTRY_EXIT')] # retrieves the merge method for the DAG, if no specific merge method is provided, it defaults to COMMON_ENTRY_EXIT. This merge method is used later to merge the DAG of tasks.
 
-        if common.use_adaptive_scheduling:
+        if common.use_adaptive_scheduling: # Adaptive scheduling means whether scheduling should seek to be adaptive between makespan and EDP(Energy Delay Product) priorities => it is currently "false" in the config_file.ini 
             if common.results.job_counter == common.max_jobs_in_parallel:
-                # System is oversubscribed, use EFT scheduling
-                rank_metric = heft.RankMetric.MEAN
+                # System is oversubscribed, use EFT scheduling, oversubscribed means too many jobs running in parallel.
+                rank_metric = heft.RankMetric.MEAN # it uses EFT scheduling with rank_metric = MEAN
                 op_mode = heft.OpMode.EFT
             else:
                 # System isn't oversubscribed, use EDP scheduling
-                rank_metric = heft.RankMetric.EDP
+                rank_metric = heft.RankMetric.EDP # if it is not oversubscribed, it uses EDP scheduling with rank_metric = EDP.
                 op_mode = heft.OpMode.EDP_REL
-        else:
-            rank_metric = heft.RankMetric(common.config.get('HEFT SCHEDULER', 'heft_rankMetric', fallback='MEAN'))
-            op_mode = heft.OpMode(common.config.get('HEFT SCHEDULER', 'heft_opMode', fallback='EFT'))
+        else: # currently adaptive scheduling is false, so the compiler consider here.
+            rank_metric = heft.RankMetric(common.config.get('HEFT SCHEDULER', 'heft_rankMetric', fallback='MEAN')) # uses EDP currently, if it would be empty it would use MEAN
+            op_mode = heft.OpMode(common.config.get('HEFT SCHEDULER', 'heft_opMode', fallback='EFT')) # uses EDP relative currently, it would use EFT if it was empty.
 
-        dag = dag_merge.merge_dags(dag, merge_method=merge_method, skip_relabeling=True)
-        computation_dict[max(dag) - 1] = np.zeros((1, len(self.resource_matrix.list)))
+        dag = dag_merge.merge_dags(dag, merge_method=merge_method, skip_relabeling=True) # it merges all the nodes which have been added above and creates a merged DAG, it avoids renaming the nodes in the DAG during the merge.
+        computation_dict[max(dag) - 1] = np.zeros((1, len(self.resource_matrix.list))) # it adds "dummy nodes" to the DAG for entry(max(dag) - 1) and exit(max(dag)). These nodes represent the start and end of the scheduling process. Their computation and power values are initialized as zero arrays.
         computation_dict[max(dag)] = np.zeros((1, len(self.resource_matrix.list)))
         power_dict[max(dag) - 1] = np.zeros((1, len(self.resource_matrix.list)))
         power_dict[max(dag)] = np.zeros((1, len(self.resource_matrix.list)))
-        computation_matrix = np.empty((max(dag) + 1, len(self.resource_matrix.list)))
+        computation_matrix = np.empty((max(dag) + 1, len(self.resource_matrix.list))) # initializing the comp. and power matrices. Comp. matrix stores the comp. times for each task on each PE, power matrix stores the power consumption for each task on each PE.
         power_matrix = np.empty((max(dag) + 1, len(self.resource_matrix.list)))
 
-        running_tasks = {}
+        running_tasks = {} # a dictionary is initialized to track the tasks currently running on each processing element.
         for idx in range(len(self.resource_matrix.list)):
-            running_tasks[idx] = []
+            running_tasks[idx] = [] # it creates an empty list for each processing element in the resource matrix.      
 
-        for task in common.TaskQueues.running.list:
-            executing_resource = self.resource_matrix.list[task.PE_ID]
-            task_id = task.ID
-            task_start = task.start_time
+        for task in common.TaskQueues.running.list: # for each task in "running" list 
+            executing_resource = self.resource_matrix.list[task.PE_ID] # the resource executing that task 
+            task_id = task.ID 
+            task_start = task.start_time # start time of the execution of that task
             task_end = task_start + executing_resource.performance[
-                executing_resource.supported_functionalities.index(task.name)]
+                executing_resource.supported_functionalities.index(task.name)] # it finds the task from the supported functionalities list and retrieves the executing time of that task. Then, adds this to the start time to find the finish time.
             proc = task.PE_ID
-            running_tasks[proc].append(heft.ScheduleEvent(task_id, task_start, task_end, proc))
-
-        for task in common.TaskQueues.executable.list:
+            running_tasks[proc].append(heft.ScheduleEvent(task_id, task_start, task_end, proc)) # it appends a scheduleEvent which includes the task's id, start time and finish time to the list allocated for that processing element in the running_tasks dictionary.
+        # running list indicates the tasks that have already been assigned to a PE and are actively consuming resources. This queue helps the scheduler determine when a PE will become available for new tasks. It is used to calculate the remaining execution time of tasks and update the availability of PEs.
+        for task in common.TaskQueues.executable.list: # for each task in the "executable" list 
             executing_resource = self.resource_matrix.list[task.PE_ID]
             task_id = task.ID
-            if len(running_tasks[task.PE_ID]) != 0:
-                task_start = running_tasks[task.PE_ID][-1].end
-            else:
-                task_start = self.env.now
+            if len(running_tasks[task.PE_ID]) != 0: # it checks the list of the PE in the running_tasks dictionary and checks if the length of that list is zero or not (if there are tasks that are running on that PE currently or not) 
+                task_start = running_tasks[task.PE_ID][-1].end # it accesses the last task in the list with "[-1]" and retrieves the end time of that task to find the start time of the task in the executable list.
+            else: 
+                task_start = self.env.now # if there is no task running on that PE currently, start time is set to current time (it can be executed right away). 
             task_end = task_start + executing_resource.performance[executing_resource.supported_functionalities.index(task.name)]
             proc = task.PE_ID
-            running_tasks[proc].append(heft.ScheduleEvent(task_id, task_start, task_end, proc))
-
+            running_tasks[proc].append(heft.ScheduleEvent(task_id, task_start, task_end, proc)) # it similarly appends a scheduleEvent to the running_tasks dictionary.
+        # executable list contains tasks that are ready to be executed but have not yet been assigned to a PE. These tasks have met all their dependencies and their input data is available. It helps the scheduler decide which task to assign to a PE next.
         for key, val in computation_dict.items():
-            computation_matrix[key, :] = val
+            computation_matrix[key, :] = val # comp. matrix and power matrix were initialized empty above, now they are filled with actual values. 
         for key, val in power_dict.items():
             power_matrix[key, :] = val
-        _, _, dict_output = heft.schedule_dag(
+        _, _, dict_output = heft.schedule_dag( # heft.schedule_dag function is called to schedule the tasks in the DAG. if there isn't any task that can be executed right away, time_offset is the time to the closest task execution start.
             dag,
             computation_matrix=computation_matrix,
             communication_matrix=common.ResourceManager.comm_band,
@@ -688,10 +688,10 @@ class Scheduler:
             rank_metric=rank_metric,
             power_dict=power_matrix,
             op_mode=op_mode
-        )
-        for task in list_of_ready:
-            task.PE_ID = dict_output[task.ID][0]
-            task.dynamic_dependencies = dict_output[task.ID][2]
+        ) # the dict_output contains the scheduling results for each task
+        for task in list_of_ready: # for each task in the ready list
+            task.PE_ID = dict_output[task.ID][0] # the PE_ID(assigned processing element) is updated based on the scheduling result.
+            task.dynamic_dependencies = dict_output[task.ID][2] # the dynamic_dependencies are updated to reflect any changes in task dependencies.
     # end of HEFT_RT(self, list_of_ready)
 
     def PEFT(self, list_of_ready):
