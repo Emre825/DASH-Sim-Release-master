@@ -1,0 +1,49 @@
+job_name ML_inference_pipeline 1
+add_new_tasks 14
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+fir_filter 1 0 
+fir_filter earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+fft_1 2 1
+fft_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+payload_extraction_1 3 2
+payload_extraction_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+hermitian_opt 4 2
+hermitian_opt earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+pilot_1 5 2
+pilot_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+matrix_opts 6 2
+matrix_opts earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+matrix_multiplication 7 3
+matrix_multiplication earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+CMM_1 8 4 5
+CMM_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+CMM_2 9 6
+CMM_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+interleaver_1 10 7
+interleaver_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+descrambler 11 8 
+descrambler earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+max_detect 12 9
+max_detect earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+message_decode 13 10 11 12
+message_decode TAIL
+message_decode earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+comm_vol 0 1 0
+comm_vol 1 2 64
+comm_vol 2 3 64
+comm_vol 2 4 32
+comm_vol 2 5 8
+comm_vol 2 6 16
+comm_vol 3 7 16 
+comm_vol 4 8 8
+comm_vol 5 8 4
+comm_vol 6 9 8
+comm_vol 7 10 4
+comm_vol 8 11 2
+comm_vol 9 12 2
+comm_vol 10 13 1
+comm_vol 11 13 1
+comm_vol 12 13 1

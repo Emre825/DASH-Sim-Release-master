@@ -1,0 +1,43 @@
+job_name signal_processing 8
+add_new_tasks 11
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+match_filter 1 0
+match_filter earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+payload_extraction_1 2 0
+payload_extraction_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+payload_extraction_2 3 0 
+payload_extraction_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+fft_1 4 2 
+fft_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+fft_2 5 4 
+fft_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+qpsk_demodulation_1 6 5
+qpsk_demodulation_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+qpsk_demodulation_2 7 5
+qpsk_demodulation_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+deinterleaver_1 8 6
+deinterleaver_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+deinterleaver_2 9 7 
+deinterleaver_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+viterbi_decoder 10 8 9
+viterbi_decoder TAIL
+viterbi_decoder earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# bit packets (each packet 128 bits)
+comm_vol 0 1 8
+comm_vol 0 2 16
+comm_vol 0 3 16
+comm_vol 2 4 32
+comm_vol 4 5 32
+comm_vol 1 5 8
+comm_vol 3 5 16
+comm_vol 5 6 64
+comm_vol 5 7 64
+comm_vol 6 8 32
+comm_vol 7 9 32
+comm_vol 8 10 8
+comm_vol 9 10 8
+
+
