@@ -31,6 +31,7 @@ message_decode 13 10 11 12
 message_decode TAIL
 message_decode earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
+# bit packets (each packet 128 bits)
 comm_vol 0 1 0
 comm_vol 1 2 64
 comm_vol 2 3 64

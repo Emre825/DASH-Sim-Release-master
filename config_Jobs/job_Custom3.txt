@@ -1,0 +1,57 @@
+job_name cryptographic 16
+add_new_tasks 15
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+cover_signal 1 0
+cover_signal earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+message_signal 2 0 
+message_signal earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+scrambler_encoder 3 1
+scrambler_encoder earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+interleaver_1 4 1 2
+interleaver_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+crc_1 5 2
+crc_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block1 6 3 4
+block1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block3 7 4 5
+block3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block4 8 6
+block4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block5 9 7
+block5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block6 10 7
+block6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+block7 11 7
+block7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+crc_2 12 8 9 10 11
+crc_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+descrambler 13 12
+descrambler earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+message_decode 14 13 
+message_decode TAIL
+message_decode earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# bit packets (each packet 128 bits)
+comm_vol 0 1 0
+comm_vol 0 2 0
+comm_vol 1 3 4
+comm_vol 1 4 10
+comm_vol 2 4 10
+comm_vol 2 5 2
+comm_vol 3 6 4
+comm_vol 4 6 10
+comm_vol 4 7 10
+comm_vol 5 7 2
+comm_vol 6 8 8
+comm_vol 7 9 4
+comm_vol 7 10 4
+comm_vol 7 11 4
+comm_vol 8 12 8
+comm_vol 9 12 4
+comm_vol 10 12 4
+comm_vol 11 12 4
+comm_vol 12 13 20
+comm_vol 13 14 16
+

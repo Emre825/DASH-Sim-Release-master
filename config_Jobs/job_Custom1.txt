@@ -1,4 +1,4 @@
-job_name signal_processing 8
+job_name signal_processing_pipeline 8
 add_new_tasks 11
 ST 0
 ST HEAD
