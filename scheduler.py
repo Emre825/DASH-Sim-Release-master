@@ -764,6 +764,9 @@ class Scheduler:
                             if fused_name not in resource.supported_functionalities:
                                 resource.supported_functionalities.append(fused_name)
 
+                    # Print fusion information to inform the user.
+                    print(f"Fusion applied: {task_u.name} + {task_v.name} => {fused_name} (node id: {fused_id})")
+
                     # Rewire the DAG:
                     for pred in list(dag.predecessors(u)):
                         if pred != fused_id:

@@ -31,20 +31,20 @@ message_decode 13 10 11 12
 message_decode TAIL
 message_decode earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
-# bit packets (each packet 128 bits)
+# unit is bits
 comm_vol 0 1 0
-comm_vol 1 2 64
-comm_vol 2 3 64
-comm_vol 2 4 32
-comm_vol 2 5 8
-comm_vol 2 6 16
-comm_vol 3 7 16 
-comm_vol 4 8 8
-comm_vol 5 8 4
-comm_vol 6 9 8
-comm_vol 7 10 4
-comm_vol 8 11 2
-comm_vol 9 12 2
-comm_vol 10 13 1
-comm_vol 11 13 1
-comm_vol 12 13 1
+comm_vol 1 2 8192
+comm_vol 2 3 8192
+comm_vol 2 4 4096
+comm_vol 2 5 1024
+comm_vol 2 6 2048
+comm_vol 3 7 2048 
+comm_vol 4 8 1024
+comm_vol 5 8 512
+comm_vol 6 9 1024
+comm_vol 7 10 512
+comm_vol 8 11 256
+comm_vol 9 12 256
+comm_vol 10 13 128
+comm_vol 11 13 128
+comm_vol 12 13 128

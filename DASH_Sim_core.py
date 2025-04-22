@@ -110,7 +110,7 @@ class SimulationManager:
                     to_memory_comm_time = int(comm_vol/comm_band)                                           # Communication time from a PE to memory
 
                     if (common.DEBUG_SIM):
-                        print('[D] Time %d: Data from task %d for task %d will be sent to memory in %d us'
+                        print('[D] Time %d: Data from task %d for task %d will be sent to memory in %d ns'
                               %(self.env.now, completed_task.ID, outstanding_task.ID, to_memory_comm_time))
 
                     # Based on this communication time, this outstanding task

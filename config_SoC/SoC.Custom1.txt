@@ -215,6 +215,7 @@ matrix_multiplication 500
 CMM_3 4400
 matrix_subtraction 1600
 
+# General purpose accelerator
 add_new_resource resource_type ACC resource_name DAP_0 resource_ID 2 capacity 1 num_supported_functionalities 66 DVFS_mode performance
 acc_supported_configs block1 block3 block4 block5 block6 block7 block9 interleaver FFT-128 FFT-512 scrambler_encoder qpsk pilot crc descrambler max_detect xcorr_comp_conj_mult hermitian cmm_1 cmm_2 mat_inv mat_sub
 opp 1000 900
@@ -286,6 +287,7 @@ matrix_opts 158 mat_inv
 matrix_multiplication 38 cmm_2
 matrix_subtraction 38 mat_sub
 
+# General purpose accelerator
 add_new_resource resource_type ACC resource_name DAP_1 resource_ID 3 capacity 1 num_supported_functionalities 66 DVFS_mode performance
 acc_supported_configs block1 block3 block4 block5 block6 block7 block9 interleaver FFT-128 FFT-512 scrambler_encoder qpsk pilot crc descrambler max_detect xcorr_comp_conj_mult hermitian cmm_1 cmm_2 mat_inv mat_sub
 opp 1000 900
@@ -357,43 +359,44 @@ matrix_opts 158 mat_inv
 matrix_multiplication 38 cmm_2
 matrix_subtraction 38 mat_sub
 
+# Specialized accelerator
 add_new_resource resource_type ACC resource_name FFT resource_ID 4 capacity 2 num_supported_functionalities 13 DVFS_mode performance
-mesh_information FFT 5 10 10 blue
 acc_supported_configs Stream-128 Stream-512
 opp 1000 900
 trip_freq -1 -1 -1
-xcorr_fft0 1024 Stream-512
-xcorr_fft1 1024 Stream-512
-xcorr_ifft 1024 Stream-512
-ifft_1 256 Stream-128
-ifft_2 256 Stream-128
-ifft_3 256 Stream-128
-ifft_4 256 Stream-128
-ifft_5 256 Stream-128
-fft_1 256 Stream-128
-fft_2 256 Stream-128
-fft_3 256 Stream-128
-fft_4 256 Stream-128
-fft_5 256 Stream-128
+xcorr_fft0 256 Stream-512
+xcorr_fft1 256 Stream-512
+xcorr_ifft 256 Stream-512
+ifft_1 64 Stream-128
+ifft_2 64 Stream-128
+ifft_3 64 Stream-128
+ifft_4 64 Stream-128
+ifft_5 64 Stream-128
+fft_1 64 Stream-128
+fft_2 64 Stream-128
+fft_3 64 Stream-128
+fft_4 64 Stream-128
+fft_5 64 Stream-128
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 5 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0
 
-comm_band_self 10000
+# unit is GHz
+comm_band_self 10
 
-comm_band 0 0 1000
-comm_band 0 5 1000
-comm_band 1 1 1000
-comm_band 1 5 1000
-comm_band 2 2 1000
-comm_band 2 5 1000
-comm_band 3 3 1000
-comm_band 3 5 1000
-comm_band 4 4 1000
-comm_band 4 5 1000
+comm_band 0 0 1
+comm_band 0 5 1
+comm_band 1 1 1
+comm_band 1 5 1
+comm_band 2 2 1
+comm_band 2 5 1
+comm_band 3 3 1
+comm_band 3 5 1
+comm_band 4 4 1
+comm_band 4 5 1
 comm_band 5 5 0
-comm_band 5 4 1000
-comm_band 5 3 1000
-comm_band 5 2 1000
-comm_band 5 1 1000
-comm_band 5 0 1000
+comm_band 5 4 1
+comm_band 5 3 1
+comm_band 5 2 1
+comm_band 5 1 1
+comm_band 5 0 1
