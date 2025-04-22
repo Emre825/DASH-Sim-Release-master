@@ -694,6 +694,113 @@ class Scheduler:
             task.dynamic_dependencies = dict_output[task.ID][2] # the dynamic_dependencies are updated to reflect any changes in task dependencies.
     # end of HEFT_RT(self, list_of_ready)
 
+    def _fuse_dependent_nodes(self, dag, comp_dict, power_dict, task_lookup, threshold=None):
+        """!
+        Scans the input DAG and applies node fusion to eligible dependent pairs.
+    
+        Requirements:
+        - The pair must be dependent (edge from u to v)
+        - u has only one successor and v has only one predecessor
+        - There is at least one accelerator resource in self.resource_matrix.list that supports both tasks
+        - Optionally, if a threshold is given, the communication weight on the edge (u,v) must be at least threshold.
+      
+        When fused, the new fused node uses node ID u.
+        The fused computation and power costs are computed as an elementwise sum.
+        The task name is merged (e.g., "task1_task2") and added to supporting resources.
+    
+        After fusion, update node ids: all nodes with id greater than fused node v are decremented by 1,
+        and comp_dict, power_dict, and task_lookup are updated accordingly.
+    
+        Parameters:
+        dag: A networkx.DiGraph representing the task DAG.
+        comp_dict: Dictionary mapping node IDs to computation cost arrays.
+        power_dict: Dictionary mapping node IDs to power cost arrays.
+        task_lookup: Dictionary mapping node IDs to task objects (each having an attribute 'name').
+        threshold: Optional communication delay threshold to trigger fusion.
+      
+        Returns:
+        Updated dag, comp_dict, power_dict, and task_lookup.
+        """
+        fusion_occurred = True
+        while fusion_occurred:
+            fusion_occurred = False
+            # Iterate over a copy of the edges since we may modify the DAG.
+            for u, v in list(dag.edges()):
+                # Check eligibility: u must have only one successor and v only one predecessor.
+                if dag.out_degree(u) == 1 and dag.in_degree(v) == 1:
+                    task_u = task_lookup[u]
+                    task_v = task_lookup[v]
+                    # Check that at least one accelerator resource supports both tasks.
+                    capable = False
+                    for resource in self.resource_matrix.list:
+                        if (resource.type.lower() == 'acc' and 
+                            task_u.name in resource.supported_functionalities and 
+                            task_v.name in resource.supported_functionalities):
+                            capable = True
+                            break
+                    if not capable:
+                        continue
+
+                    # If a threshold is provided, check the communication weight.
+                    # weight = dag[u][v].get('weight', 0)
+                    # if threshold is not None and weight < threshold:
+                    #    continue
+
+                    # Fusion applies. Use u as the fused node id.
+                    fused_id = u
+                    # Sum the computation and power arrays elementwise.
+                    comp_dict[fused_id] = np.array(comp_dict[u]) + np.array(comp_dict[v])
+                    power_dict[fused_id] = np.array(power_dict[u]) + np.array(power_dict[v])
+                    # Merge task names.
+                    fused_name = f"{task_u.name}_{task_v.name}"
+                    task_lookup[fused_id].name = fused_name
+
+                    # Update resources: for each accelerator that supports both original names,
+                    # add the fused name if not already present.
+                    for resource in self.resource_matrix.list:
+                        if (resource.type.lower() == 'acc' and 
+                            task_u.name in resource.supported_functionalities and 
+                            task_v.name in resource.supported_functionalities):
+                            if fused_name not in resource.supported_functionalities:
+                                resource.supported_functionalities.append(fused_name)
+
+                    # Rewire the DAG:
+                    for pred in list(dag.predecessors(u)):
+                        if pred != fused_id:
+                            dag.add_edge(pred, fused_id, weight=dag[pred][u].get('weight', 0))
+                    for succ in list(dag.successors(v)):
+                        if succ != fused_id:
+                            dag.add_edge(fused_id, succ, weight=dag[v][succ].get('weight', 0))
+                    # Remove node v.
+                    dag.remove_node(v)
+                    del comp_dict[v]
+                    del power_dict[v]
+                    del task_lookup[v]
+                    fusion_occurred = True
+
+                    # Adjust remaining node id numbering: for each node with id > v, decrement by 1.
+                    mapping = {node: node - 1 for node in list(dag.nodes()) if node > v}
+                    if mapping:
+                        dag = nx.relabel_nodes(dag, mapping, copy=False)
+                        # Update keys in dictionaries.
+                        def update_dict(d):
+                            new_d = {}
+                            for key, value in d.items():
+                                new_key = key - 1 if key > v else key
+                                new_d[new_key] = value
+                            return new_d
+                        comp_dict = update_dict(comp_dict)
+                        power_dict = update_dict(power_dict)
+                        task_lookup = update_dict(task_lookup)
+                    break  # Restart scanning after fusion.
+        return dag, comp_dict, power_dict, task_lookup
+    # end of _fuse_dependent_nodes(self, dag, comp_dict, power_dict, task_lookup, threshold=None)
+    
+    '''!
+    def HEFT_RT_FUSION(self, list_of_ready):
+    
+    '''
+
     def PEFT(self, list_of_ready):
         '''!
         Schedule using the PEFT heuristic. As PEFT is a static scheduler, we simply read off the lookup table that was generated during the last job generation epoch in job_generator.py
