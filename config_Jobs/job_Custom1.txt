@@ -11,7 +11,7 @@ payload_extraction_2 3 0
 payload_extraction_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 fft_1 4 2 
 fft_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-fft_2 5 4 
+fft_2 5 1 3 4
 fft_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 qpsk_demodulation_1 6 5
 qpsk_demodulation_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
