@@ -643,6 +643,10 @@ class Scheduler:
             op_mode = heft.OpMode(common.config.get('HEFT SCHEDULER', 'heft_opMode', fallback='EFT')) # uses EDP relative currently, it would use EFT if it was empty.
 
         dag = dag_merge.merge_dags(dag, merge_method=merge_method, skip_relabeling=True) # it merges all the nodes which have been added above and creates a merged DAG, it avoids renaming the nodes in the DAG during the merge.
+        task_lookup = {}
+        for task in list_of_ready:
+            task_lookup[task.ID] = task
+        dag, computation_dict, power_dict, task_lookup = self._fuse_dependent_nodes(dag, computation_dict, power_dict, task_lookup) # it calls the _fuse_dependent_nodes function to fuse dependent nodes in the DAG. It returns the updated DAG and dictionaries.
         computation_dict[max(dag) - 1] = np.zeros((1, len(self.resource_matrix.list))) # it adds "dummy nodes" to the DAG for entry(max(dag) - 1) and exit(max(dag)). These nodes represent the start and end of the scheduling process. Their computation and power values are initialized as zero arrays.
         computation_dict[max(dag)] = np.zeros((1, len(self.resource_matrix.list)))
         power_dict[max(dag) - 1] = np.zeros((1, len(self.resource_matrix.list)))
@@ -721,11 +725,24 @@ class Scheduler:
         Returns:
         Updated dag, comp_dict, power_dict, and task_lookup.
         """
+        # Create dummy tasks for any node in the dag that is missing in task_lookup.
+        for node in list(dag.nodes()):
+            if node not in task_lookup:
+                # Create a simple dummy task.
+                dummy_task = type('DummyTask', (object,), {})()
+                dummy_task.ID = node
+                dummy_task.name = f"dummy_{node}"
+                dummy_task.dummy = True
+                task_lookup[node] = dummy_task
         fusion_occurred = True
         while fusion_occurred:
             fusion_occurred = False
             # Iterate over a copy of the edges since we may modify the DAG.
             for u, v in list(dag.edges()):
+                # Skip fusion if either node corresponds to a dummy task.
+                if (hasattr(task_lookup[u], 'dummy') and task_lookup[u].dummy) or \
+                    (hasattr(task_lookup[v], 'dummy') and task_lookup[v].dummy):
+                        continue
                 # Check eligibility: u must have only one successor and v only one predecessor.
                 if dag.out_degree(u) == 1 and dag.in_degree(v) == 1:
                     task_u = task_lookup[u]
@@ -765,7 +782,8 @@ class Scheduler:
                                 resource.supported_functionalities.append(fused_name)
 
                     # Print fusion information to inform the user.
-                    print(f"Fusion applied: {task_u.name} + {task_v.name} => {fused_name} (node id: {fused_id})")
+                    if (common.DEBUG_SIM):
+                        print('[D] Fusion applied: {task_u.name} + {task_v.name} => {fused_name} (node id: {fused_id})')
 
                     # Rewire the DAG:
                     for pred in list(dag.predecessors(u)):
@@ -894,7 +912,7 @@ class Scheduler:
             task.PE_ID = dict_output[task.ID][0] # the PE_ID(assigned processing element) is updated based on the scheduling result.
             task.dynamic_dependencies = dict_output[task.ID][2] # the dynamic_dependencies are updated to reflect any changes in task dependencies.
     # end of HEFT_RT_FUSION(self, list_of_ready)
-
+    
     def PEFT(self, list_of_ready):
         '''!
         Schedule using the PEFT heuristic. As PEFT is a static scheduler, we simply read off the lookup table that was generated during the last job generation epoch in job_generator.py

@@ -68,7 +68,7 @@ class JobGenerator:
         num_jobs = 0
         count = 0
         summation = 0
-        np.random.seed(common.iteration)
+        # np.random.seed(common.iteration) commented out to see if it helps with the random seed issue
 
         
         if len(DASH_Sim_utils.get_current_job_list()) != len(self.jobs.list) and DASH_Sim_utils.get_current_job_list() != []:
@@ -307,7 +307,7 @@ class JobGenerator:
                         if count_complete_jobs == len(common.job_counter_list) and num_jobs < common.max_num_jobs:
                             # Get the next snippet's job list
                             common.snippet_ID_inj += 1
-                            np.random.seed(common.iteration)
+                        #   np.random.seed(common.iteration) commented out to see if it helps with the random seed issue
                             common.job_counter_list = [0]*len(common.current_job_list)
 
                 if (common.simulation_mode == 'validation' or common.inject_fixed_num_jobs):

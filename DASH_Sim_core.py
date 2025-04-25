@@ -360,7 +360,7 @@ class SimulationManager:
                                 comm_band = common.ResourceManager.comm_band[self.resource_matrix.list[-1].ID, ready_task.PE_ID]
                                 from_memory_comm_time = int(comm_vol/comm_band)
                                 if (common.DEBUG_SIM):
-                                    print('[D] Time %d: Data from memory for task %d from task %d will be sent to PE-%s in %d us'
+                                    print('[D] Time %d: Data from memory for task %d from task %d will be sent to PE-%s in %d ns'
                                           %(self.env.now, ready_task.ID, real_predecessor_ID, ready_task.PE_ID, from_memory_comm_time))
                                 ready_task.execution_wait_times.append(from_memory_comm_time + self.env.now)
                             # end of if (common.shared_memory)
