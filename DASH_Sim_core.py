@@ -491,6 +491,8 @@ class SimulationManager:
                     self.scheduler.HEFT(common.TaskQueues.ready.list)
                 elif self.scheduler.name == 'HEFT_RT':
                     self.scheduler.HEFT_RT(common.TaskQueues.ready.list)
+                elif self.scheduler.name == 'HEFT_RT_FUSION':
+                    self.scheduler.HEFT_RT_FUSION(common.TaskQueues.ready.list)
                 elif self.scheduler.name == 'PEFT':
                     self.scheduler.PEFT(common.TaskQueues.ready.list)
                 elif self.scheduler.name == 'PEFT_RT':

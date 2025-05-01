@@ -76,6 +76,132 @@ class JobGenerator:
                   % (self.env.now))
             sys.exit()
 
+        if (self.scheduler.name == 'HEFT_RT_FUSION'):
+            # Iterate over all jobs in the system and try to perform task fusion.
+            for job in self.jobs.list:
+                a = 0
+                while a < len(job.task_list):
+                    curr_task = job.task_list[a]
+                    # Find successors of curr_task: tasks that have curr_task.ID as their only dependency.
+                    successors = [t for t in job.task_list if (curr_task.ID in t.predecessors)]
+                    # Check that there is exactly one successor and that it depends solely on curr_task.
+                    if len(successors) == 1 and (len(successors[0].predecessors) == 1):
+                        succ_task = successors[0]
+                        # Count the number of successors for curr_task by scanning the task list.
+                        curr_successors = [t for t in job.task_list if curr_task.ID in t.predecessors]
+                        if len(curr_successors) == 1:
+                            # Check SoC hardware compatibility: there must be at least one ACC resource that supports both tasks.
+                            fusion_allowed = False
+                            for resource in self.scheduler.resource_matrix.list:
+                                if resource.type.upper() == "ACC":
+                                    if (curr_task.name in resource.supported_functionalities and
+                                        succ_task.name in resource.supported_functionalities):
+                                        fusion_allowed = True
+                                        # Add the new fused task name to this resource’s supported functionalities if not already there.
+                                        if curr_task.name + "_" + succ_task.name not in resource.supported_functionalities:
+                                            resource.supported_functionalities.append(curr_task.name + "_" + succ_task.name)
+                                            resource.num_of_functionalities += 1
+                                            resource.DAP_config_list.append(curr_task.name + "_" + succ_task.name)
+                                            curr_task_exec_time = resource.performance[resource.supported_functionalities.index(curr_task.name)]
+                                            succ_task_exec_time = resource.performance[resource.supported_functionalities.index(succ_task.name)]
+                                            fused_task_exec_time = curr_task_exec_time + succ_task_exec_time
+                                            resource.performance.append(fused_task_exec_time)
+                            if fusion_allowed:
+                                # Create new fused task.
+                                fused_task = type(curr_task)()  
+                                fused_task.name = curr_task.name + "_" + succ_task.name
+                                # Use the lower id (curr_task) as the fused task id.
+                                fused_task.ID = curr_task.ID
+                                fused_task.deadline = max(curr_task.deadline, succ_task.deadline)
+                                fused_task.dag_depth = curr_task.dag_depth
+                                fused_task.est = curr_task.est
+                                fused_task.input_packet_size = curr_task.input_packet_size
+                                fused_task.output_packet_size = curr_task.output_packet_size
+                                fused_task.jobname = curr_task.jobname
+                                fused_task.base_ID = curr_task.base_ID
+                                # Predecessors of the fused task come from the predecessor(s) of curr_task.
+                                fused_task.predecessors = curr_task.predecessors.copy()
+                                fused_task.preds = curr_task.preds.copy()
+
+                                # Save the communication volumes from the predecessor(s) of the curr_task.
+                                row_from_pred_of_curr_task = {}
+                                for t in curr_task.predecessors:
+                                    row_from_pred_of_curr_task[t] = job.comm_vol[t, :].copy()
+
+                                succ_id = succ_task.ID
+                                fused_id = fused_task.ID 
+                                
+                                # Remove succ_task from the job's task list and update the current task slot.
+                                job.task_list[a] = fused_task
+                                job.task_list.remove(succ_task)
+
+                                # Update the IDs and base IDs of the subsequent tasks in the task list.
+                                for t in job.task_list:
+                                   if t.ID > succ_id:
+                                       t.ID -= 1
+                                       t.base_ID -= 1 
+
+                                # Update dependencies in other tasks: if any task had succ_task as a predecessor, replace it with fused_task.ID.
+                                for t in job.task_list:
+                                    for j in range(len(t.predecessors)):
+                                        if t.predecessors[j] == succ_id:
+                                            t.predecessors[j] = fused_id
+                                            t.preds[j] = fused_id
+                                        if t.predecessors[j] > succ_id:
+                                            t.predecessors[j] -= 1
+                                            t.preds[j] -= 1   
+
+                                if (common.DEBUG_SCH):
+                                    print("[D] Fused tasks %d and %d into %s" % (curr_task.ID, succ_task.ID, fused_task.name))
+
+                                row_from_succ = job.comm_vol[succ_id, :].copy() # Update the row of the fused task in the comm_vol matrix.
+                                job.comm_vol[fused_id, :] = row_from_succ
+                                col_from_succ = job.comm_vol[:, succ_id].copy() # Update the column of the fused task in the comm_vol matrix.
+                                job.comm_vol[:, fused_id] = col_from_succ
+
+                                # Update the communication volumes from the predecessor(s) of fused_task.
+                                for k, row in row_from_pred_of_curr_task.items():
+                                    job.comm_vol[k, :] = row
+
+                                job.comm_vol = np.delete(job.comm_vol, succ_id, axis=0) # Delete the row of the succ_task.
+                                job.comm_vol = np.delete(job.comm_vol, succ_id, axis=1) # Delete the column of the succ_task.    
+
+                                if succ_id in job.dag_depth:
+                                    del job.dag_depth[succ_id] # Delete the succ_task from the dag_depth dictionary.
+
+                                updated_dag_depth = {} # Update the dag_depth dictionary according to the recent changes.
+                                for key, depth in job.dag_depth.items():
+                                    if key == 'DAG':
+                                        updated_dag_depth[key] = depth
+                                    elif isinstance(key, int):
+                                        if key > succ_id:
+                                            updated_dag_depth[key - 1] = depth
+                                        else:
+                                            updated_dag_depth[key] = depth
+                                    else:
+                                        updated_dag_depth[key] = depth
+                                
+                                job.dag_depth = updated_dag_depth
+
+                                individual_depths = [d for k, d in job.dag_depth.items() if k != 'DAG']
+                                # Build a sorted list of unique depths.
+                                unique_depths = sorted(set(individual_depths))
+
+                                # Create a mapping from the unique depths to new depths to get rid of the jumps in the dag_depth dictionary, if there is any.
+                                new_depth_map = {orig_depth: new_depth for new_depth, orig_depth in enumerate(unique_depths)}
+
+                                # Update every task's dag_depth stored in job.dag_depth (excluding the 'DAG' key) using the mapping.
+                                for key in list(job.dag_depth.keys()):
+                                    if key != 'DAG':
+                                        job.dag_depth[key] = new_depth_map[job.dag_depth[key]]
+
+                                # Finally, update the overall 'DAG' depth as the maximum of the new values.
+                                job.dag_depth['DAG'] = max(new_depth_map.values()) if new_depth_map else 0
+                                # Do not increment a so we can check if further fusion is possible on the new fused task.
+                                continue
+                    a += 1
+        # End of HEFT_RT_FUSION fusion block
+
         while (self.generate_job):  # Continue generating jobs till #generate_job is False
 
             if (common.results.job_counter >= common.max_jobs_in_parallel or (common.job_list != [] and common.snippet_ID_inj == common.snippet_ID_exec)):

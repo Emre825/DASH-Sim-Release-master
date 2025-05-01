@@ -215,7 +215,7 @@ matrix_multiplication 500
 CMM_3 4400
 matrix_subtraction 1600
 
-# General purpose accelerator
+# General purpose accelerator (Domain Adaptive Processor)
 add_new_resource resource_type ACC resource_name DAP_0 resource_ID 2 capacity 1 num_supported_functionalities 66 DVFS_mode performance
 acc_supported_configs block1 block3 block4 block5 block6 block7 block9 interleaver FFT-128 FFT-512 scrambler_encoder qpsk pilot crc descrambler max_detect xcorr_comp_conj_mult hermitian cmm_1 cmm_2 mat_inv mat_sub
 opp 1000 900
@@ -287,7 +287,7 @@ matrix_opts 158 mat_inv
 matrix_multiplication 38 cmm_2
 matrix_subtraction 38 mat_sub
 
-# General purpose accelerator
+# General purpose accelerator (Domain Adaptive Processor)
 add_new_resource resource_type ACC resource_name DAP_1 resource_ID 3 capacity 1 num_supported_functionalities 66 DVFS_mode performance
 acc_supported_configs block1 block3 block4 block5 block6 block7 block9 interleaver FFT-128 FFT-512 scrambler_encoder qpsk pilot crc descrambler max_detect xcorr_comp_conj_mult hermitian cmm_1 cmm_2 mat_inv mat_sub
 opp 1000 900
