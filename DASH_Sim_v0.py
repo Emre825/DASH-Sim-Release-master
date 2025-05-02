@@ -392,8 +392,8 @@ def run_simulator(scale_values=common.scale_values_list):
                 if (common.INFO_JOB):
                     print('[I] Starting iteration: %d' %(iteration+1))
 
-                job_gen = job_generator.JobGenerator(env, resource_matrix, jobs, DASH_scheduler, DASH_resources)
-
+                job_gen = job_generator.JobGenerator(env, resource_matrix, jobs, DASH_scheduler, DASH_resources, common.resource_matrix_Acc)
+                
                 sim_core = DASH_Sim_core.SimulationManager(env, sim_done, job_gen, DASH_scheduler, DASH_resources,
                                                            jobs, resource_matrix)
 

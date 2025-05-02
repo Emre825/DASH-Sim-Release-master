@@ -19,7 +19,7 @@ class JobGenerator:
     '''!
     Define the JobGenerator class to handle dynamic job generation
     '''
-    def __init__(self, env, resource_matrix, jobs, scheduler, PE_list):
+    def __init__(self, env, resource_matrix, jobs, scheduler, PE_list, resource_matrix_Acc):
         '''!
         @param env: Pointer to the current simulation environment
         @param resource_matrix: The data structure that defines power/performance characteristics of the PEs for each supported task
@@ -32,6 +32,7 @@ class JobGenerator:
         self.jobs = jobs
         self.scheduler = scheduler
         self.PEs = PE_list
+        self.resource_matrix_Acc = resource_matrix_Acc
         
         
         # Initially none of the tasks are outstanding
@@ -97,15 +98,96 @@ class JobGenerator:
                                     if (curr_task.name in resource.supported_functionalities and
                                         succ_task.name in resource.supported_functionalities):
                                         fusion_allowed = True
-                                        # Add the new fused task name to this resource’s supported functionalities if not already there.
-                                        if curr_task.name + "_" + succ_task.name not in resource.supported_functionalities:
-                                            resource.supported_functionalities.append(curr_task.name + "_" + succ_task.name)
+                                        # Add the new fused task to this resource’s supported functionalities if not already there.
+                                        fused_config = curr_task.name + "_" + succ_task.name
+                                        if fused_config not in resource.supported_functionalities:
+                                            resource.supported_functionalities.append(fused_config)
                                             resource.num_of_functionalities += 1
-                                            resource.DAP_config_list.append(curr_task.name + "_" + succ_task.name)
+                                            resource.DAP_config_list.append(fused_config)
                                             curr_task_exec_time = resource.performance[resource.supported_functionalities.index(curr_task.name)]
                                             succ_task_exec_time = resource.performance[resource.supported_functionalities.index(succ_task.name)]
                                             fused_task_exec_time = curr_task_exec_time + succ_task_exec_time
                                             resource.performance.append(fused_task_exec_time)
+                                            # Add the new config and other informations about it into the ACC_model.csv file.
+                                            import csv
+                                            acc_csv_path = r"C:\\Users\\emre-\\DASH-Sim-Release-master\\ACC_model.csv"
+                                            dynamic_power_curr = None
+                                            curr_task_config = resource.DAP_config_list[resource.supported_functionalities.index(curr_task.name)]
+                                            dynamic_power_succ = None
+                                            succ_task_config = resource.DAP_config_list[resource.supported_functionalities.index(succ_task.name)]
+                                            with open(acc_csv_path, "r", newline="") as f:
+                                                reader = csv.DictReader(f)
+                                                for row in reader:
+                                                    if row["Config"] == curr_task_config:
+                                                        dynamic_power_curr = float(row["Dynamic Power (W)"])
+                                                    if row["Config"] == succ_task_config:
+                                                        dynamic_power_succ = float(row["Dynamic Power (W)"])
+                                            if dynamic_power_curr is None:
+                                                dynamic_power_curr = 0
+                                            if dynamic_power_succ is None:
+                                                dynamic_power_succ = 0
+                                            fused_dynamic_power = dynamic_power_curr + dynamic_power_succ
+                                            formatted_fused_dynamic_power = round(fused_dynamic_power, 4) 
+
+                                            if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
+                                                pe_util = 0.5
+                                                dap_subpe = 16
+                                                new_row = {
+                                                    "PE Type": resource.name[:5],
+                                                    "Config": fused_config,
+                                                    "Throughput (sample/cycle)": "1",
+                                                    "Data Transfer Latency": "1",
+                                                    "Programming Latency": "0",
+                                                    "PE Utilization": str(pe_util),
+                                                    "Leakage Power (W)": "0",
+                                                    "Dynamic Power (W)": str(formatted_fused_dynamic_power),
+                                                    "DAP sub-PE": str(dap_subpe)
+                                                }
+                                                new_Acc_object = common.ResourceAcc()
+                                                new_Acc_object.type = resource.name[:5]
+                                                new_Acc_object.programming_latency = 0
+                                                new_Acc_object.leakage_power = float(0)
+                                                new_Acc_object.dynamic_power = formatted_fused_dynamic_power
+                                                new_Acc_object.config = fused_config
+                                                new_Acc_object.DAP_subPEs = dap_subpe
+                                                self.resource_matrix_Acc.dict[resource.name[:5] + "," + fused_config] = new_Acc_object
+                                                common.resource_matrix_Acc = self.resource_matrix_Acc
+                                            else:
+                                                pe_util = 1
+                                                dap_subpe = 0
+                                                new_row = {
+                                                    "PE Type": resource.name[:3],
+                                                    "Config": fused_config,
+                                                    "Throughput (sample/cycle)": "1",
+                                                    "Data Transfer Latency": "1",
+                                                    "Programming Latency": "0",
+                                                    "PE Utilization": str(pe_util),
+                                                    "Leakage Power (W)": "0",
+                                                    "Dynamic Power (W)": str(formatted_fused_dynamic_power),
+                                                    "DAP sub-PE": str(dap_subpe)
+                                                }
+                                                new_Acc_object = common.ResourceAcc()
+                                                new_Acc_object.type = resource.name[:3]
+                                                new_Acc_object.programming_latency = 0
+                                                new_Acc_object.leakage_power = float(0)
+                                                new_Acc_object.dynamic_power = formatted_fused_dynamic_power
+                                                new_Acc_object.config = fused_config
+                                                new_Acc_object.DAP_subPEs = dap_subpe
+                                                self.resource_matrix_Acc.dict[resource.name[:3] + "," + fused_config] = new_Acc_object
+                                                common.resource_matrix_Acc = self.resource_matrix_Acc
+
+                                            with open(acc_csv_path, "a", newline="") as f:
+                                                writer = csv.DictWriter(f, fieldnames=["PE Type",
+                                                                                        "Config",
+                                                                                        "Throughput (sample/cycle)",
+                                                                                        "Data Transfer Latency",
+                                                                                        "Programming Latency",
+                                                                                        "PE Utilization",
+                                                                                        "Leakage Power (W)",
+                                                                                        "Dynamic Power (W)",
+                                                                                        "DAP sub-PE"])
+                                                writer.writerow(new_row)
+                 
                             if fusion_allowed:
                                 # Create new fused task.
                                 fused_task = type(curr_task)()  
