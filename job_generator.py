@@ -91,6 +91,12 @@ class JobGenerator:
                         # Count the number of successors for curr_task by scanning the task list.
                         curr_successors = [t for t in job.task_list if curr_task.ID in t.predecessors]
                         if len(curr_successors) == 1:
+                            # Retrieve the communication volume between curr_task and its successor.
+                            comm_vol_value = job.comm_vol[curr_task.ID, succ_task.ID]
+                            # Check if the communication volume meets the threshold.
+                            if comm_vol_value < common.fusion_threshold: # Skip fusion for these tasks and move on to the next one.
+                                a += 1
+                                continue
                             # Check SoC hardware compatibility: there must be at least one ACC resource that supports both tasks.
                             fusion_allowed = False
                             for resource in self.scheduler.resource_matrix.list:
@@ -108,7 +114,23 @@ class JobGenerator:
                                             succ_task_exec_time = resource.performance[resource.supported_functionalities.index(succ_task.name)]
                                             fused_task_exec_time = curr_task_exec_time + succ_task_exec_time
                                             resource.performance.append(fused_task_exec_time)
-                                            # Add the new config and other informations about it into the ACC_model.csv file.
+                                            # Check if the new config is already in the ACC_model.csv file and resource_matrix_Acc dictionary, if yes, skip the rest of the current for loop iteration and move on from the next resource.
+                                            config_exists = False
+                                            if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
+                                                for k, v in self.resource_matrix_Acc.dict.items():
+                                                    if k == resource.name[:5] + "," + fused_config:
+                                                        config_exists = True
+                                                        break
+                                                if config_exists:
+                                                    continue    
+                                            else:
+                                                for k, v in self.resource_matrix_Acc.dict.items():
+                                                    if k == resource.name[:3] + "," + fused_config:
+                                                        config_exists = True
+                                                        break
+                                                if config_exists:
+                                                    continue    
+                                            # If the config is not already in the csv file, add it. Also, add the new config into the resource_matrix_Acc dictionary. 
                                             import csv
                                             acc_csv_path = r"C:\\Users\\emre-\\DASH-Sim-Release-master\\ACC_model.csv"
                                             dynamic_power_curr = None
@@ -132,17 +154,7 @@ class JobGenerator:
                                             if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
                                                 pe_util = 0.5
                                                 dap_subpe = 16
-                                                new_row = {
-                                                    "PE Type": resource.name[:5],
-                                                    "Config": fused_config,
-                                                    "Throughput (sample/cycle)": "1",
-                                                    "Data Transfer Latency": "1",
-                                                    "Programming Latency": "0",
-                                                    "PE Utilization": str(pe_util),
-                                                    "Leakage Power (W)": "0",
-                                                    "Dynamic Power (W)": str(formatted_fused_dynamic_power),
-                                                    "DAP sub-PE": str(dap_subpe)
-                                                }
+                                                new_row = {"PE Type": resource.name[:5], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = resource.name[:5]
                                                 new_Acc_object.programming_latency = 0
@@ -155,17 +167,7 @@ class JobGenerator:
                                             else:
                                                 pe_util = 1
                                                 dap_subpe = 0
-                                                new_row = {
-                                                    "PE Type": resource.name[:3],
-                                                    "Config": fused_config,
-                                                    "Throughput (sample/cycle)": "1",
-                                                    "Data Transfer Latency": "1",
-                                                    "Programming Latency": "0",
-                                                    "PE Utilization": str(pe_util),
-                                                    "Leakage Power (W)": "0",
-                                                    "Dynamic Power (W)": str(formatted_fused_dynamic_power),
-                                                    "DAP sub-PE": str(dap_subpe)
-                                                }
+                                                new_row = {"PE Type": resource.name[:3], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = resource.name[:3]
                                                 new_Acc_object.programming_latency = 0
@@ -177,15 +179,7 @@ class JobGenerator:
                                                 common.resource_matrix_Acc = self.resource_matrix_Acc
 
                                             with open(acc_csv_path, "a", newline="") as f:
-                                                writer = csv.DictWriter(f, fieldnames=["PE Type",
-                                                                                        "Config",
-                                                                                        "Throughput (sample/cycle)",
-                                                                                        "Data Transfer Latency",
-                                                                                        "Programming Latency",
-                                                                                        "PE Utilization",
-                                                                                        "Leakage Power (W)",
-                                                                                        "Dynamic Power (W)",
-                                                                                        "DAP sub-PE"])
+                                                writer = csv.DictWriter(f, fieldnames=["PE Type", "Config", "Throughput (sample/cycle)", "Data Transfer Latency", "Programming Latency", "PE Utilization", "Leakage Power (W)", "Dynamic Power (W)", "DAP sub-PE"])
                                                 writer.writerow(new_row)
                  
                             if fusion_allowed:
@@ -234,7 +228,7 @@ class JobGenerator:
                                             t.preds[j] -= 1   
 
                                 if (common.DEBUG_SCH):
-                                    print("[D] Fused tasks %d and %d into %s" % (curr_task.ID, succ_task.ID, fused_task.name))
+                                    print("[D] Fused tasks %d and %d into %s in job %s" % (curr_task.ID, succ_task.ID, fused_task.name, job.name))
 
                                 row_from_succ = job.comm_vol[succ_id, :].copy() # Update the row of the fused task in the comm_vol matrix.
                                 job.comm_vol[fused_id, :] = row_from_succ

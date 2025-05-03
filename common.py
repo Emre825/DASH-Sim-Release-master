@@ -184,6 +184,7 @@ else:
 num_of_iterations   = int(config['SIMULATION MODE']['num_of_iterations'])               # The number of iteration at each job injection rate
 config_scale_values = config['SIMULATION MODE']['scale_values']
 scale_values_list = str_to_list(config_scale_values)                                    # List of scale values which will determine the job arrival rate under performance mode
+fusion_threshold = int(config['SIMULATION MODE']['fusion_threshold'])                      # The threshold value for the fusion of tasks
 
 # variables used under validation mode
 scale = int(config['SIMULATION MODE']['scale'])                                 # The variable used to adjust the mean value of the job inter-arrival time
