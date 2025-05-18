@@ -1,0 +1,315 @@
+# Configuration file of the Resources available in DASH-SoC
+# Lines that start with "#" are comments
+
+# Add a new resource using the keyword: add_new_resource
+# Always add MEMORY last as a special resource, which will be used for communication 
+# and does not support any functionality
+# The following lines must have the attributes below
+# The format: add_new_resource $resource_type (string)  $resource_name (string) $resource_id (int) $capacity (int) $num_of_supported_functionality (int) $DVFS_mode (string)
+#             $functionality_name (string) $execution_time (float)
+# Note: for type, use the following abbreviations
+#       central processing unit --> CPU
+#       Arm LITTLE cluster      --> LTL
+#       Arm big cluster         --> BIG
+#       accelerator             --> ACC
+#       memory                  --> MEM
+#
+# opp $frequency (int - MHz) $voltage (int - mV), defines the Operating Performance Points (OPPs) with frequency and voltage tuples
+#
+# trip_freq $trip_1 $trip_2 $trip_3 ..., defines the frequencies that are set at each trip point if throttling is enabled. "-1" means that the frequency is not modified
+#
+# power_profile $frequency $power_1 $power_2 $power_3 ... $power_max_capacity
+# e.g., power_profile 1000 0.19 0.29 0.35 0.40. At 1GHz, the power for 1 core is 0.19W, 2 cores is 0.29W, and so on.
+#
+# PG_profile $frequency $power_1 $power_2 $power_3 ... $power_max_capacity
+#
+# Example: The following lines add a new CPU with name=P1, ID=0, capacity=1 and
+#          that can run 3 different tasks using "performance" DVFS mode
+#
+#          add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 1 num_supported_functionalities 3 DVFS_mode performance
+#          opp 1000 1150
+#          trip_freq -1 -1 -1
+#          power_profile 1000 0.1
+#          PG_profile 1000 0.1
+#          scrambler 12
+#          reed_solomon_encoder 15
+#          bpsk_modulation 18
+#
+# After adding resources, use keyword comm_band to add communication bandwidth 
+# between resources
+# The format: comm_band $source_id (int) $destination_id (int) bandwidth (int)
+# Example: The following line adds communication bandwidth between resource 0 (source)
+#          and resource 1 (destination)
+#                    
+#          comm_band 0 1 5
+
+add_new_resource resource_type CPU resource_name cpu0 resource_ID 0 capacity 1 num_supported_functionalities 44 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+LD_t0 10935.9
+LD_t1_conv0 36382.5
+LD_t2 1.3309
+LD_t3_conv1 7247.4
+LD_t4 0.0863
+LD_t5_conv2 3273.4
+LD_t6 0.062
+LD_t7_conv3 2827.9
+LD_t8 28582.9
+LD_t9 30219.4
+scrambler_encoder 5626.367
+interleaver_1 1673.386
+interleaver_2 1673.386
+interleaver_3 1673.386
+interleaver_4 1673.386
+interleaver_5 1673.386
+qpsk_1 9493.509
+qpsk_2 9493.509
+qpsk_3 9493.509
+qpsk_4 9493.509
+qpsk_5 9493.509
+pilot_insertion_1 648.104
+pilot_insertion_2 648.104
+pilot_insertion_3 648.104
+pilot_insertion_4 648.104
+pilot_insertion_5 648.104
+ifft_1 18466.816
+ifft_2 18466.816
+ifft_3 18466.816
+ifft_4 18466.816
+ifft_5 18466.816
+crc_1 752.873
+crc_2 752.873
+crc_3 752.873
+crc_4 752.873
+crc_5 752.873
+end 34877.43
+RD_head 126.6
+RD_LFM 2654.2142
+RD_FFT0 3145.2856
+RD_FFT1 3145.2856
+RD_MUL 2020.8065
+RD_IFFT 3145.2856
+RD_MAX 442.2822
+
+add_new_resource resource_type CPU resource_name cpu1 resource_ID 1 capacity 1 num_supported_functionalities 44 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+LD_t0 10935.9
+LD_t1_conv0 36382.5
+LD_t2 1.3309
+LD_t3_conv1 7247.4
+LD_t4 0.0863
+LD_t5_conv2 3273.4
+LD_t6 0.062
+LD_t7_conv3 2827.9
+LD_t8 28582.9
+LD_t9 30219.4
+scrambler_encoder 5626.367
+interleaver_1 1673.386
+interleaver_2 1673.386
+interleaver_3 1673.386
+interleaver_4 1673.386
+interleaver_5 1673.386
+qpsk_1 9493.509
+qpsk_2 9493.509
+qpsk_3 9493.509
+qpsk_4 9493.509
+qpsk_5 9493.509
+pilot_insertion_1 648.104
+pilot_insertion_2 648.104
+pilot_insertion_3 648.104
+pilot_insertion_4 648.104
+pilot_insertion_5 648.104
+ifft_1 18466.816
+ifft_2 18466.816
+ifft_3 18466.816
+ifft_4 18466.816
+ifft_5 18466.816
+crc_1 752.873
+crc_2 752.873
+crc_3 752.873
+crc_4 752.873
+crc_5 752.873
+end 34877.43
+RD_head 126.6
+RD_LFM 2654.2142
+RD_FFT0 3145.2856
+RD_FFT1 3145.2856
+RD_MUL 2020.8065
+RD_IFFT 3145.2856
+RD_MAX 442.2822
+
+add_new_resource resource_type CPU resource_name cpu2 resource_ID 2 capacity 1 num_supported_functionalities 44 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+LD_t0 10935.9
+LD_t1_conv0 36382.5
+LD_t2 1.3309
+LD_t3_conv1 7247.4
+LD_t4 0.0863
+LD_t5_conv2 3273.4
+LD_t6 0.062
+LD_t7_conv3 2827.9
+LD_t8 28582.9
+LD_t9 30219.4
+scrambler_encoder 5626.367
+interleaver_1 1673.386
+interleaver_2 1673.386
+interleaver_3 1673.386
+interleaver_4 1673.386
+interleaver_5 1673.386
+qpsk_1 9493.509
+qpsk_2 9493.509
+qpsk_3 9493.509
+qpsk_4 9493.509
+qpsk_5 9493.509
+pilot_insertion_1 648.104
+pilot_insertion_2 648.104
+pilot_insertion_3 648.104
+pilot_insertion_4 648.104
+pilot_insertion_5 648.104
+ifft_1 18466.816
+ifft_2 18466.816
+ifft_3 18466.816
+ifft_4 18466.816
+ifft_5 18466.816
+crc_1 752.873
+crc_2 752.873
+crc_3 752.873
+crc_4 752.873
+crc_5 752.873
+end 34877.43
+RD_head 126.6
+RD_LFM 2654.2142
+RD_FFT0 3145.2856
+RD_FFT1 3145.2856
+RD_MUL 2020.8065
+RD_IFFT 3145.2856
+RD_MAX 442.2822
+
+add_new_resource resource_type CPU resource_name cpu3 resource_ID 3 capacity 1 num_supported_functionalities 44 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+LD_t0 10935.9
+LD_t1_conv0 36382.5
+LD_t2 1.3309
+LD_t3_conv1 7247.4
+LD_t4 0.0863
+LD_t5_conv2 3273.4
+LD_t6 0.062
+LD_t7_conv3 2827.9
+LD_t8 28582.9
+LD_t9 30219.4
+scrambler_encoder 5626.367
+interleaver_1 1673.386
+interleaver_2 1673.386
+interleaver_3 1673.386
+interleaver_4 1673.386
+interleaver_5 1673.386
+qpsk_1 9493.509
+qpsk_2 9493.509
+qpsk_3 9493.509
+qpsk_4 9493.509
+qpsk_5 9493.509
+pilot_insertion_1 648.104
+pilot_insertion_2 648.104
+pilot_insertion_3 648.104
+pilot_insertion_4 648.104
+pilot_insertion_5 648.104
+ifft_1 18466.816
+ifft_2 18466.816
+ifft_3 18466.816
+ifft_4 18466.816
+ifft_5 18466.816
+crc_1 752.873
+crc_2 752.873
+crc_3 752.873
+crc_4 752.873
+crc_5 752.873
+end 34877.43
+RD_head 126.6
+RD_LFM 2654.2142
+RD_FFT0 3145.2856
+RD_FFT1 3145.2856
+RD_MUL 2020.8065
+RD_IFFT 3145.2856
+RD_MAX 442.2822
+
+# add_new_resource resource_type ACC resource_name FFT resource_ID 3 capacity 1 num_supported_functionalities 8 DVFS_mode performance
+# acc_supported_configs Stream-128 Stream-512
+# opp 1000 900
+# trip_freq -1 -1 -1
+# RD_FFT0 28.1307754 Stream-512
+# RD_FFT1 28.1307754 Stream-512
+# RD_IFFT 28.1307754 Stream-512
+# ifft_1 11556.528384 Stream-128
+# ifft_2 11556.528384 Stream-128
+# ifft_3 11556.528384 Stream-128
+# ifft_4 11556.528384 Stream-128
+# ifft_5 11556.528384 Stream-128
+
+# add_new_resource resource_type ACC resource_name FFT resource_ID 4 capacity 1 num_supported_functionalities 8 DVFS_mode performance
+# acc_supported_configs Stream-128 Stream-512
+# opp 1000 900
+# trip_freq -1 -1 -1
+# RD_FFT0 28.1307754 Stream-512
+# RD_FFT1 28.1307754 Stream-512
+# RD_IFFT 28.1307754 Stream-512
+# ifft_1 11556.528384 Stream-128
+# ifft_2 11556.528384 Stream-128
+# ifft_3 11556.528384 Stream-128
+# ifft_4 11556.528384 Stream-128
+# ifft_5 11556.528384 Stream-128
+
+# add_new_resource resource_type ACC resource_name INTER resource_ID 5 capacity 1 num_supported_functionalities 5 DVFS_mode performance
+# acc_supported_configs interleaver
+# opp 1000 900
+# trip_freq -1 -1 -1
+# interleaver_1 1373.386 interleaver
+# interleaver_2 1373.386 interleaver
+# interleaver_3 1373.386 interleaver
+# interleaver_4 1373.386 interleaver
+# interleaver_5 1373.386 interleaver
+
+# add_new_resource resource_type ACC resource_name QPSK resource_ID 6 capacity 1 num_supported_functionalities 5 DVFS_mode performance
+# acc_supported_configs qpsk
+# opp 1000 900
+# trip_freq -1 -1 -1
+# qpsk_1 949.3509 qpsk
+# qpsk_2 949.3509 qpsk
+# qpsk_3 949.3509 qpsk
+# qpsk_4 949.3509 qpsk
+# qpsk_5 949.3509 qpsk
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 4 capacity 1 num_supported_functionalities 1 DVFS_mode none 
+None 0 
+
+# comm_band when the source and destination are the same PE
+comm_band_self 100
+
+# comm_band for all clusters
+comm_band 0 0 10
+comm_band 0 4 10
+comm_band 4 0 10
+
+comm_band 1 1 10
+comm_band 1 4 10
+comm_band 4 1 10
+
+comm_band 2 2 10
+comm_band 2 4 10
+comm_band 4 2 10
+
+comm_band 3 3 10
+comm_band 3 4 10
+comm_band 4 3 10
+
+comm_band 4 4 0

@@ -154,7 +154,7 @@ class JobGenerator:
                                             if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
                                                 pe_util = 0.5
                                                 dap_subpe = 16
-                                                new_row = {"PE Type": resource.name[:5], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
+                                                # new_row = {"PE Type": resource.name[:5], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = resource.name[:5]
                                                 new_Acc_object.programming_latency = 0
@@ -167,7 +167,7 @@ class JobGenerator:
                                             else:
                                                 pe_util = 1
                                                 dap_subpe = 0
-                                                new_row = {"PE Type": resource.name[:3], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
+                                                # new_row = {"PE Type": resource.name[:3], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = resource.name[:3]
                                                 new_Acc_object.programming_latency = 0
@@ -178,9 +178,9 @@ class JobGenerator:
                                                 self.resource_matrix_Acc.dict[resource.name[:3] + "," + fused_config] = new_Acc_object
                                                 common.resource_matrix_Acc = self.resource_matrix_Acc
 
-                                            with open(acc_csv_path, "a", newline="") as f:
-                                                writer = csv.DictWriter(f, fieldnames=["PE Type", "Config", "Throughput (sample/cycle)", "Data Transfer Latency", "Programming Latency", "PE Utilization", "Leakage Power (W)", "Dynamic Power (W)", "DAP sub-PE"])
-                                                writer.writerow(new_row)
+                                            # with open(acc_csv_path, "a", newline="") as f:
+                                            #     writer = csv.DictWriter(f, fieldnames=["PE Type", "Config", "Throughput (sample/cycle)", "Data Transfer Latency", "Programming Latency", "PE Utilization", "Leakage Power (W)", "Dynamic Power (W)", "DAP sub-PE"])
+                                            #     writer.writerow(new_row)
                  
                             if fusion_allowed:
                                 # Create new fused task.
