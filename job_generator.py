@@ -132,7 +132,7 @@ class JobGenerator:
                                                     continue    
                                             # If the config is not already in the csv file, add it. Also, add the new config into the resource_matrix_Acc dictionary. 
                                             import csv
-                                            acc_csv_path = r"C:\\Users\\emre-\\DASH-Sim-Release-master\\ACC_model.csv"
+                                            acc_csv_path = r"C:\\Users\\EMRE\\DASH-Sim-Release-master\\ACC_model.csv"
                                             dynamic_power_curr = None
                                             curr_task_config = resource.DAP_config_list[resource.supported_functionalities.index(curr_task.name)]
                                             dynamic_power_succ = None

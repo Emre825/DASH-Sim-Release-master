@@ -1,0 +1,71 @@
+
+import torch
+import torch.nn as nn
+
+def conv2d(in_channel, out_channel, kernel_size, stride, padding):
+    return nn.Sequential(
+        nn.Conv2d(in_channel, out_channel, kernel_size, stride, padding),
+        nn.ReLU()
+    )
+
+class Model(nn.Module):
+    def __init__(self, in_channels = 3):
+        super(Model, self).__init__()
+        self.down1a = conv2d(3, 8, 3, 1, 1)
+        self.down1b = conv2d(8, 8, 3, 1, 1)
+        self.down2a = conv2d(8, 16, 3, 1, 1)
+        self.down2b = conv2d(16, 16, 3, 1, 1)
+        self.down3a = conv2d(16, 32, 3, 1, 1)
+        self.down3b = conv2d(32, 32, 3, 1, 1)
+        self.down4a = conv2d(32, 64, 3, 1, 1)
+        self.down4b = conv2d(64, 64, 3, 1, 1)
+        self.upreg1 = conv2d(64, 128, 3, 1, 1)
+        self.upreg2 = conv2d(128, 128, 3, 1, 1)
+        self.up1a = conv2d(192, 64, 3, 1, 1)
+        self.up1b = conv2d(64, 64, 3, 1, 1)
+        self.up2a = conv2d(96, 32, 3, 1, 1)
+        self.up2b = conv2d(32, 32, 3, 1, 1)
+        self.up3a = conv2d(48, 16, 3, 1, 1)
+        self.up3b = conv2d(16, 16, 3, 1, 1)
+        self.up4a = conv2d(24, 8, 3, 1, 1)
+        self.up4b = conv2d(8, 8, 3, 1, 1)
+        self.upreg3 = nn.Conv2d(8, 1, 1, 1, 0)
+        self.maxpool = nn.MaxPool2d(2, 2)
+        self.relu = nn.ReLU()
+        self.sig = nn.Sigmoid()
+        self.upsample = nn.UpsamplingNearest2d(scale_factor=2)
+    # The execution path of the Model, in image models like this, the input is more likely a 4D tensor (Batch Size, Channels, Height, Width)
+    def forward(self, x): # Defines the actual computation path, the data flow. Layers defined in init are used here. This function is what PyTorch calls when you do model(input).
+        x = self.down1a(x) # x is the input tensor of the model, it passes x through convolution and relu layers (down1a), and store the result back in x. 
+        conv1 = self.down1b(x)
+        x = self.maxpool(conv1)
+        x = self.down2a(x)
+        conv2 = self.down2b(x)
+        x = self.maxpool(conv2)
+        x = self.down3a(x)
+        conv3 = self.down3b(x)
+        x = self.maxpool(conv3)
+        x = self.down4a(x)
+        conv4 = self.down4b(x)
+        x = self.maxpool(conv4)
+        x = self.upreg1(x)
+        x = self.upreg2(x)
+        x = self.upsample(x)
+        x = torch.cat((x, conv4), 1)
+        x = self.up1a(x)
+        x = self.up1b(x)
+        x = self.upsample(x)
+        x = torch.cat((x, conv3), 1)
+        x = self.up2a(x)
+        x = self.up2b(x)
+        x = self.upsample(x)
+        x = torch.cat((x, conv2), 1)
+        x = self.up3a(x)
+        x = self.up3b(x)
+        x = self.upsample(x)
+        x = torch.cat((x, conv1), 1)
+        x = self.up4a(x)
+        x = self.up4b(x)
+        x = self.upreg3(x)
+        x = self.sig(x)
+        return x
