@@ -1,0 +1,166 @@
+job_name conv_neural_network 1605632
+add_new_tasks 51
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_1 1 0
+conv2d_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_1 2 1
+relu_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_2 3 2
+conv2d_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_2 4 3
+relu_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2d_1 5 4
+maxpool2d_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_3 6 5 
+conv2d_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_3 7 6
+relu_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_4 8 7 
+conv2d_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_4 9 8
+relu_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2d_2 10 9
+maxpool2d_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_5 11 10
+conv2d_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_5 12 11
+relu_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_6 13 12
+conv2d_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_6 14 13
+relu_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2d_3 15 14
+maxpool2d_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_7 16 15
+conv2d_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_7 17 16
+relu_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_8 18 17
+conv2d_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_8 19 18
+relu_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2d_4 20 19
+maxpool2d_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_9 21 20
+conv2d_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_9 22 21
+relu_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_10 23 22
+conv2d_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_10 24 23
+relu_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+upsample_1 25 24
+upsample_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+cat_1 26 25 19
+cat_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_11 27 26
+conv2d_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_11 28 27
+relu_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_12 29 28
+conv2d_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_12 30 29
+relu_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+upsample_2 31 30
+upsample_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+cat_2 32 31 14
+cat_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_13 33 32
+conv2d_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_13 34 33
+relu_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_14 35 34
+conv2d_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_14 36 35
+relu_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+upsample_3 37 36
+upsample_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+cat_3 38 37 9
+cat_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_15 39 38
+conv2d_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_15 40 39
+relu_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_16 41 40
+conv2d_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_16 42 41
+relu_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+upsample_4 43 42
+upsample_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+cat_4 44 43 4
+cat_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_17 45 44
+conv2d_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_17 46 45
+relu_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_18 47 46
+conv2d_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relu_18 48 47
+relu_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2d_19 49 48
+conv2d_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+sigmoid 50 49
+sigmoid TAIL
+sigmoid earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 4816896
+comm_vol 1 2 12845056
+comm_vol 2 3 12845056
+comm_vol 3 4 12845056
+comm_vol 4 5 12845056
+comm_vol 5 6 3211264
+comm_vol 6 7 6422528
+comm_vol 7 8 6422528
+comm_vol 8 9 6422528
+comm_vol 9 10 6422528
+comm_vol 10 11 1605632
+comm_vol 11 12 3211264
+comm_vol 12 13 3211264
+comm_vol 13 14 3211264
+comm_vol 14 15 3211264
+comm_vol 15 16 802816
+comm_vol 16 17 1605632
+comm_vol 17 18 1605632
+comm_vol 18 19 1605632
+comm_vol 19 20 1605632
+comm_vol 20 21 401408
+comm_vol 21 22 802816
+comm_vol 22 23 802816
+comm_vol 23 24 802816
+comm_vol 24 25 802816
+comm_vol 25 26 3211264
+comm_vol 19 26 1605632
+comm_vol 26 27 4816896
+comm_vol 27 28 1605632
+comm_vol 28 29 1605632
+comm_vol 29 30 1605632
+comm_vol 30 31 1605632
+comm_vol 31 32 6422528
+comm_vol 14 32 3211264
+comm_vol 32 33 9633792
+comm_vol 33 34 3211264
+comm_vol 34 35 3211264
+comm_vol 35 36 3211264
+comm_vol 36 37 3211264
+comm_vol 37 38 12845056
+comm_vol 9 38 6422528
+comm_vol 38 39 19267584
+comm_vol 39 40 6422528
+comm_vol 40 41 6422528
+comm_vol 41 42 6422528
+comm_vol 42 43 6422528
+comm_vol 43 44 25690112
+comm_vol 4 44 12845056
+comm_vol 44 45 38535168
+comm_vol 45 46 12845056
+comm_vol 46 47 12845056
+comm_vol 47 48 12845056
+comm_vol 48 49 12845056
+comm_vol 49 50 1605632
+ 
+
+
+
