@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import simpy
+import re
 
 from heft import heft, dag_merge, gantt
 from peft import peft
@@ -69,8 +70,18 @@ class JobGenerator:
         num_jobs = 0
         count = 0
         summation = 0
-        # np.random.seed(common.iteration) commented out to see if it helps with the random seed issue
+        np.random.seed(common.iteration)
 
+        def get_acc_prefix(name):
+            # Match 3-letter accelerators (e.g., FFT, FIR, MMM)
+            match = re.match(r'^[A-Z]{3}', name)
+            if match:
+                return match.group(0)
+            # Match SM_x or SM_xx (e.g., SM_0, SM_10, SM_12)
+            match = re.match(r'^SM_\d{1,2}', name)
+            if match:
+                return match.group(0)
+            return name[:5] 
         
         if len(DASH_Sim_utils.get_current_job_list()) != len(self.jobs.list) and DASH_Sim_utils.get_current_job_list() != []:
             print('[E] Time %s: Job_list and job_file configs have different lengths, please check SoC.**.txt file'
@@ -83,6 +94,10 @@ class JobGenerator:
                 a = 0
                 while a < len(job.task_list):
                     curr_task = job.task_list[a]
+                    # Skip the head task, when it applies fusion to head task, it gives an attribute error. Solve the attribute error.
+                    # if curr_task.head: 
+                    #     a += 1
+                    #     continue
                     # Find successors of curr_task: tasks that have curr_task.ID as their only dependency.
                     successors = [t for t in job.task_list if (curr_task.ID in t.predecessors)]
                     # Check that there is exactly one successor and that it depends solely on curr_task.
@@ -116,16 +131,17 @@ class JobGenerator:
                                             resource.performance.append(fused_task_exec_time)
                                             # Check if the new config is already in the ACC_model.csv file and resource_matrix_Acc dictionary, if yes, skip the rest of the current for loop iteration and move on from the next resource.
                                             config_exists = False
-                                            if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
+                                            prefix = get_acc_prefix(resource.name)
+                                            if prefix == "DAP_0" or prefix == "DAP_1":
                                                 for k, v in self.resource_matrix_Acc.dict.items():
-                                                    if k == resource.name[:5] + "," + fused_config:
+                                                    if k == prefix + "," + fused_config:
                                                         config_exists = True
                                                         break
                                                 if config_exists:
                                                     continue    
                                             else:
                                                 for k, v in self.resource_matrix_Acc.dict.items():
-                                                    if k == resource.name[:3] + "," + fused_config:
+                                                    if k == prefix + "," + fused_config:
                                                         config_exists = True
                                                         break
                                                 if config_exists:
@@ -151,31 +167,31 @@ class JobGenerator:
                                             fused_dynamic_power = dynamic_power_curr + dynamic_power_succ
                                             formatted_fused_dynamic_power = round(fused_dynamic_power, 4) 
 
-                                            if resource.name.startswith("DAP_0") or resource.name.startswith("DAP_1"):
+                                            if prefix == "DAP_0" or prefix == "DAP_1":
                                                 pe_util = 0.5
                                                 dap_subpe = 16
-                                                # new_row = {"PE Type": resource.name[:5], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
+                                                # new_row = {"PE Type": prefix, "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
-                                                new_Acc_object.type = resource.name[:5]
+                                                new_Acc_object.type = prefix
                                                 new_Acc_object.programming_latency = 0
                                                 new_Acc_object.leakage_power = float(0)
                                                 new_Acc_object.dynamic_power = formatted_fused_dynamic_power
                                                 new_Acc_object.config = fused_config
                                                 new_Acc_object.DAP_subPEs = dap_subpe
-                                                self.resource_matrix_Acc.dict[resource.name[:5] + "," + fused_config] = new_Acc_object
+                                                self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
                                                 common.resource_matrix_Acc = self.resource_matrix_Acc
                                             else:
                                                 pe_util = 1
                                                 dap_subpe = 0
-                                                # new_row = {"PE Type": resource.name[:3], "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
+                                                # new_row = {"PE Type": prefix, "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
-                                                new_Acc_object.type = resource.name[:3]
+                                                new_Acc_object.type = prefix
                                                 new_Acc_object.programming_latency = 0
                                                 new_Acc_object.leakage_power = float(0)
                                                 new_Acc_object.dynamic_power = formatted_fused_dynamic_power
                                                 new_Acc_object.config = fused_config
                                                 new_Acc_object.DAP_subPEs = dap_subpe
-                                                self.resource_matrix_Acc.dict[resource.name[:3] + "," + fused_config] = new_Acc_object
+                                                self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
                                                 common.resource_matrix_Acc = self.resource_matrix_Acc
 
                                             # with open(acc_csv_path, "a", newline="") as f:
@@ -509,7 +525,7 @@ class JobGenerator:
                         if count_complete_jobs == len(common.job_counter_list) and num_jobs < common.max_num_jobs:
                             # Get the next snippet's job list
                             common.snippet_ID_inj += 1
-                        #   np.random.seed(common.iteration) commented out to see if it helps with the random seed issue
+                            np.random.seed(common.iteration)
                             common.job_counter_list = [0]*len(common.current_job_list)
 
                 if (common.simulation_mode == 'validation' or common.inject_fixed_num_jobs):
