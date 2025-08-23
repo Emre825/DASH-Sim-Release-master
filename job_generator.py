@@ -72,16 +72,56 @@ class JobGenerator:
         summation = 0
         np.random.seed(common.iteration)
 
+        def determine_fusion_threshold_approx(job):
+            """
+            Simple threshold selector:
+            - Collect all non-zero communication volumes from the job (job.comm_vol)
+            - Compute their mean
+            - Choose the communication volume value (from the set of distinct values) closest to the mean
+            Returns selected threshold (float, in bits). Prints the mean and chosen threshold.
+            """
+            import numpy as np
+
+            # collect non-zero comm volumes
+            comm_vals = []
+            n = len(job.task_list)
+            for i in range(n):
+                for j in range(n):
+                    if i < job.comm_vol.shape[0] and j < job.comm_vol.shape[1]:
+                        v = job.comm_vol[i, j]
+                        if v and v > 0:
+                            comm_vals.append(float(v))
+
+            if not comm_vals:
+                # no communications -> no fusion threshold
+                print("[D] determine_fusion_threshold_approx: no comm volumes found, threshold = 0")
+                return 0.0
+
+            vals = np.array(comm_vals, dtype=float)
+            mean_val = float(vals.mean())
+
+            # use unique sorted candidate values and pick the one closest to the mean
+            candidates = np.unique(vals)
+            idx = int(np.argmin(np.abs(candidates - mean_val)))
+            selected = float(candidates[idx])
+
+            if (common.DEBUG_SCH):
+                print(f"[D] determine_fusion_threshold_approx: mean={mean_val:.3f}, selected_threshold={selected}")
+            return selected
+
         def get_acc_prefix(name):
-            # Match 3-letter accelerators (e.g., FFT, FIR, MMM)
-            match = re.match(r'^[A-Z]{3}', name)
-            if match:
-                return match.group(0)
-            # Match SM_x or SM_xx (e.g., SM_0, SM_10, SM_12)
-            match = re.match(r'^SM_\d{1,2}', name)
-            if match:
-                return match.group(0)
-            return name[:5] 
+            m = re.match(r'^(SM_\d{1,2})', name) # Checks for SM_X and SM_XX patterns.
+            if m:
+                return m.group(1)
+            m = re.match(r'^(DAP_\d+)', name) # Checks for DAP_X patterns.
+            if m:
+                return m.group(1)
+            m = re.match(r'^[A-Z]{3,5}(?=_|$)', name) # Checks for FFT, MMM, FIR etc. if it doesn't found DAP or SM.
+            if m:
+                return m.group(0)
+            if '_' in name:
+                return name.split('_')[0]
+            return name[:5]
         
         if len(DASH_Sim_utils.get_current_job_list()) != len(self.jobs.list) and DASH_Sim_utils.get_current_job_list() != []:
             print('[E] Time %s: Job_list and job_file configs have different lengths, please check SoC.**.txt file'
@@ -91,13 +131,12 @@ class JobGenerator:
         if (self.scheduler.name == 'HEFT_RT_FUSION'):
             # Iterate over all jobs in the system and try to perform task fusion.
             for job in self.jobs.list:
+                if not hasattr(job, 'fusion_threshold'):
+                    job.fusion_threshold = determine_fusion_threshold_approx(job)
+                fusion_threshold = job.fusion_threshold
                 a = 0
                 while a < len(job.task_list):
                     curr_task = job.task_list[a]
-                    # Skip the head task, when it applies fusion to head task, it gives an attribute error. Solve the attribute error.
-                    # if curr_task.head: 
-                    #     a += 1
-                    #     continue
                     # Find successors of curr_task: tasks that have curr_task.ID as their only dependency.
                     successors = [t for t in job.task_list if (curr_task.ID in t.predecessors)]
                     # Check that there is exactly one successor and that it depends solely on curr_task.
@@ -109,7 +148,7 @@ class JobGenerator:
                             # Retrieve the communication volume between curr_task and its successor.
                             comm_vol_value = job.comm_vol[curr_task.ID, succ_task.ID]
                             # Check if the communication volume meets the threshold.
-                            if comm_vol_value < common.fusion_threshold: # Skip fusion for these tasks and move on to the next one.
+                            if comm_vol_value < fusion_threshold: # Skip fusion for these tasks and move on to the next one.
                                 a += 1
                                 continue
                             # Check SoC hardware compatibility: there must be at least one ACC resource that supports both tasks.
@@ -170,7 +209,6 @@ class JobGenerator:
                                             if prefix == "DAP_0" or prefix == "DAP_1":
                                                 pe_util = 0.5
                                                 dap_subpe = 16
-                                                # new_row = {"PE Type": prefix, "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = prefix
                                                 new_Acc_object.programming_latency = 0
@@ -183,7 +221,6 @@ class JobGenerator:
                                             else:
                                                 pe_util = 1
                                                 dap_subpe = 0
-                                                # new_row = {"PE Type": prefix, "Config": fused_config, "Throughput (sample/cycle)": "1", "Data Transfer Latency": "1", "Programming Latency": "0", "PE Utilization": str(pe_util), "Leakage Power (W)": "0", "Dynamic Power (W)": str(formatted_fused_dynamic_power), "DAP sub-PE": str(dap_subpe)}
                                                 new_Acc_object = common.ResourceAcc()
                                                 new_Acc_object.type = prefix
                                                 new_Acc_object.programming_latency = 0
@@ -193,10 +230,6 @@ class JobGenerator:
                                                 new_Acc_object.DAP_subPEs = dap_subpe
                                                 self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
                                                 common.resource_matrix_Acc = self.resource_matrix_Acc
-
-                                            # with open(acc_csv_path, "a", newline="") as f:
-                                            #     writer = csv.DictWriter(f, fieldnames=["PE Type", "Config", "Throughput (sample/cycle)", "Data Transfer Latency", "Programming Latency", "PE Utilization", "Leakage Power (W)", "Dynamic Power (W)", "DAP sub-PE"])
-                                            #     writer.writerow(new_row)
                  
                             if fusion_allowed:
                                 # Create new fused task.
@@ -214,7 +247,8 @@ class JobGenerator:
                                 # Predecessors of the fused task come from the predecessor(s) of curr_task.
                                 fused_task.predecessors = curr_task.predecessors.copy()
                                 fused_task.preds = curr_task.preds.copy()
-
+                                if curr_task.head:
+                                    fused_task.head = True
                                 # Save the communication volumes from the predecessor(s) of the curr_task.
                                 row_from_pred_of_curr_task = {}
                                 for t in curr_task.predecessors:
