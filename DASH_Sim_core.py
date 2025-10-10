@@ -41,6 +41,7 @@ class SimulationManager:
         self.PEs = PE_list
         self.jobs = jobs
         self.resource_matrix = resource_matrix
+        self.total_comm_time = common.results.total_comm_time
 
         self.action = env.process(self.run())  # starts the run() method as a SimPy process
 
@@ -108,6 +109,7 @@ class SimulationManager:
                     comm_vol = self.jobs.list[job_ID].comm_vol[completed_task.base_ID , outstanding_task.base_ID]
                     comm_band = common.ResourceManager.comm_band[completed_task.PE_ID, self.resource_matrix.list[-1].ID]
                     to_memory_comm_time = int(comm_vol/comm_band)                                           # Communication time from a PE to memory
+                    self.total_comm_time += to_memory_comm_time
 
                     if (common.DEBUG_SIM):
                         print('[D] Time %d: Data from task %d for task %d will be sent to memory in %d ns'
@@ -359,6 +361,7 @@ class SimulationManager:
                                 # Compute the memory to PE communication time
                                 comm_band = common.ResourceManager.comm_band[self.resource_matrix.list[-1].ID, ready_task.PE_ID]
                                 from_memory_comm_time = int(comm_vol/comm_band)
+                                self.total_comm_time += from_memory_comm_time
                                 if (common.DEBUG_SIM):
                                     print('[D] Time %d: Data from memory for task %d from task %d will be sent to PE-%s in %d ns'
                                           %(self.env.now, ready_task.ID, real_predecessor_ID, ready_task.PE_ID, from_memory_comm_time))
@@ -508,6 +511,7 @@ class SimulationManager:
                     sys.exit()
                 # end of if self.scheduler.name
                 self.update_execution_queue(common.TaskQueues.ready.list)       # Update the execution queue based on task's info
+                common.results.total_comm_time = self.total_comm_time           # Update the total communication time
             # end of if not len(common.TaskQueues.ready.list) == 0:
 
             # Initialize $remove_from_executable which will populate tasks
@@ -558,6 +562,7 @@ class SimulationManager:
                         current_resource = self.resource_matrix.list[executable_task.PE_ID]
                         self.env.process(self.PEs[executable_task.PE_ID].run(  # Send the current task and a handle for this simulation manager (self)
                             self, executable_task, current_resource, DTPM_module))  # This handle is used by the PE to call the update_ready_queue function
+                        common.results.total_comm_time = self.total_comm_time  # Update the total communication time
 
                         remove_from_executable.append(executable_task)
                     # end of if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met

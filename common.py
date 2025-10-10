@@ -350,6 +350,7 @@ class PerfStatics:
         self.average_job_number = 0                 # Shows the average number of jobs in the system for a workload
         self.bits_processed = 0                     # Tracks the total number of bits processed by all applications
         self.throughput = 0                         # Average throughput (data processed by all applications)
+        self.total_comm_time = 0                    # Total time spent for the data transfers
         self.job_counter_list = []
         self.sampling_rate_list = []
 # end class PerfStatics
