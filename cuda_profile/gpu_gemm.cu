@@ -4,8 +4,10 @@
 #include <unistd.h>
 #include <stdint.h>
 
-#include "cedr_types.h"
-#include "platform.h"
+#include "include/cedr_types.h"
+
+#define SEC2NANOSEC 1000000000
+
 
 //cudaStream_t stream;
 cublasHandle_t handle;
@@ -42,13 +44,16 @@ __global__ void matrixMultiply(const cedr_cmplx_flt_type *A, const cedr_cmplx_fl
   }
 }
 
-extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, cedr_re_flt_type** C, size_t* A_ROWS, size_t* A_COLS, size_t* B_COLS, cedr_re_flt_type* maxA_real, cedr_re_flt_type* maxA_imag, cedr_re_flt_type* maxB_real, cedr_re_flt_type* maxB_imag, bool* isComplex) {
+Latency_Profiling CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, cedr_re_flt_type** C, size_t* A_ROWS, size_t* A_COLS, size_t* B_COLS, cedr_re_flt_type* maxA_real, cedr_re_flt_type* maxA_imag, cedr_re_flt_type* maxB_real, cedr_re_flt_type* maxB_imag, bool* isComplex) {
 //    int dev_count;
 //    cudaGetDeviceCount(&dev_count);
 //    cudaSetDevice(resource_idx%dev_count);
 //    printf("---------------------------------------\n");
 //    printf("------------- GEMM on GPU --------------\n");
 //    printf("---------------------------------------\n");
+  Latency_Profiling latency_profiling = {0, 0, 0};
+  struct timespec start_timespec {}, end_timespec {};
+  uint64_t start_time, end_time;
   if(*isComplex){
     const int row_a = *A_ROWS;
     const int col_a = *A_COLS;
@@ -58,6 +63,7 @@ extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, ce
     dim3 block_dim(block_size,block_size,1);
     cudaError_t err = cudaSuccess;
 
+
     cedr_cmplx_flt_type* d_A = NULL;
     cedr_cmplx_flt_type* d_B = NULL;
     cedr_cmplx_flt_type* d_C = NULL;
@@ -65,8 +71,10 @@ extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, ce
     err = cudaMalloc((void**)&d_B, col_a*col_b*sizeof(cedr_cmplx_flt_type));
     err = cudaMalloc((void**)&d_C, row_a*col_b*sizeof(cedr_cmplx_flt_type));
 
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
     err = cudaMemcpy(d_A, (*A), row_a*col_a*sizeof(cedr_cmplx_flt_type), cudaMemcpyHostToDevice);
     err = cudaMemcpy(d_B, (*B), col_a*col_b*sizeof(cedr_cmplx_flt_type), cudaMemcpyHostToDevice);
+    
 
     err = cudaGetLastError();
 
@@ -90,7 +98,7 @@ extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, ce
 
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
 
-    return;
+    // return;
   } else{
     int M = *A_ROWS;
     int N = *B_COLS;
@@ -100,15 +108,23 @@ extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, ce
     size_t size_B = N * K * sizeof(cedr_re_flt_type);
     size_t size_C = M * N * sizeof(cedr_re_flt_type);
 
+    
     cedr_re_flt_type *d_A, *d_B, *d_C;
     cudaMalloc(&d_A, size_A);
     cudaMalloc(&d_B, size_B);
     cudaMalloc(&d_C, size_C);
 
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
     cudaMemcpy(d_A, (*A), size_A, cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, (*B), size_B, cudaMemcpyHostToDevice);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.host_to_device_time = (end_time - start_time);
+
     float alpha = 1.0f;
     float beta = 0.0f;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
     cublasSgemm(
             handle,
             CUBLAS_OP_T,      // op(A) = B (no transpose)
@@ -122,9 +138,20 @@ extern "C" void CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, ce
             &beta,
             d_C, M            // C matrix, leading dimension = N
         );
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.kernel_launch_time = (end_time - start_time);
+
     //cudaStreamSynchronize(stream);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
     cudaMemcpy((*C), d_C, size_C, cudaMemcpyDeviceToHost);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.device_to_host_time = (end_time - start_time);
     cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
   }
+  return latency_profiling;
 }
 

@@ -34,9 +34,9 @@ class Model(nn.Module):
         self.relu = nn.ReLU()
         self.sig = nn.Sigmoid()
         self.upsample = nn.UpsamplingNearest2d(scale_factor=2)
-    # The execution path of the Model, in image models like this, the input is more likely a 4D tensor (Batch Size, Channels, Height, Width)
-    def forward(self, x): # Defines the actual computation path, the data flow. Layers defined in init are used here. This function is what PyTorch calls when you do model(input).
-        x = self.down1a(x) # x is the input tensor of the model, it passes x through convolution and relu layers (down1a), and store the result back in x. 
+
+    def forward(self, x):
+        x = self.down1a(x)
         conv1 = self.down1b(x)
         x = self.maxpool(conv1)
         x = self.down2a(x)
