@@ -1,0 +1,119 @@
+job_name cnn 36971028
+add_new_tasks 38
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_1 1 0
+conv2dcnn_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_1 2 1
+relucnn_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_2 3 2
+conv2dcnn_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_2 4 3
+relucnn_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_3 5 4
+conv2dcnn_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_3 6 5
+relucnn_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_4 7 6
+conv2dcnn_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_4 8 7
+relucnn_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_5 9 8
+conv2dcnn_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_5 10 9
+relucnn_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_6 11 10
+conv2dcnn_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_6 12 11
+relucnn_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_7 13 12
+conv2dcnn_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_7 14 13
+relucnn_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_8 15 14
+conv2dcnn_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_8 16 15
+relucnn_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_9 17 16
+conv2dcnn_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_9 18 17
+relucnn_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_10 19 18
+conv2dcnn_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_10 20 19
+relucnn_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_11 21 20
+conv2dcnn_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_11 22 21
+relucnn_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_12 23 22
+conv2dcnn_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_12 24 23
+relucnn_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_13 25 24
+conv2dcnn_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_13 26 25
+relucnn_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_14 27 26
+conv2dcnn_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_14 28 27
+relucnn_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_15 29 28
+conv2dcnn_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_15 30 29
+relucnn_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_16 31 30
+conv2dcnn_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_16 32 31
+relucnn_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_17 33 32
+conv2dcnn_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_17 34 33
+relucnn_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_18 35 34
+conv2dcnn_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+relucnn_18 36 35
+relucnn_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dcnn_19 37 36
+conv2dcnn_19 TAIL
+conv2dcnn_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 330832064
+comm_vol 1 2 112867047
+comm_vol 2 3 608553576
+comm_vol 3 4 148383506
+comm_vol 4 5 203157775
+comm_vol 5 6 71788463
+comm_vol 6 7 298327496
+comm_vol 7 8 75545287
+comm_vol 8 9 89100727
+comm_vol 9 10 34836221
+comm_vol 10 11 147186672
+comm_vol 11 12 41355267
+comm_vol 12 13 55298530
+comm_vol 13 14 22909872
+comm_vol 14 15 69871271
+comm_vol 15 16 20845147
+comm_vol 16 17 28582548
+comm_vol 17 18 14112692
+comm_vol 18 19 45258124
+comm_vol 19 20 12993149
+comm_vol 20 21 187384018
+comm_vol 21 22 39172461
+comm_vol 22 23 83602332
+comm_vol 23 24 24320115
+comm_vol 24 25 361616768
+comm_vol 25 26 49925157
+comm_vol 26 27 151452052
+comm_vol 27 28 39862266
+comm_vol 28 29 653690136
+comm_vol 29 30 118747584
+comm_vol 30 31 307449680
+comm_vol 31 32 78784308
+comm_vol 32 33 1338885039
+comm_vol 33 34 202903389
+comm_vol 34 35 602133180
+comm_vol 35 36 142829688
+comm_vol 36 37 115795188

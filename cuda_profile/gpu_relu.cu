@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <math.h>
+#include <time.h>
 
 #include "include/cedr_types.h"
 

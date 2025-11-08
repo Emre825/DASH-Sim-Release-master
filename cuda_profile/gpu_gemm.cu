@@ -3,6 +3,7 @@
 #include <cublas_v2.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <time.h>
 
 #include "include/cedr_types.h"
 
