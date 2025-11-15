@@ -50,6 +50,15 @@ struct ConvParams {
     int Dw;     // Dilation width
 };
 
+struct MaxPoolParams {
+    int N;          // Batch size
+    int C;          // Number of channels
+    int Hin;        // Input height
+    int Win;        // Input width
+    int pool_size;  // Pooling kernel size
+    int stride;     // Pooling stride
+};
+
 std::tuple<long long, long long, long long, long long, long long> compute_conv_gemm(const ConvParams& p) {
     // Compute output dimensions
     int Hout = std::floor((p.Hin + 2 * p.Ph - p.Dh * (p.Kh - 1) - 1) / p.Sh + 1);
@@ -67,6 +76,13 @@ std::tuple<long long, long long, long long, long long, long long> compute_conv_g
     long long C_cols = (long long)p.N * Hout * Wout;
 
     return {A_rows, A_cols, B_cols, C_rows, C_cols};
+}
+
+std::tuple<int, int, int> compute_maxpool_output(const MaxPoolParams& p) {
+    int Hout = (p.Hin - p.pool_size) / p.stride + 1;
+    int Wout = (p.Win - p.pool_size) / p.stride + 1;
+    int total_size = p.N * p.C * Hout * Wout;
+    return {Hout, Wout, total_size};
 }
 
 void print_stats(const std::vector<uint64_t>& v, const char* name) {
@@ -177,7 +193,55 @@ int gemm_pass(size_t A_ROWS, size_t A_COLS, size_t B_COLS, int trial){
   return 1;
 }
 
-// int N;      // Batch size
+int maxpool_pass(int height, int width, int pool_size, int stride, int trial) {
+  cedr_re_flt_type *input, *output;
+  
+  // Calculate output dimensions
+  int output_h = (height - pool_size) / stride + 1;
+  int output_w = (width - pool_size) / stride + 1;
+  int input_size = height * width;
+  int output_size = output_h * output_w;
+  
+  // Allocate and initialize input
+  input = (cedr_re_flt_type*)malloc(input_size * sizeof(cedr_re_flt_type));
+  output = (cedr_re_flt_type*)malloc(output_size * sizeof(cedr_re_flt_type));
+  
+  for(int i = 0; i < input_size; i++) {
+      input[i] = (cedr_re_flt_type)(rand() % 1000) / 10.0f; // Random values 0-100
+  }
+  
+  std::vector<uint64_t> host_to_device_times(trial);
+  std::vector<uint64_t> device_to_host_times(trial);
+  std::vector<uint64_t> kernel_launch_times(trial);
+  
+  int size = input_size; // Dummy parameter if needed by API
+  
+  for (int t = 0; t < trial; ++t) {
+    Latency_Profiling lp = {};
+    lp = CEDR_MAXPOOL_2D_flt_gpu(&input, &size, &height, &width, 
+                                  &pool_size, &stride, &output);
+    host_to_device_times[t] = lp.host_to_device_time;
+    device_to_host_times[t] = lp.device_to_host_time;
+    kernel_launch_times[t] = lp.kernel_launch_time;
+  }
+  
+  printf("******************************************\n");
+  printf("MAXPOOL2D GPU Profiling Results over %d trials:\n", trial);
+  printf("Input: %dx%d, Output: %dx%d, Pool: %dx%d, Stride: %d\n", 
+         height, width, output_h, output_w, pool_size, pool_size, stride);
+  print_stats(host_to_device_times, "host_to_device");
+  print_stats(device_to_host_times, "device_to_host");
+  print_stats(kernel_launch_times, "kernel_launch");
+  printf("******************************************\n");
+  
+  // Free allocated memory
+  free(input);
+  free(output);
+  
+  return 1;
+}
+
+//     int N;      // Batch size
 //     int Cin;    // Input channels
 //     int Cout;   // Output channels
 //     int Hin;    // Input height
@@ -195,10 +259,10 @@ int main(){
 
   ConvParams p;
   p.N = 1;
-  p.Cin = 3;
-  p.Cout = 8;
-  p.Hin = 512;
-  p.Win = 512;
+  p.Cin = 8;  
+  p.Cout = 8; 
+  p.Hin = 512; 
+  p.Win = 512;  
   p.Kh = 3;
   p.Kw = 3;
   p.Ph = 1;
@@ -207,6 +271,14 @@ int main(){
   p.Sw = 1;
   p.Dh = 1;
   p.Dw = 1;
+
+  MaxPoolParams maxp;
+  maxp.N = 1;
+  maxp.C = 64;
+  maxp.Hin = 64;
+  maxp.Win = 64;
+  maxp.pool_size = 2;
+  maxp.stride = 2;
 
   auto [A_rows, A_cols, B_cols, C_rows, C_cols] = compute_conv_gemm(p);
 
@@ -231,11 +303,12 @@ int main(){
   gemm_pass(A_rows, A_cols, B_cols, 100);
   relu_pass(C_rows*C_cols, 100);
 
+  printf("----------------Profiling for Maxpool2D----------------\n");
+  maxpool_pass(maxp.Hin, maxp.Win, maxp.pool_size, maxp.stride, 100);
+
   printf("----------------Profiling for LINEAR----------------\n");
   gemm_pass(A_Frows, A_Fcols, B_Fcols, 100);
   relu_pass(C_Frows*C_Fcols, 100);
-
-
 
   return 0;
 }
