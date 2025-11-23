@@ -1,0 +1,94 @@
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 1 num_supported_functionalities 4 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+ST 0
+summation_1 0
+summation_2 0
+summation_3 0
+
+# execution times are in nanoseconds
+add_new_resource resource_type ACC resource_name GPU resource_ID 1 capacity 14 num_supported_functionalities 68 DVFS_mode performance
+acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2dcnn_1 783098 conv2d
+conv2dcnn_2 1035478 conv2d
+conv2dcnn_3 451442 conv2d
+conv2dcnn_4 671220 conv2d
+conv2dcnn_5 382412 conv2d
+conv2dcnn_6 576908 conv2d
+conv2dcnn_7 576301 conv2d
+conv2dcnn_8 621265 conv2d
+conv2dcnn_9 486605 conv2d
+conv2dcnn_10 542176 conv2d
+conv2dcnn_11 1093415 conv2d
+conv2dcnn_12 605706 conv2d
+conv2dcnn_13 1523339 conv2d
+conv2dcnn_14 574777 conv2d
+conv2dcnn_15 2551269 conv2d
+conv2dcnn_16 671704 conv2d
+conv2dcnn_17 4093914 conv2d
+conv2dcnn_18 1028243 conv2d
+conv2dcnn_19 668640 conv2d
+relucnn_1 264771 relu
+relucnn_2 278067 relu
+relucnn_3 215731 relu
+relucnn_4 229177 relu
+relucnn_5 204966 relu
+relucnn_6 202073 relu
+relucnn_7 188157 relu
+relucnn_8 196436 relu
+relucnn_9 102937 relu
+relucnn_10 101238 relu
+relucnn_11 194453 relu
+relucnn_12 195091 relu
+relucnn_13 198408 relu
+relucnn_14 211360 relu
+relucnn_15 222338 relu
+relucnn_16 224513 relu
+relucnn_17 271790 relu
+relucnn_18 275980 relu
+maxpool2d_1 192275 maxpool2d
+maxpool2d_2 58503 maxpool2d
+maxpool2d_3 19871 maxpool2d
+maxpool2d_4 8193 maxpool2d
+conv2dres_1 227931 conv2d
+conv2dres_2 119273 conv2d
+conv2dres_3 261327 conv2d
+conv2dres_4 123140 conv2d
+conv2dres_5 158823 conv2d
+conv2dres_6 101732 conv2d
+conv2dres_7 380558 conv2d
+conv2dres_8 305433 conv2d
+conv2dres_9 86858 conv2d
+relures_1 22123 relu
+relures_2 22526 relu
+relures_3 30540 relu
+relures_4 18555 relu
+relures_5 27620 relu
+relures_6 15536 relu
+relures_7 11938 relu
+linear 71804 linear
+adaptive_avg_pool2d 8397 adaptive_avg_pool2d
+bn2d_1 19894 bn2d
+bn2d_2 22761 bn2d
+bn2d_3 25867 bn2d
+bn2d_4 22363 bn2d
+bn2d_5 22878 bn2d
+bn2d_6 15541 bn2d
+bn2d_7 17227 bn2d
+bn2d_8 11833 bn2d
+bn2d_9 9318 bn2d
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s, 53.6 is rounded to 54    
+comm_band 1 2 54
+comm_band 2 1 54
+
+# Bandwidth between memory and CPU is higher
+comm_band 0 2 1000
+comm_band 2 0 1000

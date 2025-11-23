@@ -103,9 +103,8 @@ Latency_Profiling CEDR_MAXPOOL_2D_flt_gpu(cedr_re_flt_type** input,
                                                  *height, *width,
                                                  output_h, output_w, 
                                                  *pool_size, *pool_stride);
-    
     // Synchronize to ensure kernel completion before timing
-    cudaDeviceSynchronize();
+    //cudaDeviceSynchronize();
     clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
     
     err = cudaGetLastError();

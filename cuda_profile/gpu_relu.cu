@@ -46,7 +46,7 @@ Latency_Profiling CEDR_RELU_flt_gpu(cedr_re_flt_type** input, int* size, cedr_re
 
   clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
   relu_kernel<<<blocksPerGrid, threadsPerBlock>>>(d_input, d_output, *size);
-  cudaDeviceSynchronize();
+  //cudaDeviceSynchronize();
   clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
   start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
   end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;

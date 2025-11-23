@@ -139,7 +139,7 @@ Latency_Profiling CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, 
             &beta,
             d_C, M            // C matrix, leading dimension = N
         );
-    cudaDeviceSynchronize();
+    //cudaDeviceSynchronize();
     clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
     start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
     end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
