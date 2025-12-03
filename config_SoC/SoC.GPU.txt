@@ -1,4 +1,4 @@
-add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 1 num_supported_functionalities 4 DVFS_mode performance
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 10 num_supported_functionalities 17 DVFS_mode performance
 opp 2300 30000
 trip_freq -1 -1 -1
 power_profile 2300 30
@@ -7,10 +7,23 @@ ST 0
 summation_1 0
 summation_2 0
 summation_3 0
+summation_llm_1 0
+summation_llm_2 0
+summation_llm_3 0
+summation_llm_4 0
+summation_llm_5 0
+summation_llm_6 0
+summation_llm_7 0
+summation_llm_8 0
+summation_llm_9 0
+summation_llm_10 0
+summation_llm_11 0
+summation_llm_12 0
+summation_llm_13 0
 
 # execution times are in nanoseconds
-add_new_resource resource_type ACC resource_name GPU resource_ID 1 capacity 14 num_supported_functionalities 106 DVFS_mode performance
-acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear
+add_new_resource resource_type ACC resource_name GPU resource_ID 1 capacity 14 num_supported_functionalities 182 DVFS_mode performance
+acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear embedding layernorm batchedgemm softmax gelu
 opp 1000 900
 trip_freq -1 -1 -1
 conv2dcnn_1 188957 conv2d
@@ -119,6 +132,82 @@ reluautoen_6 6402 relu
 reluautoen_7 5203 relu
 reluautoen_8 8579 relu
 reluautoen_9 4684 relu
+embed_tok 29544 embedding
+embed_pos 21787 embedding
+layernorm_1 19060 layernorm
+layernorm_2 19279 layernorm
+layernorm_3 19060 layernorm
+layernorm_4 19279 layernorm
+layernorm_5 19060 layernorm
+layernorm_6 19279 layernorm
+layernorm_7 19060 layernorm
+layernorm_8 19279 layernorm
+layernorm_9 19060 layernorm
+layernorm_10 19279 layernorm
+layernorm_11 19060 layernorm
+layernorm_12 19279 layernorm
+layernorm_13 18913 layernorm
+linearllm_1 240017 linear
+linearllm_2 92865 linear
+linearllm_3 97518 linear
+linearllm_4 111719 linear
+linearllm_5 110697 linear
+linearllm_6 125548 linear
+linearllm_7 240017 linear
+linearllm_8 92865 linear
+linearllm_9 97518 linear
+linearllm_10 111719 linear
+linearllm_11 110697 linear
+linearllm_12 125548 linear
+linearllm_13 240017 linear
+linearllm_14 92865 linear
+linearllm_15 97518 linear
+linearllm_16 111719 linear
+linearllm_17 110697 linear
+linearllm_18 125548 linear
+linearllm_19 240017 linear
+linearllm_20 92865 linear
+linearllm_21 97518 linear
+linearllm_22 111719 linear
+linearllm_23 110697 linear
+linearllm_24 125548 linear
+linearllm_25 240017 linear
+linearllm_26 92865 linear
+linearllm_27 97518 linear
+linearllm_28 111719 linear
+linearllm_29 110697 linear
+linearllm_30 125548 linear
+linearllm_31 240017 linear
+linearllm_32 92865 linear
+linearllm_33 97518 linear
+linearllm_34 111719 linear
+linearllm_35 110697 linear
+linearllm_36 125548 linear
+linearllm_37 102651 linear
+batchedgemm_1 146492 batchedgemm
+batchedgemm_2 123651 batchedgemm
+batchedgemm_3 146492 batchedgemm 
+batchedgemm_4 123651 batchedgemm
+batchedgemm_5 146492 batchedgemm
+batchedgemm_6 123651 batchedgemm
+batchedgemm_7 146492 batchedgemm
+batchedgemm_8 123651 batchedgemm
+batchedgemm_9 146492 batchedgemm
+batchedgemm_10 123651 batchedgemm
+batchedgemm_11 146492 batchedgemm
+batchedgemm_12 123651 batchedgemm
+softmax_1 26325 softmax
+softmax_2 26325 softmax
+softmax_3 26325 softmax
+softmax_4 26325 softmax
+softmax_5 26325 softmax
+softmax_6 26325 softmax
+gelu_1 26344 gelu
+gelu_2 26344 gelu
+gelu_3 26344 gelu
+gelu_4 26344 gelu
+gelu_5 26344 gelu
+gelu_6 26344 gelu
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0
@@ -128,5 +217,5 @@ comm_band 1 2 54
 comm_band 2 1 54
 
 # Bandwidth between memory and CPU is higher
-comm_band 0 2 1000
-comm_band 2 0 1000
+comm_band 0 2 10000
+comm_band 2 0 10000

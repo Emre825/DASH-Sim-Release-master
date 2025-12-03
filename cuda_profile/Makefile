@@ -1,5 +1,5 @@
 CC := nvcc
-SRC := main.cpp gpu_relu.cu gpu_gemm.cu gpu_maxpool2d.cu gpu_adaptive_avgpool2d.cu gpu_batchnorm2d.cu
+SRC := main.cpp gpu_relu.cu gpu_gemm.cu gpu_maxpool2d.cu gpu_adaptive_avgpool2d.cu gpu_batchnorm2d.cu gpu_softmax.cu gpu_gelu.cu gpu_layernorm.cu gpu_embedding.cu
 TARGET := main
 INCDIR := .include
 

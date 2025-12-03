@@ -157,3 +157,93 @@ Latency_Profiling CEDR_GEMM_flt_gpu(cedr_re_flt_type** A, cedr_re_flt_type** B, 
   return latency_profiling;
 }
 
+// Batch Matrix Multiplication (Attention)
+Latency_Profiling CEDR_BATCHED_GEMM_flt_gpu(
+    cedr_re_flt_type** A, cedr_re_flt_type** B, cedr_re_flt_type** C,
+    int* BatchCount, // Number of matrices (B * Heads)
+    int* M,          // Rows of A and C
+    int* N,          // Cols of B and C
+    int* K,          // Cols of A and Rows of B
+    float* alpha_scale, // Scaling factor (e.g., 1/sqrt(d_head))
+    int* transA_flag, // 0 = No Transpose, 1 = Transpose
+    int* transB_flag  // 0 = No Transpose, 1 = Transpose
+) {
+    Latency_Profiling latency_profiling = {0, 0, 0};
+    struct timespec start_timespec {}, end_timespec {};
+    uint64_t start_time, end_time;
+
+    int m = *M;
+    int n = *N;
+    int k = *K;
+    int batch_count = *BatchCount;
+
+    cublasOperation_t opA = (*transA_flag) ? CUBLAS_OP_T : CUBLAS_OP_N;
+    cublasOperation_t opB = (*transB_flag) ? CUBLAS_OP_T : CUBLAS_OP_N;
+
+    // Calculate Strides (Distance between Matrix i and Matrix i+1)
+    long long strideA = (long long)m * k;
+    long long strideB = (long long)k * n;
+    long long strideC = (long long)m * n;
+
+    size_t size_A = strideA * batch_count * sizeof(cedr_re_flt_type);
+    size_t size_B = strideB * batch_count * sizeof(cedr_re_flt_type);
+    size_t size_C = strideC * batch_count * sizeof(cedr_re_flt_type);
+
+    cedr_re_flt_type *d_A, *d_B, *d_C;
+    cudaMalloc(&d_A, size_A);
+    cudaMalloc(&d_B, size_B);
+    cudaMalloc(&d_C, size_C);
+
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
+    cudaMemcpy(d_A, (*A), size_A, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, (*B), size_B, cudaMemcpyHostToDevice);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.host_to_device_time = (end_time - start_time);
+
+    float alpha = *alpha_scale; 
+    float beta = 0.0f;
+    
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
+
+    // To compute C = A x B^T (Row Major), we need to compute C^T = B x A^T (Col Major).
+    // cuBLAS is column-major, so it sees d_B (normally, K) as K^T and d_A (normally, Q) as Q^T. To get the result C (which cuBLAS sees it as C^T), we must calculate;
+    // C^T = (K^T)^T x Q^T (so, Q^T in col major is actually Q in row major, and (K^T)^T is equal to K in col major but it is actually K^T in row major)
+    // We pass d_B as the first matrix (Arg1, K), cuBLAS sees it as K^T and applies opB (which is CUBLAS_OP_T because of transB flag) and it becomes (K^T)^T.
+    // We pass d_A as the second matrix (Arg2, Q), cuBLAS sees it as Q^T and applies opA (which is CUBLAS_OP_N because of transA flag) and it becomes Q^T.
+    
+    // StridedBatched, the reason we can't use normal cublasSgemm is that it is 2D, but matrix mul. operations in attention happens 4D (Batch, Heads, SeqL, HeadDim).
+    // We have X batches and N number of heads so we basically applying cublasSgemm X*N times, this can be done with a for loop with cublasSgemm but this is faster.
+    // The scaling in the calculation of scores (which is 1/sqrt(HeadDim)) happens in the API as well, because we passed alpha as 1/sqrt(HeadDim) into the API. 
+    cublasSgemmStridedBatched(
+        handle,
+        opB,     // Arg1 op: Controlled by transB (Matrix B)
+        opA,     // Arg2 op: Controlled by transA (Matrix A)
+        n, m, k, // Swapped M and N, instead of passing MxK and KxN (which is what we want), we pass NxK and KxM because WE WANT TO COMPUTE C^T instead of C.
+        &alpha,
+        d_B, (*transB_flag) ? k : n, strideB, // Arg1 is B. Leading dim depends on transB.
+        d_A, k, strideA, // Arg2 is A. Leading dim is always k for pass1 and pass2.
+        &beta,
+        d_C, n, strideC, 
+        batch_count
+    );
+
+    //cudaDeviceSynchronize();
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.kernel_launch_time = (end_time - start_time);
+
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start_timespec);
+    cudaMemcpy((*C), d_C, size_C, cudaMemcpyDeviceToHost);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end_timespec);
+    start_time = start_timespec.tv_nsec + start_timespec.tv_sec * SEC2NANOSEC;
+    end_time = end_timespec.tv_nsec + end_timespec.tv_sec * SEC2NANOSEC;
+    latency_profiling.device_to_host_time = (end_time - start_time);
+    
+    cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
+
+    return latency_profiling;
+}
+
