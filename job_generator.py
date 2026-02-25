@@ -1,7 +1,7 @@
 '''!
 @brief This file contains the code for the job generator.
 '''
-import random 
+import random
 import copy
 import networkx as nx
 import numpy as np
@@ -14,8 +14,8 @@ from heft import heft, dag_merge, gantt
 from peft import peft
 import common
 import DASH_Sim_utils
-#import CP_models
-           
+import CP_models
+
 class JobGenerator:
     '''!
     Define the JobGenerator class to handle dynamic job generation
@@ -34,8 +34,8 @@ class JobGenerator:
         self.scheduler = scheduler
         self.PEs = PE_list
         self.resource_matrix_Acc = resource_matrix_Acc
-        
-        
+
+
         # Initially none of the tasks are outstanding
         common.TaskQueues.outstanding = common.TaskManager()                    # List of *all* tasks waiting to be processed
 
@@ -44,21 +44,23 @@ class JobGenerator:
 
         # Initially none of the tasks are running on the PEs
         common.TaskQueues.running = common.TaskManager()                        # List of currently running tasks
-        
+
         # Initially none of the tasks are completed
         common.TaskQueues.ready = common.TaskManager()                          # List of tasks that are ready for processing
-        
+
         # Initially none of the tasks are in wait ready queue
         common.TaskQueues.wait_ready = common.TaskManager()                     # List of tasks that are waiting for being ready for processing
-        
+
         # Initially none of the tasks are executable
         common.TaskQueues.executable = common.TaskManager()                     # List of tasks that are ready for execution
-        
+
         self.generate_job = True                                                # Initially $generate_job is True so that as soon as run function is called
                                                                                 #   it will start generating jobs
         self.max_num_jobs = common.max_num_jobs                                 # Number of jobs to be created
         self.generated_job_list = []                                            # List of all jobs that are generated
         self.offset = 0                                                         # This value will be used to assign correct ID numbers for incoming tasks
+        self.fused_jobs_cache = {}                                              # Cache of fused job versions, keyed by job index in self.jobs.list
+        self.fusion_threshold_cache = {}                                        # Cache of per-job fusion thresholds, keyed by job index
 
         self.action = env.process(self.run())                                   # Starts the run() method as a SimPy process
 
@@ -122,216 +124,13 @@ class JobGenerator:
             if '_' in name:
                 return name.split('_')[0]
             return name[:5]
-        
+
         if len(DASH_Sim_utils.get_current_job_list()) != len(self.jobs.list) and DASH_Sim_utils.get_current_job_list() != []:
             print('[E] Time %s: Job_list and job_file configs have different lengths, please check SoC.**.txt file'
                   % (self.env.now))
             sys.exit()
 
-        if (self.scheduler.name == 'HEFT_RT_FUSION'):
-            # Iterate over all jobs in the system and try to perform task fusion.
-            for job in self.jobs.list:
-                if not hasattr(job, 'fusion_threshold'):
-                    job.fusion_threshold = determine_fusion_threshold_approx(job)
-                fusion_threshold = job.fusion_threshold
-                a = 0
-                while a < len(job.task_list):
-                    curr_task = job.task_list[a]
-                    # Find successors of curr_task: tasks that have curr_task.ID as their only dependency.
-                    successors = [t for t in job.task_list if (curr_task.ID in t.predecessors)]
-                    # Check that there is exactly one successor and that it depends solely on curr_task.
-                    if len(successors) == 1 and (len(successors[0].predecessors) == 1):
-                        succ_task = successors[0]
-                        # Count the number of successors for curr_task by scanning the task list.
-                        curr_successors = [t for t in job.task_list if curr_task.ID in t.predecessors]
-                        if len(curr_successors) == 1:
-                            # Retrieve the communication volume between curr_task and its successor.
-                            comm_vol_value = job.comm_vol[curr_task.ID, succ_task.ID]
-                            # Check if the communication volume meets the threshold.
-                            if comm_vol_value < fusion_threshold: # Skip fusion for these tasks and move on to the next one.
-                                a += 1
-                                continue
-                            # Check SoC hardware compatibility: there must be at least one ACC resource that supports both tasks.
-                            fusion_allowed = False
-                            for resource in self.scheduler.resource_matrix.list:
-                                if resource.type.upper() == "ACC":
-                                    if (curr_task.name in resource.supported_functionalities and
-                                        succ_task.name in resource.supported_functionalities):
-                                        fusion_allowed = True
-                                        # Add the new fused task to this resource’s supported functionalities if not already there.
-                                        fused_config = curr_task.name + "_" + succ_task.name
-                                        if fused_config not in resource.supported_functionalities:
-                                            resource.supported_functionalities.append(fused_config)
-                                            resource.num_of_functionalities += 1
-                                            resource.DAP_config_list.append(fused_config)
-                                            curr_task_exec_time = resource.performance[resource.supported_functionalities.index(curr_task.name)]
-                                            succ_task_exec_time = resource.performance[resource.supported_functionalities.index(succ_task.name)]
-                                            fused_task_exec_time = curr_task_exec_time + succ_task_exec_time
-                                            resource.performance.append(fused_task_exec_time)
-                                            # Check if the new config is already in the ACC_model.csv file and resource_matrix_Acc dictionary, if yes, skip the rest of the current for loop iteration and move on from the next resource.
-                                            config_exists = False
-                                            prefix = get_acc_prefix(resource.name)
-                                            if prefix == "DAP_0" or prefix == "DAP_1":
-                                                for k, v in self.resource_matrix_Acc.dict.items():
-                                                    if k == prefix + "," + fused_config:
-                                                        config_exists = True
-                                                        break
-                                                if config_exists:
-                                                    continue    
-                                            else:
-                                                for k, v in self.resource_matrix_Acc.dict.items():
-                                                    if k == prefix + "," + fused_config:
-                                                        config_exists = True
-                                                        break
-                                                if config_exists:
-                                                    continue    
-                                            # If the config is not already in the csv file, add it. Also, add the new config into the resource_matrix_Acc dictionary. 
-                                            import csv
-                                            acc_csv_path = r"/home/emre/Desktop/DASH-Sim-Release-master/ACC_model.csv"
-                                            dynamic_power_curr = None
-                                            curr_task_config = resource.DAP_config_list[resource.supported_functionalities.index(curr_task.name)]
-                                            dynamic_power_succ = None
-                                            succ_task_config = resource.DAP_config_list[resource.supported_functionalities.index(succ_task.name)]
-                                            with open(acc_csv_path, "r", newline="") as f:
-                                                reader = csv.DictReader(f)
-                                                for row in reader:
-                                                    if row["Config"] == curr_task_config:
-                                                        dynamic_power_curr = float(row["Dynamic Power (W)"])
-                                                    if row["Config"] == succ_task_config:
-                                                        dynamic_power_succ = float(row["Dynamic Power (W)"])
-                                            if dynamic_power_curr is None:
-                                                dynamic_power_curr = 0
-                                            if dynamic_power_succ is None:
-                                                dynamic_power_succ = 0
-                                            fused_dynamic_power = dynamic_power_curr + dynamic_power_succ
-                                            formatted_fused_dynamic_power = round(fused_dynamic_power, 4) 
-
-                                            if prefix == "DAP_0" or prefix == "DAP_1":
-                                                pe_util = 0.5
-                                                dap_subpe = 16
-                                                new_Acc_object = common.ResourceAcc()
-                                                new_Acc_object.type = prefix
-                                                new_Acc_object.programming_latency = 0
-                                                new_Acc_object.leakage_power = float(0)
-                                                new_Acc_object.dynamic_power = formatted_fused_dynamic_power
-                                                new_Acc_object.config = fused_config
-                                                new_Acc_object.DAP_subPEs = dap_subpe
-                                                self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
-                                                common.resource_matrix_Acc = self.resource_matrix_Acc
-                                            else:
-                                                pe_util = 1
-                                                dap_subpe = 0
-                                                new_Acc_object = common.ResourceAcc()
-                                                new_Acc_object.type = prefix
-                                                new_Acc_object.programming_latency = 0
-                                                new_Acc_object.leakage_power = float(0)
-                                                new_Acc_object.dynamic_power = formatted_fused_dynamic_power
-                                                new_Acc_object.config = fused_config
-                                                new_Acc_object.DAP_subPEs = dap_subpe
-                                                self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
-                                                common.resource_matrix_Acc = self.resource_matrix_Acc
-                 
-                            if fusion_allowed:
-                                # Create new fused task.
-                                fused_task = type(curr_task)()  
-                                fused_task.name = curr_task.name + "_" + succ_task.name
-                                # Use the lower id (curr_task) as the fused task id.
-                                fused_task.ID = curr_task.ID
-                                fused_task.deadline = max(curr_task.deadline, succ_task.deadline)
-                                fused_task.dag_depth = curr_task.dag_depth
-                                fused_task.est = curr_task.est
-                                fused_task.input_packet_size = curr_task.input_packet_size
-                                fused_task.output_packet_size = curr_task.output_packet_size
-                                fused_task.jobname = curr_task.jobname
-                                fused_task.base_ID = curr_task.base_ID
-                                # Predecessors of the fused task come from the predecessor(s) of curr_task.
-                                fused_task.predecessors = curr_task.predecessors.copy()
-                                fused_task.preds = curr_task.preds.copy()
-                                if curr_task.head:
-                                    fused_task.head = True
-                                if succ_task.tail:
-                                    fused_task.tail = True
-                                # Save the communication volumes from the predecessor(s) of the curr_task.
-                                row_from_pred_of_curr_task = {}
-                                for t in curr_task.predecessors:
-                                    row_from_pred_of_curr_task[t] = job.comm_vol[t, :].copy()
-
-                                succ_id = succ_task.ID
-                                fused_id = fused_task.ID 
-                                
-                                # Remove succ_task from the job's task list and update the current task slot.
-                                job.task_list[a] = fused_task
-                                job.task_list.remove(succ_task)
-
-                                # Update the IDs and base IDs of the subsequent tasks in the task list.
-                                for t in job.task_list:
-                                   if t.ID > succ_id:
-                                       t.ID -= 1
-                                       t.base_ID -= 1 
-
-                                # Update dependencies in other tasks: if any task had succ_task as a predecessor, replace it with fused_task.ID.
-                                for t in job.task_list:
-                                    for j in range(len(t.predecessors)):
-                                        if t.predecessors[j] == succ_id:
-                                            t.predecessors[j] = fused_id
-                                            t.preds[j] = fused_id
-                                        if t.predecessors[j] > succ_id:
-                                            t.predecessors[j] -= 1
-                                            t.preds[j] -= 1   
-
-                                if (common.DEBUG_SCH):
-                                    print("[D] Fused tasks %d and %d into %s in job %s" % (curr_task.ID, succ_task.ID, fused_task.name, job.name))
-
-                                row_from_succ = job.comm_vol[succ_id, :].copy() # Update the row of the fused task in the comm_vol matrix.
-                                job.comm_vol[fused_id, :] = row_from_succ
-                                col_from_succ = job.comm_vol[:, succ_id].copy() # Update the column of the fused task in the comm_vol matrix.
-                                job.comm_vol[:, fused_id] = col_from_succ
-
-                                # Update the communication volumes from the predecessor(s) of fused_task.
-                                for k, row in row_from_pred_of_curr_task.items():
-                                    job.comm_vol[k, :] = row
-
-                                job.comm_vol = np.delete(job.comm_vol, succ_id, axis=0) # Delete the row of the succ_task.
-                                job.comm_vol = np.delete(job.comm_vol, succ_id, axis=1) # Delete the column of the succ_task.    
-
-                                if succ_id in job.dag_depth:
-                                    del job.dag_depth[succ_id] # Delete the succ_task from the dag_depth dictionary.
-
-                                updated_dag_depth = {} # Update the dag_depth dictionary according to the recent changes.
-                                for key, depth in job.dag_depth.items():
-                                    if key == 'DAG':
-                                        updated_dag_depth[key] = depth
-                                    elif isinstance(key, int):
-                                        if key > succ_id:
-                                            updated_dag_depth[key - 1] = depth
-                                        else:
-                                            updated_dag_depth[key] = depth
-                                    else:
-                                        updated_dag_depth[key] = depth
-                                
-                                job.dag_depth = updated_dag_depth
-
-                                individual_depths = [d for k, d in job.dag_depth.items() if k != 'DAG']
-                                # Build a sorted list of unique depths.
-                                unique_depths = sorted(set(individual_depths))
-
-                                # Create a mapping from the unique depths to new depths to get rid of the jumps in the dag_depth dictionary, if there is any.
-                                new_depth_map = {orig_depth: new_depth for new_depth, orig_depth in enumerate(unique_depths)}
-
-                                # Update every task's dag_depth stored in job.dag_depth (excluding the 'DAG' key) using the mapping.
-                                for key in list(job.dag_depth.keys()):
-                                    if key != 'DAG':
-                                        job.dag_depth[key] = new_depth_map[job.dag_depth[key]]
-
-                                # Finally, update the overall 'DAG' depth as the maximum of the new values.
-                                job.dag_depth['DAG'] = max(new_depth_map.values()) if new_depth_map else 0
-                                # Do not increment a so we can check if further fusion is possible on the new fused task.
-                                continue
-                    a += 1
-        # End of HEFT_RT_FUSION fusion block
-
         while (self.generate_job):  # Continue generating jobs till #generate_job is False
-
             if (common.results.job_counter >= common.max_jobs_in_parallel or (common.job_list != [] and common.snippet_ID_inj == common.snippet_ID_exec)):
                 try:
                     yield self.env.timeout(common.simulation_clk)
@@ -343,7 +142,7 @@ class JobGenerator:
                 for index, job_counter in enumerate(common.job_counter_list):
                     if job_counter < common.current_job_list[index]:
                         valid_jobs.append(index)
-                
+
                 if valid_jobs != []:
                     selection = np.random.choice(valid_jobs)
                     #print('selected job id is',selection)
@@ -352,12 +151,212 @@ class JobGenerator:
                     selection = np.random.choice(list(range(num_of_apps)), 1, p=common.job_probabilities)
                     # print('selected job id is',selection)
 
-                self.generated_job_list.append(copy.deepcopy(self.jobs.list[int(selection)]))               # Create each job as a deep copy of the job chosen from job list
+                job_index = int(selection)
+
+                if common.fusion_flag:
+                    # ----------------------------------------------------------------
+                    # Dynamic fusion condition: evaluated fresh at each injection.
+                    # ----------------------------------------------------------------
+                    dynamic_fusion_condition = True  # TODO: insert dynamic condition here, which is current availability of the resources.
+
+                    if dynamic_fusion_condition:
+                        if job_index in self.fused_jobs_cache:
+                            # Fused version already computed for this job type — reuse it
+                            self.generated_job_list.append(copy.deepcopy(self.fused_jobs_cache[job_index]))
+                            if common.DEBUG_JOB:
+                                print('[D] Time %d: Using cached fused version for job index %d' % (self.env.now, job_index))
+                        else:
+                            # First fusion attempt for this job type — work on a deep copy of the original
+                            job = copy.deepcopy(self.jobs.list[job_index])
+                            if job_index not in self.fusion_threshold_cache:
+                                self.fusion_threshold_cache[job_index] = determine_fusion_threshold_approx(job)
+                            fusion_threshold = self.fusion_threshold_cache[job_index]
+                            a = 0
+                            while a < len(job.task_list):
+                                curr_task = job.task_list[a]
+                                # Find successors of curr_task: tasks that have curr_task.ID as their dependency.
+                                successors = [t for t in job.task_list if (curr_task.ID in t.predecessors)]
+                                # Check that there is exactly one successor and that it depends solely on curr_task.
+                                if len(successors) == 1 and (len(successors[0].predecessors) == 1):
+                                    succ_task = successors[0]
+                                    # Retrieve the communication volume between curr_task and its successor.
+                                    comm_vol_value = job.comm_vol[curr_task.ID, succ_task.ID]
+                                    # Check if the communication volume meets the threshold.
+                                    if comm_vol_value < fusion_threshold:  # Skip fusion for these tasks and move on to the next one.
+                                        a += 1
+                                        continue
+                                    # Check SoC hardware compatibility: there must be at least one ACC resource that supports both tasks.
+                                    fusion_allowed = False
+                                    for resource in self.scheduler.resource_matrix.list:
+                                        if resource.type.upper() == "ACC":
+                                            if (curr_task.name in resource.supported_functionalities and
+                                                succ_task.name in resource.supported_functionalities):
+                                                fusion_allowed = True
+                                                # Add the new fused task to this resource's supported functionalities if not already there.
+                                                fused_config = curr_task.name + "_" + succ_task.name
+                                                if fused_config not in resource.supported_functionalities:
+                                                    resource.supported_functionalities.append(fused_config)
+                                                    resource.num_of_functionalities += 1
+                                                    resource.DAP_config_list.append(fused_config)
+                                                    curr_task_exec_time = resource.performance[resource.supported_functionalities.index(curr_task.name)]
+                                                    succ_task_exec_time = resource.performance[resource.supported_functionalities.index(succ_task.name)]
+                                                    fused_task_exec_time = curr_task_exec_time + succ_task_exec_time
+                                                    resource.performance.append(fused_task_exec_time)
+                                                    # Check if the new config is already in ACC_model.csv and resource_matrix_Acc; if yes, skip.
+                                                    config_exists = False
+                                                    prefix = get_acc_prefix(resource.name)
+                                                    if prefix == "DAP_0" or prefix == "DAP_1":
+                                                        for k, v in self.resource_matrix_Acc.dict.items():
+                                                            if k == prefix + "," + fused_config:
+                                                                config_exists = True
+                                                                break
+                                                        if config_exists:
+                                                            continue
+                                                    else:
+                                                        for k, v in self.resource_matrix_Acc.dict.items():
+                                                            if k == prefix + "," + fused_config:
+                                                                config_exists = True
+                                                                break
+                                                        if config_exists:
+                                                            continue
+                                                    # Config is new — add it to ACC_model.csv and resource_matrix_Acc.
+                                                    import csv
+                                                    acc_csv_path = r"/home/emre/Desktop/DASH-Sim-Release-master/ACC_model.csv"
+                                                    dynamic_power_curr = None
+                                                    curr_task_config = resource.DAP_config_list[resource.supported_functionalities.index(curr_task.name)]
+                                                    dynamic_power_succ = None
+                                                    succ_task_config = resource.DAP_config_list[resource.supported_functionalities.index(succ_task.name)]
+                                                    with open(acc_csv_path, "r", newline="") as f:
+                                                        reader = csv.DictReader(f)
+                                                        for row in reader:
+                                                            if row["Config"] == curr_task_config:
+                                                                dynamic_power_curr = float(row["Dynamic Power (W)"])
+                                                            if row["Config"] == succ_task_config:
+                                                                dynamic_power_succ = float(row["Dynamic Power (W)"])
+                                                    if dynamic_power_curr is None:
+                                                        dynamic_power_curr = 0
+                                                    if dynamic_power_succ is None:
+                                                        dynamic_power_succ = 0
+                                                    fused_dynamic_power = dynamic_power_curr + dynamic_power_succ
+                                                    formatted_fused_dynamic_power = round(fused_dynamic_power, 4)
+                                                    if prefix == "DAP_0" or prefix == "DAP_1":
+                                                        pe_util = 0.5
+                                                        dap_subpe = 16
+                                                        new_Acc_object = common.ResourceAcc()
+                                                        new_Acc_object.type = prefix
+                                                        new_Acc_object.programming_latency = 0
+                                                        new_Acc_object.leakage_power = float(0)
+                                                        new_Acc_object.dynamic_power = formatted_fused_dynamic_power
+                                                        new_Acc_object.config = fused_config
+                                                        new_Acc_object.DAP_subPEs = dap_subpe
+                                                        self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
+                                                        common.resource_matrix_Acc = self.resource_matrix_Acc
+                                                    else:
+                                                        pe_util = 1
+                                                        dap_subpe = 0
+                                                        new_Acc_object = common.ResourceAcc()
+                                                        new_Acc_object.type = prefix
+                                                        new_Acc_object.programming_latency = 0
+                                                        new_Acc_object.leakage_power = float(0)
+                                                        new_Acc_object.dynamic_power = formatted_fused_dynamic_power
+                                                        new_Acc_object.config = fused_config
+                                                        new_Acc_object.DAP_subPEs = dap_subpe
+                                                        self.resource_matrix_Acc.dict[prefix + "," + fused_config] = new_Acc_object
+                                                        common.resource_matrix_Acc = self.resource_matrix_Acc
+                                    if fusion_allowed:
+                                        # Create new fused task.
+                                        fused_task = type(curr_task)()
+                                        fused_task.name = curr_task.name + "_" + succ_task.name
+                                        # Use the lower id (curr_task) as the fused task id.
+                                        fused_task.ID = curr_task.ID
+                                        fused_task.deadline = max(curr_task.deadline, succ_task.deadline)
+                                        fused_task.dag_depth = curr_task.dag_depth
+                                        fused_task.est = curr_task.est
+                                        fused_task.input_packet_size = curr_task.input_packet_size
+                                        fused_task.output_packet_size = curr_task.output_packet_size
+                                        fused_task.jobname = curr_task.jobname
+                                        fused_task.base_ID = curr_task.base_ID
+                                        # Predecessors of the fused task come from the predecessor(s) of curr_task.
+                                        fused_task.predecessors = curr_task.predecessors.copy()
+                                        fused_task.preds = curr_task.preds.copy()
+                                        if curr_task.head:
+                                            fused_task.head = True
+                                        if succ_task.tail:
+                                            fused_task.tail = True
+                                        # Save the communication volumes from the predecessor(s) of curr_task.
+                                        row_from_pred_of_curr_task = {}
+                                        for t in curr_task.predecessors:
+                                            row_from_pred_of_curr_task[t] = job.comm_vol[t, :].copy()
+                                        succ_id = succ_task.ID
+                                        fused_id = fused_task.ID
+                                        # Remove succ_task from the job's task list and update the current task slot.
+                                        job.task_list[a] = fused_task
+                                        job.task_list.remove(succ_task)
+                                        # Update the IDs and base IDs of the subsequent tasks in the task list.
+                                        for t in job.task_list:
+                                            if t.ID > succ_id:
+                                                t.ID -= 1
+                                                t.base_ID -= 1
+                                        # Update dependencies in other tasks: replace succ_task predecessor refs with fused_task.ID.
+                                        for t in job.task_list:
+                                            for j in range(len(t.predecessors)):
+                                                if t.predecessors[j] == succ_id:
+                                                    t.predecessors[j] = fused_id
+                                                    t.preds[j] = fused_id
+                                                if t.predecessors[j] > succ_id:
+                                                    t.predecessors[j] -= 1
+                                                    t.preds[j] -= 1
+                                        if common.DEBUG_SCH:
+                                            print("[D] Fused tasks %d and %d into %s in job %s" % (curr_task.ID, succ_task.ID, fused_task.name, job.name))
+                                        row_from_succ = job.comm_vol[succ_id, :].copy()  # Update the row of the fused task in the comm_vol matrix.
+                                        job.comm_vol[fused_id, :] = row_from_succ
+                                        col_from_succ = job.comm_vol[:, succ_id].copy()  # Update the column of the fused task in the comm_vol matrix.
+                                        job.comm_vol[:, fused_id] = col_from_succ
+                                        # Update the communication volumes from the predecessor(s) of fused_task.
+                                        for k, row in row_from_pred_of_curr_task.items():
+                                            job.comm_vol[k, :] = row
+                                        job.comm_vol = np.delete(job.comm_vol, succ_id, axis=0)  # Delete the row of the succ_task.
+                                        job.comm_vol = np.delete(job.comm_vol, succ_id, axis=1)  # Delete the column of the succ_task.
+                                        if succ_id in job.dag_depth:
+                                            del job.dag_depth[succ_id]  # Delete the succ_task from the dag_depth dictionary.
+                                        updated_dag_depth = {}  # Update the dag_depth dictionary according to the recent changes.
+                                        for key, depth in job.dag_depth.items():
+                                            if key == 'DAG':
+                                                updated_dag_depth[key] = depth
+                                            elif isinstance(key, int):
+                                                if key > succ_id:
+                                                    updated_dag_depth[key - 1] = depth
+                                                else:
+                                                    updated_dag_depth[key] = depth
+                                            else:
+                                                updated_dag_depth[key] = depth
+                                        job.dag_depth = updated_dag_depth
+                                        individual_depths = [d for k, d in job.dag_depth.items() if k != 'DAG']
+                                        unique_depths = sorted(set(individual_depths))
+                                        # Create a mapping to remove depth gaps.
+                                        new_depth_map = {orig_depth: new_depth for new_depth, orig_depth in enumerate(unique_depths)}
+                                        for key in list(job.dag_depth.keys()):
+                                            if key != 'DAG':
+                                                job.dag_depth[key] = new_depth_map[job.dag_depth[key]]
+                                        job.dag_depth['DAG'] = max(new_depth_map.values()) if new_depth_map else 0
+                                        # Do not increment a so we can check if further fusion is possible on the new fused task.
+                                        continue
+                                a += 1
+                            # Cache the fused job so future injections can reuse it without re-running fusion logic.
+                            self.fused_jobs_cache[job_index] = copy.deepcopy(job)
+                            self.generated_job_list.append(job)
+                    else:
+                        # Dynamic condition not met — inject original, unfused job.
+                        self.generated_job_list.append(copy.deepcopy(self.jobs.list[job_index]))
+                        if common.DEBUG_JOB:
+                            print('[D] Time %d: Dynamic fusion condition not met, using original job index %d' % (self.env.now, job_index))
+                else:
+                    self.generated_job_list.append(copy.deepcopy(self.jobs.list[int(selection)]))  # Create each job as a deep copy of the job chosen from job list
                 common.results.job_counter += 1
                 summation += common.results.job_counter
                 count += 1
                 common.results.average_job_number = summation/count
-                
+
                 if (common.DEBUG_JOB):
                     print('[D] Time %d: Job generator added job %d' % (self.env.now, i + 1))
 
@@ -508,9 +507,9 @@ class JobGenerator:
                     if 'ACUMEN' in self.generated_job_list[i].name:
                         if i > 0 and (next_task.ID % 9 == 4):
                             #print(self.generated_job_list[i].name, next_task.ID, self.generated_job_list[i-1].task_list[-1].ID)
-                            next_task.dynamic_dependencies.append(self.generated_job_list[i-1].task_list[-1].ID)  
-                    #### ACUMEN ###        
-                            
+                            next_task.dynamic_dependencies.append(self.generated_job_list[i-1].task_list[-1].ID)
+                    #### ACUMEN ###
+
                     if next_task.head:
                         next_task.job_start = self.env.now                      # When a new job is generated, its execution is also started
                         common.results.total_execution_time = self.env.now
@@ -543,7 +542,7 @@ class JobGenerator:
                     while len(common.TaskQueues.executable.list) > 0:
                         task = common.TaskQueues.executable.list.pop(-1)
                         common.TaskQueues.ready.list.append(task)
-                    
+
                     CP_models.CP(self.env.now, self.PEs, self.resource_matrix, self.jobs, self.generated_job_list)
 
                 # Update the job ID
@@ -567,8 +566,8 @@ class JobGenerator:
                 if (common.simulation_mode == 'validation' or common.inject_fixed_num_jobs):
                     if (num_jobs >= self.max_num_jobs):                                 # check if max number of jobs, given in config file, are created
                         self.generate_job = False                                       # if yes, no more jobs will be added to simulation
-                
-                
+
+
                 # print ('lambda value is: %.2f' %(1/common.scale))
                 if common.fixed_injection_rate:
                     self.wait_time = common.scale
@@ -580,3 +579,4 @@ class JobGenerator:
                 except simpy.exceptions.Interrupt:
                     pass
             # end of while (self.generate_job):
+
