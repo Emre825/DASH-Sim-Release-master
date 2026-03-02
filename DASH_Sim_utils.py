@@ -28,6 +28,19 @@ def check_PE_capacity(PE, resource, task):
     else:
         return (len(PE.queue) < PE.capacity)
 
+def get_idle_PEs_in_cluster(cluster_ID, PEs):
+    '''!
+    Get the number of idle PEs in the cluster.
+    @param cluster_ID: ID of the cluster to be evaluated
+    @param PEs: list of PEs in the system
+    '''
+    idle_PEs = []
+    for PE in PEs:
+        if PE.ID in common.ClusterManager.cluster_list[cluster_ID].PE_list:
+            if PEs[PE.ID].idle:
+                idle_PEs.append(PEs[PE.ID])
+    return idle_PEs
+
 def update_PE_utilization_and_info(PE, current_timestamp):
     '''!
     Update the PE utilization.

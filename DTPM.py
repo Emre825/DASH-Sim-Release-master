@@ -126,7 +126,7 @@ class DTPMmodule:
         for i, resource in enumerate(self.resource_matrix.list):
             current_PE = self.PEs[i]
             if common.ClusterManager.cluster_list[current_PE.cluster_ID].type != 'MEM':
-                if current_PE.process.count == 0:
+                if current_PE.process.count == 0 and current_PE.capacity > 0:
                     # Only evaluate the PE if there is no process running, otherwise the PE itself will call the DVFS evaluation
                     self.evaluate_PE(resource, current_PE, self.env.now)
                     # Update the power dissipation to be only the static power as the PE is currently idle

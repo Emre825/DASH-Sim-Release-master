@@ -76,7 +76,6 @@ class PE:
 
                         DASH_Sim_utils.trace_frequency(self.env.now)
 
-                self.idle = False                                               # Since the PE starts execution of a task, it is not idle anymore
                 common.TaskQueues.running.list.append(task)                     # Since the execution started for the task we should add it to the running queue 
                 task.start_time = self.env.now                                  # When a resource starts executing the task, record it as the start time
 
@@ -130,7 +129,12 @@ class PE:
                         dynamic_power = 0
                         for config in common.ClusterManager.cluster_list[self.cluster_ID].current_acc_kernels_exec:
                             acc_info = DTPM_power_models.get_acc_config_info(common.ClusterManager.cluster_list[self.cluster_ID].name, config)
-                            dynamic_power += acc_info.dynamic_power / DASH_Sim_utils.get_num_tasks_being_executed(common.ClusterManager.cluster_list[self.cluster_ID], sim_manager.PEs)
+                            num_tasks = DASH_Sim_utils.get_num_tasks_being_executed(
+                                common.ClusterManager.cluster_list[self.cluster_ID], sim_manager.PEs)
+                            if num_tasks > 0:
+                                dynamic_power += acc_info.dynamic_power / num_tasks
+                            else:
+                                dynamic_power += acc_info.dynamic_power
                     else: # BIG and LTL
                         max_power_consumption, freq_threshold = DTPM_power_models.get_max_power_consumption(common.ClusterManager.cluster_list[self.cluster_ID], sim_manager.PEs)  # of this task on this resource running at max frequency
 
@@ -184,6 +188,16 @@ class PE:
                 
                 task_time = task.finish_time - task.start_time
                 self.idle = True
+
+                # If this is a fused task, release the auxiliary PEs now that execution has finished
+                if task.fused:
+                    auxiliary_PE_IDs = getattr(task, 'auxiliary_PE_IDs', [])
+                    for aux_pe_id in auxiliary_PE_IDs:
+                        sim_manager.PEs[aux_pe_id].idle = True
+                        sim_manager.PEs[aux_pe_id].capacity = 1
+                        if (common.DEBUG_JOB):
+                            print('[D] Time %d: Auxiliary PE-%d from cluster %d is marked as idle after the execution of fused task %s finished'
+                                  % (self.env.now, aux_pe_id, sim_manager.PEs[aux_pe_id].cluster_ID, task.ID))
                 
                 if task.finish_time > common.warmup_period:
                     if task.start_time <= common.warmup_period:

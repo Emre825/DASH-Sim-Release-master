@@ -532,38 +532,118 @@ class SimulationManager:
                             PE.blocking += 1
                 
                 for i, executable_task in enumerate(common.TaskQueues.executable.list):
-                    is_time_to_execute = (executable_task.time_stamp <= self.env.now)
-                    PE_has_capacity = DASH_Sim_utils.check_PE_capacity(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
-                    task_has_assignment = (executable_task.PE_ID != -1)
+                    if executable_task.fused:
+                        kernel_count = executable_task.kernel_count
+                        cluster_ID = self.PEs[executable_task.PE_ID].cluster_ID
+                        num_PEs_in_cluster = len(common.ClusterManager.cluster_list[cluster_ID].PE_list)
+                        can_execute = False
+                        if kernel_count <= num_PEs_in_cluster:
+                            idle_PEs_in_cluster = DASH_Sim_utils.get_idle_PEs_in_cluster(cluster_ID, self.PEs)
+                            if kernel_count <= len(idle_PEs_in_cluster):
+                                can_execute = True
+                            else: 
+                                # Not enough idle PEs in the cluster right now.
+                                # Leave the task in the executable queue — it will be
+                                # retried on the next simulation tick when more PEs may be free.
+                                if common.DEBUG_SIM:
+                                    print('[D] Time %s: Fused task %s waiting — needs %d idle PEs in cluster %d, only %d available'
+                                          % (self.env.now, executable_task.ID, kernel_count,
+                                             cluster_ID, len(idle_PEs_in_cluster)))
+                        else: 
+                            # The fused task requires more PEs than the cluster physically has.
+                            if common.DEBUG_SIM:
+                                print('[E] Time %s: Fused task %s has kernel_count=%d but cluster %d only has %d PEs — skipping'
+                                      % (self.env.now, executable_task.ID, kernel_count,
+                                         cluster_ID, num_PEs_in_cluster))
+                        if can_execute:
+                            is_time_to_execute = (executable_task.time_stamp <= self.env.now)
+                            PE_has_capacity = DASH_Sim_utils.check_PE_capacity(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
+                            task_has_assignment = (executable_task.PE_ID != -1)
 
-                    dynamic_dependencies_met = True
+                            dynamic_dependencies_met = True
 
-                    dependencies_completed = []
-                    for dynamic_dependency in executable_task.dynamic_dependencies:
-                        dependencies_completed = dependencies_completed + list(filter(lambda completed_task: completed_task.ID == dynamic_dependency, common.TaskQueues.completed.list))
-                    if len(dependencies_completed) != len(executable_task.dynamic_dependencies):
-                        dynamic_dependencies_met = False
+                            dependencies_completed = []
+                            for dynamic_dependency in executable_task.dynamic_dependencies:
+                                dependencies_completed = dependencies_completed + list(filter(lambda completed_task: completed_task.ID == dynamic_dependency, common.TaskQueues.completed.list))
+                            if len(dependencies_completed) != len(executable_task.dynamic_dependencies):
+                                dynamic_dependencies_met = False
 
-                    if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met and task_has_assignment:
-                        self.PEs[executable_task.PE_ID].queue.append(executable_task)
+                            if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met and task_has_assignment:
+                                self.PEs[executable_task.PE_ID].queue.append(executable_task)
 
-                        # If executing on an accelerator, update the configuration (add)
-                        DASH_acc_utils.add_config_acc(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
-                        if self.PEs[executable_task.PE_ID].type == 'ACC':
-                            num_tasks = DASH_Sim_utils.get_num_tasks_being_executed(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs)
-                            DTPM_power_models.set_active_cores(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs, num_tasks)
+                                # If executing on an accelerator, update the configuration (add)
+                                DASH_acc_utils.add_config_acc(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
+                                if self.PEs[executable_task.PE_ID].type == 'ACC':
+                                    num_tasks = DASH_Sim_utils.get_num_tasks_being_executed(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs)
+                                    DTPM_power_models.set_active_cores(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs, num_tasks)
 
-                        if (common.INFO_SIM):
-                            print('[I] Time %s: Task %s is ready for execution by PE-%s'
-                                  % (self.env.now, executable_task.ID, executable_task.PE_ID))
+                                if (common.INFO_SIM):
+                                    print('[I] Time %s: Task %s is ready for execution by PE-%s'
+                                        % (self.env.now, executable_task.ID, executable_task.PE_ID))
 
-                        current_resource = self.resource_matrix.list[executable_task.PE_ID]
-                        self.env.process(self.PEs[executable_task.PE_ID].run(  # Send the current task and a handle for this simulation manager (self)
-                            self, executable_task, current_resource, DTPM_module))  # This handle is used by the PE to call the update_ready_queue function
-                        common.results.total_comm_time = self.total_comm_time  # Update the total communication time
+                                # we need to make (kernel_count - 1) PEs in the same cluster as busy (not idle) to simulate fused kernel allocation/execution
+                                # and these PEs must be different from the PE that will execute the fused kernel
+                                number_of_PEs_to_set_busy = kernel_count - 1
+                                busy_PEs = [executable_task.PE_ID]
+                                auxiliary_PE_IDs = []
+                                for i in range(number_of_PEs_to_set_busy):
+                                    available_idle_PEs = [pe for pe in DASH_Sim_utils.get_idle_PEs_in_cluster(cluster_ID, self.PEs)
+                                                          if pe.ID not in busy_PEs]
+                                    random_idle_PE = random.choice(available_idle_PEs)
+                                    auxiliary_PE_IDs.append(random_idle_PE.ID)
+                                    busy_PEs.append(random_idle_PE.ID)
+                                
+                                executable_task.auxiliary_PE_IDs = auxiliary_PE_IDs
+                                for aux_pe_id in auxiliary_PE_IDs:
+                                    self.PEs[aux_pe_id].idle = False
+                                    self.PEs[aux_pe_id].capacity = 0
+                                    if (common.DEBUG_JOB):
+                                        print('[D] Time %d: Auxiliary PE-%d from cluster %d is marked as busy for the execution of fused task %s'
+                                              % (self.env.now, aux_pe_id, self.PEs[aux_pe_id].cluster_ID, executable_task.ID))
+                                self.PEs[executable_task.PE_ID].idle = False
 
-                        remove_from_executable.append(executable_task)
-                    # end of if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met
+                                current_resource = self.resource_matrix.list[executable_task.PE_ID]
+                                self.env.process(self.PEs[executable_task.PE_ID].run(  # Send the current task and a handle for this simulation manager (self)
+                                    self, executable_task, current_resource, DTPM_module))  # This handle is used by the PE to call the update_ready_queue function
+                                common.results.total_comm_time = self.total_comm_time  # Update the total communication time
+
+                                remove_from_executable.append(executable_task)                    
+                    else: # if the task is not a fused task, then execute as before
+                        is_time_to_execute = (executable_task.time_stamp <= self.env.now)
+                        PE_has_capacity = DASH_Sim_utils.check_PE_capacity(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
+                        task_has_assignment = (executable_task.PE_ID != -1)
+
+                        dynamic_dependencies_met = True
+
+                        dependencies_completed = []
+                        for dynamic_dependency in executable_task.dynamic_dependencies:
+                            dependencies_completed = dependencies_completed + list(filter(lambda completed_task: completed_task.ID == dynamic_dependency, common.TaskQueues.completed.list))
+                        if len(dependencies_completed) != len(executable_task.dynamic_dependencies):
+                            dynamic_dependencies_met = False
+
+                        if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met and task_has_assignment:
+                            self.PEs[executable_task.PE_ID].queue.append(executable_task)
+
+                            # If executing on an accelerator, update the configuration (add)
+                            DASH_acc_utils.add_config_acc(self.PEs[executable_task.PE_ID], self.resource_matrix.list[executable_task.PE_ID], executable_task)
+                            if self.PEs[executable_task.PE_ID].type == 'ACC':
+                                num_tasks = DASH_Sim_utils.get_num_tasks_being_executed(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs)
+                                DTPM_power_models.set_active_cores(common.ClusterManager.cluster_list[self.PEs[executable_task.PE_ID].cluster_ID], self.PEs, num_tasks)
+
+                            if (common.INFO_SIM):
+                                print('[I] Time %s: Task %s is ready for execution by PE-%s'
+                                    % (self.env.now, executable_task.ID, executable_task.PE_ID))
+
+                            self.PEs[executable_task.PE_ID].idle = False
+
+                            current_resource = self.resource_matrix.list[executable_task.PE_ID]
+                            self.env.process(self.PEs[executable_task.PE_ID].run(  # Send the current task and a handle for this simulation manager (self)
+                                self, executable_task, current_resource, DTPM_module))  # This handle is used by the PE to call the update_ready_queue function
+                            common.results.total_comm_time = self.total_comm_time  # Update the total communication time
+
+                            remove_from_executable.append(executable_task)
+                        # end of if is_time_to_execute and PE_has_capacity and dynamic_dependencies_met
+                    # end of else for if executable_task.fused:
                 # end of for i, executable_task in...
             # end of if not len(common.TaskQueues.executable.list) == 0:
 

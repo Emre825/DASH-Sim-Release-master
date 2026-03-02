@@ -220,7 +220,7 @@ class Scheduler:
                                 PE_to_PE_comm_time = int(c_vol/PE_to_PE_band)
 
                                 if common.comm_model == 'PE' :
-                                    PE_to_PE_comm_time = int(comm_vol/comm_band)
+                                    PE_to_PE_comm_time = int(c_vol/PE_to_PE_band)
                                 elif common.comm_model == 'NoC' :
                                     ## Compute communication time
                                     ## If source and destination are same PE, then communication time is assumed to be zero
