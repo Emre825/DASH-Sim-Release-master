@@ -1,0 +1,66 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
+job_name AutoEncoder_Jetson 349840764
+add_new_tasks 20
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_1 1 0
+linearautoen_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_1 2 1
+reluautoen_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_2 3 2
+linearautoen_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_2 4 3
+reluautoen_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_3 5 4
+linearautoen_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_3 6 5
+reluautoen_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_4 7 6
+linearautoen_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_4 8 7
+reluautoen_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_5 9 8
+linearautoen_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_5 10 9
+reluautoen_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_6 11 10
+linearautoen_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_6 12 11
+reluautoen_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_7 13 12
+linearautoen_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_7 14 13
+reluautoen_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_8 15 14
+linearautoen_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_8 16 15
+reluautoen_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_9 17 16
+linearautoen_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluautoen_9 18 17
+reluautoen_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearautoen_10 19 18
+linearautoen_10 TAIL
+linearautoen_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 2124857280
+comm_vol 1 2 179148191
+comm_vol 2 3 1077446370
+comm_vol 3 4 179148191
+comm_vol 4 5 1077446370
+comm_vol 5 6 179148191
+comm_vol 6 7 1077446370
+comm_vol 7 8 179148191
+comm_vol 8 9 187622526
+comm_vol 9 10 53550653
+comm_vol 10 11 180203806
+comm_vol 11 12 54171423
+comm_vol 12 13 1076184509
+comm_vol 13 14 179148191
+comm_vol 14 15 1077446370
+comm_vol 15 16 179148191
+comm_vol 16 17 1077446370
+comm_vol 17 18 179148191
+comm_vol 18 19 1075120410
