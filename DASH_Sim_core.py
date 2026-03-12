@@ -91,11 +91,11 @@ class SimulationManager:
             common.PE_to_Cache[(PE_position, cache_position)] += int(completed_task.output_packet_size)
             NoC_model.write_to_cache(self.env.now, PE_position, cache_position, buffer_ind, completed_task)
         
-        job_ID = -1
-        for ind, job in enumerate(self.jobs.list):
-            if job.name == completed_task.jobname:
-                job_ID = ind
-
+        # job_ID = -1
+        # for ind, job in enumerate(self.jobs.list):
+        #     if job.name == completed_task.jobname:
+        #         job_ID = ind
+        job_instance = self.job_gen.generated_job_list[completed_task.jobID]
 
         # Check if the dependency of any outstanding task is cleared
         # We need to move them to the ready queue
@@ -106,7 +106,8 @@ class SimulationManager:
                 if (common.shared_memory):
                     # Get the communication time to memory for data from a
                     # predecessor task to a outstanding task
-                    comm_vol = self.jobs.list[job_ID].comm_vol[completed_task.base_ID , outstanding_task.base_ID]
+                    # comm_vol = self.jobs.list[job_ID].comm_vol[completed_task.base_ID , outstanding_task.base_ID]
+                    comm_vol = job_instance.comm_vol[completed_task.base_ID, outstanding_task.base_ID]
                     comm_band = common.ResourceManager.comm_band[completed_task.PE_ID, self.resource_matrix.list[-1].ID]
                     to_memory_comm_time = int(comm_vol/comm_band)                                           # Communication time from a PE to memory
                     self.total_comm_time += to_memory_comm_time
@@ -254,12 +255,13 @@ class SimulationManager:
             # end of if (common.latency_matrix):
 
             else:  # If other communication modes are used (PE_to_PE or shared_memory)
-                for ind, job in enumerate(self.jobs.list):
-                    if job.name == ready_task.jobname:
-                        job_ID = ind
+                job_instance = self.job_gen.generated_job_list[ready_task.jobID]
+                # for ind, job in enumerate(self.jobs.list):
+                #     if job.name == ready_task.jobname:
+                #         job_ID = ind
 
-                for i, task in enumerate(self.jobs.list[job_ID].task_list):
-                    if ready_task.base_ID == task.ID:
+                for i, task in enumerate(job_instance.task_list): # Changed from "self.jobs.list[job_ID].task_list"
+                    if ready_task.ID == task.ID: # Changed from "ready_task.base_ID == task.ID"
                         if ready_task.head == True:
                             # if a task is the leading task of a job
                             # then it can start immediately since it has no predecessor
@@ -267,16 +269,23 @@ class SimulationManager:
                             ready_task.execution_wait_times.append(self.env.now)
                         # end of if ready_task.head == True:
 
-                        for predecessor in task.predecessors:
-                            if(task.ID==ready_task.ID):
-                               ready_task.predecessors = task.predecessors
+                        for predecessor in task.preds: # changed from "for predecessor in task.predecessors"
+                            # if(task.ID==ready_task.ID):
+                            #    ready_task.predecessors = task.predecessors
 
                             # data required from the predecessor for $ready_task
-                            comm_vol = self.jobs.list[job_ID].comm_vol[predecessor, ready_task.base_ID]
+                            # task.preds now contains GLOBAL IDs because "task" is coming from the generated job directly instead of self.jobs.list. 
+                            # Reverse the offset to find the local base_ID
+                            offset = ready_task.ID - ready_task.base_ID
+                            local_pred_ID = predecessor - offset
+                            comm_vol = job_instance.comm_vol[local_pred_ID, ready_task.base_ID]
+                            # comm_vol = self.jobs.list[job_ID].comm_vol[predecessor, ready_task.base_ID]
 
-                            # retrieve the real ID  of the predecessor based on the job ID
-                            real_predecessor_ID = predecessor + ready_task.ID - ready_task.base_ID
-
+                            # retrieve the real ID of the predecessor based on the job ID
+                            # real_predecessor_ID = predecessor + ready_task.ID - ready_task.base_ID
+                            # the predecessor is already the global ID since we iterate over the generated job now. 
+                            real_predecessor_ID = predecessor
+                            
                             # Initialize following two variables which will be used if
                             # PE to PE communication is utilized
                             predecessor_PE_ID = -1

@@ -106,7 +106,7 @@ class JobGenerator:
             idx = int(np.argmin(np.abs(candidates - mean_val)))
             selected = float(candidates[idx])
 
-            if (common.DEBUG_SCH):
+            if (common.DEBUG_JOB):
                 print(f"[D] determine_fusion_threshold_approx: mean={mean_val:.3f}, selected_threshold={selected}")
             return selected
         
@@ -488,8 +488,13 @@ class JobGenerator:
                     next_task.ID = ii + self.offset                             # and change the ID of the task accordingly
                     # Ensure all tasks have fused and kernel_count attributes.
                     if not hasattr(next_task, 'fused'):
+                        # _kernel_types_pattern = r'adaptive_avg_pool|maxpool2d|conv2d|linear|bn2d|summation|relu'
+                        # _kernel_matches = re.findall(_kernel_types_pattern, next_task.name)
+                        # _kcount = len(_kernel_matches) if _kernel_matches else 1  # default to 1 for unknown/special tasks (e.g. ST)
+                        # next_task.fused = (_kcount > 1)
                         next_task.fused = False
                     if not hasattr(next_task, 'kernel_count'):
+                        # next_task.kernel_count = _kcount
                         next_task.kernel_count = 1
                     #### ACUMEN ###
                     if 'ACUMEN' in self.generated_job_list[i].name:
