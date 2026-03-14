@@ -1,0 +1,302 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
+job_name LLM_Jetson 36577086000
+add_new_tasks 90
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+embed_tok 1 0
+embed_tok earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+embed_pos 2 0
+embed_pos earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_1 3 2 1
+summation_llm_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_1 4 3
+layernorm_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_1 5 4
+linearllm_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_2 6 4
+linearllm_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_3 7 4
+linearllm_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_1 8 6 5
+batchedgemm_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_1 9 8
+softmax_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_2 10 9 7
+batchedgemm_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_4 11 10
+linearllm_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_2 12 11 3
+summation_llm_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_2 13 12
+layernorm_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_5 14 13
+linearllm_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_1 15 14
+gelu_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_6 16 15
+linearllm_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_3 17 16 12
+summation_llm_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_3 18 17
+layernorm_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_7 19 18
+linearllm_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_8 20 18
+linearllm_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_9 21 18
+linearllm_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_3 22 20 19
+batchedgemm_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_2 23 22
+softmax_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_4 24 23 21
+batchedgemm_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_10 25 24
+linearllm_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_4 26 25 17
+summation_llm_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_4 27 26
+layernorm_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_11 28 27
+linearllm_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_2 29 28
+gelu_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_12 30 29
+linearllm_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_5 31 30 26
+summation_llm_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_5 32 31
+layernorm_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_13 33 32
+linearllm_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_14 34 32
+linearllm_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_15 35 32
+linearllm_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_5 36 34 33
+batchedgemm_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_3 37 36
+softmax_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_6 38 37 35
+batchedgemm_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_16 39 38
+linearllm_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_6 40 39 31
+summation_llm_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_6 41 40
+layernorm_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_17 42 41
+linearllm_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_3 43 42
+gelu_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_18 44 43
+linearllm_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_7 45 44 40
+summation_llm_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_7 46 45
+layernorm_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_19 47 46
+linearllm_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_20 48 46
+linearllm_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_21 49 46
+linearllm_21 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_7 50 48 47
+batchedgemm_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_4 51 50
+softmax_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_8 52 51 49
+batchedgemm_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_22 53 52
+linearllm_22 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_8 54 53 45
+summation_llm_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_8 55 54
+layernorm_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_23 56 55
+linearllm_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_4 57 56
+gelu_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_24 58 57
+linearllm_24 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_9 59 58 54
+summation_llm_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_9 60 59
+layernorm_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_25 61 60
+linearllm_25 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_26 62 60
+linearllm_26 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_27 63 60
+linearllm_27 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_9 64 62 61
+batchedgemm_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_5 65 64
+softmax_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_10 66 65 63
+batchedgemm_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_28 67 66
+linearllm_28 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_10 68 67 59
+summation_llm_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_10 69 68
+layernorm_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_29 70 69
+linearllm_29 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_5 71 70
+gelu_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_30 72 71
+linearllm_30 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_11 73 72 68
+summation_llm_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_11 74 73
+layernorm_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_31 75 74
+linearllm_31 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_32 76 74
+linearllm_32 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_33 77 74
+linearllm_33 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_11 78 76 75
+batchedgemm_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+softmax_6 79 78
+softmax_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+batchedgemm_12 80 79 77
+batchedgemm_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_34 81 80
+linearllm_34 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_12 82 81 73
+summation_llm_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_12 83 82
+layernorm_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_35 84 83
+linearllm_35 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+gelu_6 85 84
+gelu_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_36 86 85
+linearllm_36 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+summation_llm_13 87 86 82
+summation_llm_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+layernorm_13 88 87
+layernorm_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearllm_37 89 88
+linearllm_37 TAIL
+linearllm_37 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 17233179600
+comm_vol 0 2 1374074520
+comm_vol 1 3 821665572
+comm_vol 2 3 678934620
+comm_vol 3 4 467839008
+comm_vol 4 5 666868566
+comm_vol 4 6 656062680
+comm_vol 4 7 657012720
+comm_vol 5 8 971947158
+comm_vol 6 8 943129278
+comm_vol 8 9 2547040860
+comm_vol 7 10 2032725240
+comm_vol 9 10 3372571020
+comm_vol 10 11 1069535376
+comm_vol 3 12 467839008
+comm_vol 11 12 1501248840
+comm_vol 12 13 630774144
+comm_vol 13 14 1484424942
+comm_vol 14 15 3040213176
+comm_vol 15 16 2647734180
+comm_vol 12 17 630774144
+comm_vol 16 17 4105472280
+comm_vol 17 18 627925116
+comm_vol 18 19 726924198
+comm_vol 18 20 626061072
+comm_vol 18 21 614375034
+comm_vol 19 22 1024834902
+comm_vol 20 22 942427122
+comm_vol 22 23 2524299960
+comm_vol 21 24 1961051820
+comm_vol 23 24 3429578880
+comm_vol 24 25 1064339094
+comm_vol 17 26 627925116
+comm_vol 25 26 1325393160
+comm_vol 26 27 692526744
+comm_vol 27 28 1579595472
+comm_vol 28 29 3062091396
+comm_vol 29 30 2423934240
+comm_vol 26 31 692526744
+comm_vol 30 31 4055535120
+comm_vol 31 32 631771140
+comm_vol 32 33 743024100
+comm_vol 32 34 724778964
+comm_vol 32 35 636317682
+comm_vol 33 36 1042306356
+comm_vol 34 36 1011304476
+comm_vol 36 37 2456797980
+comm_vol 35 38 2005430700
+comm_vol 37 38 3426220980
+comm_vol 38 39 1127717682
+comm_vol 31 40 631771140
+comm_vol 39 40 1497612480
+comm_vol 40 41 396476808
+comm_vol 41 42 1418682720
+comm_vol 42 43 3010735182
+comm_vol 43 44 2515340100
+comm_vol 40 45 396476808
+comm_vol 44 45 4156883640
+comm_vol 45 46 622632192
+comm_vol 46 47 651295554
+comm_vol 46 48 665136108
+comm_vol 46 49 635339796
+comm_vol 47 50 973004760
+comm_vol 48 50 955035900
+comm_vol 50 51 2510578980
+comm_vol 49 52 2015122200
+comm_vol 51 52 3457108200
+comm_vol 52 53 1062083022
+comm_vol 45 54 622632192
+comm_vol 53 54 1418464320
+comm_vol 54 55 616428540
+comm_vol 55 56 1482717054
+comm_vol 56 57 3080127960
+comm_vol 57 58 2554351800
+comm_vol 54 59 616428540
+comm_vol 58 59 4056452400
+comm_vol 59 60 650548080
+comm_vol 60 61 729589224
+comm_vol 60 62 664513668
+comm_vol 60 63 637005642
+comm_vol 61 64 1046018064
+comm_vol 62 64 958581624
+comm_vol 64 65 2492058660
+comm_vol 63 66 2016148680
+comm_vol 65 66 3460924740
+comm_vol 66 67 1105714974
+comm_vol 59 68 650548080
+comm_vol 67 68 1417743600
+comm_vol 68 69 372624252
+comm_vol 69 70 1542685872
+comm_vol 70 71 3037011432
+comm_vol 71 72 2587494000
+comm_vol 68 73 372624252
+comm_vol 72 73 4166788080
+comm_vol 73 74 534765504
+comm_vol 74 75 657866664
+comm_vol 74 76 663614952
+comm_vol 74 77 662099256
+comm_vol 75 78 944472438
+comm_vol 76 78 937691118
+comm_vol 78 79 2485304640
+comm_vol 77 80 1925059500
+comm_vol 79 80 3264877980
+comm_vol 80 81 1051924146
+comm_vol 73 82 534765504
+comm_vol 81 82 1339021320
+comm_vol 82 83 631145424
+comm_vol 83 84 1441311144
+comm_vol 84 85 3017211834
+comm_vol 85 86 2644692960
+comm_vol 82 87 631145424
+comm_vol 86 87 4175622360
+comm_vol 87 88 623145432
+comm_vol 88 89 8888901294
+

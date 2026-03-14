@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import sys
 import simpy
 import re
+import time
 
 from heft import heft, dag_merge, gantt
 from peft import peft
@@ -60,6 +61,7 @@ class JobGenerator:
         self.generated_job_list = []                                            # List of all jobs that are generated
         self.offset = 0                                                         # This value will be used to assign correct ID numbers for incoming tasks
         self.fusion_threshold_cache = {}                                        # Cache of per-job fusion thresholds, keyed by job index
+        self.total_fusion_time = 0.0                                            # Total time spent on fusion across all generated jobs
 
         self.action = env.process(self.run())                                   # Starts the run() method as a SimPy process
 
@@ -145,7 +147,7 @@ class JobGenerator:
                     # print('selected job id is',selection)
 
                 job_index = int(selection)
-
+                time_start = time.time()
                 if common.fusion_flag:
                     job = copy.deepcopy(self.jobs.list[job_index])
                     if job_index not in self.fusion_threshold_cache:
@@ -334,6 +336,12 @@ class JobGenerator:
                     self.generated_job_list.append(job)
                 else:
                     self.generated_job_list.append(copy.deepcopy(self.jobs.list[int(selection)]))  # Create each job as a deep copy of the job chosen from job list
+                
+                time_end = time.time()
+                fusion_seconds = time_end - time_start
+                self.total_fusion_time += fusion_seconds
+                print(f"[TIMING] Fusion time: {fusion_seconds:.6f} seconds")
+                print(f"[STATS] Total fusion time so far: {self.total_fusion_time:.6f} seconds")
 
                 common.results.job_counter += 1
                 summation += common.results.job_counter
@@ -512,7 +520,9 @@ class JobGenerator:
 
                     for k in range(len(next_task.predecessors)):
                         next_task.predecessors[k] += self.offset                # also change the predecessors of the newly added task, accordingly
-
+                    for k in range(len(next_task.preds)):
+                        next_task.preds[k] += self.offset
+                        
                     if len(next_task.predecessors) > 0:
                         common.TaskQueues.outstanding.list.append(next_task)    # Add the task to the outstanding queue since it has predecessors
                         # Next, print debug messages

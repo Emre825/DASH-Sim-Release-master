@@ -12,6 +12,7 @@ import networkx as nx
 import pickle
 import csv
 import warnings
+import time
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=UserWarning)
 
@@ -398,11 +399,17 @@ def run_simulator(scale_values=common.scale_values_list):
                 
                 sim_core = DASH_Sim_core.SimulationManager(env, sim_done, job_gen, DASH_scheduler, DASH_resources,
                                                            jobs, resource_matrix)
+                
+                t_start = time.time()
 
                 if common.inject_fixed_num_jobs is False:
                     env.run(until = common.simulation_length)
                 else:
                     env.run(until = sim_done)
+
+                t_end = time.time()
+                wall_clock_seconds = t_end - t_start
+                print(f"[TIMING] Total simulation time: {wall_clock_seconds:.6f} seconds")
 
                 # Now, the simulation has completed
                 # Next, process the results

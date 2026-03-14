@@ -1,6 +1,6 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 64
 # execution times are in nanoseconds
-add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 98 DVFS_mode performance
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 187 DVFS_mode performance
 opp 2300 30000
 trip_freq -1 -1 -1
 power_profile 2300 30
@@ -103,9 +103,98 @@ bn2ddscnn_9 471015
 reludscnn_9 211433 
 adaptive_avg_pool_2ddscnn 1802310
 lineardscnn 6114
+embed_tok 24702200
+embed_pos 660093
+summation_llm_1 0
+layernorm_1 205862000
+linearllm_1 398517000
+linearllm_2 405386000
+linearllm_3 403183000
+batchedgemm_1 475696
+softmax_1 5561900000
+batchedgemm_2 549338
+linearllm_4 404064000
+summation_llm_2 0
+layernorm_2 186216000
+linearllm_5 1581190000
+gelu_1 3831860000
+linearllm_6 1822220000
+summation_llm_3 0
+layernorm_3 199828000
+linearllm_7 404439000
+linearllm_8 400196000
+linearllm_9 402674000
+batchedgemm_3 348285
+softmax_2 5507050000
+batchedgemm_4 720099
+linearllm_10 403998000
+summation_llm_4 0
+layernorm_4 184818000
+linearllm_11 1579890000
+gelu_2 3829870000
+linearllm_12 1742530000
+summation_llm_5 0
+layernorm_5 172712000
+linearllm_13 401555000
+linearllm_14 397759000
+linearllm_15 407008000
+batchedgemm_5 357437
+softmax_3 5520520000
+batchedgemm_6 858058
+linearllm_16 401972000
+summation_llm_6 0
+layernorm_6 175196000
+linearllm_17 1577140000
+gelu_3 3821750000
+linearllm_18 1742410000
+summation_llm_7 0
+layernorm_7 200951000
+linearllm_19 401309000
+linearllm_20 398229000
+linearllm_21 402395000
+batchedgemm_7 382029
+softmax_4 5509490000
+batchedgemm_8 458867
+linearllm_22 405861000
+summation_llm_8 0
+layernorm_8 174380000
+linearllm_23 1583620000
+gelu_4 3824670000
+linearllm_24 1740200000
+summation_llm_9 0
+layernorm_9 196927000
+linearllm_25 402740000
+linearllm_26 399204000
+linearllm_27 403872000
+batchedgemm_9 372848
+softmax_5 5532610000
+batchedgemm_10 489190
+linearllm_28 414058000
+summation_llm_10 0
+layernorm_10 185099000
+linearllm_29 1578270000
+gelu_5 3824660000
+linearllm_30 1741360000
+summation_llm_11 0
+layernorm_11 190899000
+linearllm_31 401447000
+linearllm_32 398151000
+linearllm_33 403496000
+batchedgemm_11 381507
+softmax_6 5519210000
+batchedgemm_12 471178
+linearllm_34 404510000
+summation_llm_12 0
+layernorm_12 193721000
+linearllm_35 1581870000
+gelu_6 3824360000
+linearllm_36 1740150000
+summation_llm_13 0
+layernorm_13 178365000
+linearllm_37 12361000000
 
-add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 8 num_supported_functionalities 94 DVFS_mode performance
-acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 8 num_supported_functionalities 170 DVFS_mode performance
+acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear embedding gelu softmax batchedgemm layernorm
 opp 1000 900
 trip_freq -1 -1 -1
 conv2dalex_1 200071 conv2d
@@ -202,6 +291,82 @@ bn2ddscnn_9 16760 bn2d
 reludscnn_9 15445 relu
 adaptive_avg_pool_2ddscnn 14296 adaptive_avg_pool2d
 lineardscnn 23359 linear
+embed_tok 70491 embedding
+embed_pos 49291 embedding
+layernorm_1 54333 layernorm
+linearllm_1 196957 linear
+linearllm_2 181296 linear
+linearllm_3 181668 linear
+batchedgemm_1 187593 batchedgemm
+softmax_1 65592 softmax
+batchedgemm_2 184867 batchedgemm
+linearllm_4 176439 linear
+layernorm_2 46082 layernorm
+linearllm_5 303198 linear
+gelu_1 68193 gelu
+linearllm_6 190383 linear
+layernorm_3 52903 layernorm
+linearllm_7 177540 linear
+linearllm_8 178739 linear
+linearllm_9 177033 linear
+batchedgemm_3 176526 batchedgemm
+softmax_2 62796 softmax
+batchedgemm_4 181589 batchedgemm
+linearllm_10 177015 linear
+layernorm_4 51362 layernorm
+linearllm_11 302869 linear
+gelu_2 64497 gelu
+linearllm_12 179291 linear
+layernorm_5 55676 layernorm
+linearllm_13 178168 linear
+linearllm_14 174720 linear
+linearllm_15 172695 linear
+batchedgemm_5 184883 batchedgemm
+softmax_3 63996 softmax
+batchedgemm_6 175247 batchedgemm
+linearllm_16 172197 linear
+layernorm_6 53744 layernorm
+linearllm_17 300011 linear
+gelu_3 66636 gelu
+linearllm_18 181664 linear
+layernorm_7 52368 layernorm
+linearllm_19 174174 linear
+linearllm_20 178264 linear
+linearllm_21 177929 linear
+batchedgemm_7 174880 batchedgemm
+softmax_4 62862 softmax
+batchedgemm_8 174347 batchedgemm
+linearllm_22 174508 linear
+layernorm_8 51977 layernorm
+linearllm_23 303674 linear
+gelu_4 62251 gelu
+linearllm_24 179074 linear
+layernorm_9 47822 layernorm
+linearllm_25 171054 linear
+linearllm_26 176326 linear
+linearllm_27 174619 linear
+batchedgemm_9 175506 batchedgemm
+softmax_5 60625 softmax
+batchedgemm_10 175581 batchedgemm
+linearllm_28 176438 linear
+layernorm_10 47690 layernorm
+linearllm_29 301484 linear
+gelu_5 65852 gelu
+linearllm_30 180027 linear
+layernorm_11 56749 layernorm
+linearllm_31 176372 linear
+linearllm_32 178620 linear
+linearllm_33 179465 linear
+batchedgemm_11 174396 batchedgemm
+softmax_6 63888 softmax
+batchedgemm_12 177004 batchedgemm
+linearllm_34 175213 linear
+layernorm_12 58561 layernorm
+linearllm_35 305616 linear
+gelu_6 63767 gelu
+linearllm_36 177653 linear
+layernorm_13 56582 layernorm
+linearllm_37 1084760 linear
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0
