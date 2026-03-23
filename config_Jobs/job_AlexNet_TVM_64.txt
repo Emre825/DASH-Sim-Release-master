@@ -1,0 +1,45 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 64, compiled statically with TVM
+job_name AlexNet_TVM_64 919714068
+add_new_tasks 13
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dalex_1_relualex_1 1 0
+conv2dalex_1_relualex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dalex_1 2 1
+maxpool2dalex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dalex_2_relualex_2 3 2
+conv2dalex_2_relualex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dalex_2 4 3
+maxpool2dalex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dalex_3_relualex_3 5 4
+conv2dalex_3_relualex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dalex_4_relualex_4 6 5
+conv2dalex_4_relualex_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dalex_5_relualex_5 7 6
+conv2dalex_5_relualex_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dalex_3 8 7
+maxpool2dalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+adaptive_avg_pool_2dalex 9 8
+adaptive_avg_pool_2dalex earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearalex_1_relualex_6 10 9
+linearalex_1_relualex_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearalex_2_relualex_7 11 10
+linearalex_2_relualex_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearalex_3 12 11
+linearalex_3 TAIL
+linearalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 36577632000
+comm_vol 1 2 4302950270
+comm_vol 2 3 17933150180
+comm_vol 3 4 2912867499
+comm_vol 4 5 4721573766
+comm_vol 5 6 10600011240
+comm_vol 6 7 7196411040
+comm_vol 7 8 1037269222
+comm_vol 8 9 167603054
+comm_vol 9 10 9498228558
+comm_vol 10 11 4471700142
+comm_vol 11 12 1516301514

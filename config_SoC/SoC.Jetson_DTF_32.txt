@@ -1,0 +1,140 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 60 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+ST 0
+conv2dres_1 441396
+bn2d_1 1094530
+relures_1 785427
+conv2dres_2 3135710
+bn2d_2 838735
+relures_2 771177
+conv2dres_3 2902200
+bn2d_3 799896
+summation_1 0
+relures_3 832780
+conv2dres_4 1365070
+bn2d_4 428655
+relures_4 391585
+conv2dres_5 1417320
+bn2d_5 439856
+conv2dres_6 263058
+bn2d_6 435318
+summation_2 0
+relures_5 373561
+conv2dres_7 630029
+bn2d_7 231359
+relures_6 213426
+conv2dres_8 1151790
+bn2d_8 249119
+conv2dres_9 189155
+bn2d_9 232760
+summation_3 0
+relures_7 196487
+adaptive_avg_pool2d 599100
+linear 4652
+conv2ddscnn_1 353122 
+bn2ddscnn_1 334579 
+reludscnn_1 126915 
+conv2ddscnn_2 245559 
+bn2ddscnn_2 212203 
+reludscnn_2 125491 
+conv2ddscnn_3 185477 
+bn2ddscnn_3 212359 
+reludscnn_3 136918 
+conv2ddscnn_4 213960 
+bn2ddscnn_4 211315 
+reludscnn_4 117741 
+conv2ddscnn_5 194211 
+bn2ddscnn_5 246040 
+reludscnn_5 116742 
+conv2ddscnn_6 158813 
+bn2ddscnn_6 212795
+reludscnn_6 133922 
+conv2ddscnn_7 290403 
+bn2ddscnn_7 251226 
+reludscnn_7 118478 
+conv2ddscnn_8 274767 
+bn2ddscnn_8 216126 
+reludscnn_8 113611 
+conv2ddscnn_9 192943 
+bn2ddscnn_9 231408 
+reludscnn_9 113739 
+adaptive_avg_pool_2ddscnn 782552
+lineardscnn 3515
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 16 num_supported_functionalities 56 DVFS_mode performance
+acc_supported_configs conv2d relu bn2d adaptive_avg_pool2d linear 
+opp 1000 900
+trip_freq -1 -1 -1
+conv2dres_1 84323 conv2d
+bn2d_1 23007 bn2d
+relures_1 26140 relu
+conv2dres_2 123061 conv2d
+bn2d_2 21818 bn2d
+relures_2 29004 relu
+conv2dres_3 121730 conv2d
+bn2d_3 23072 bn2d
+relures_3 25564 relu
+conv2dres_4 82895 conv2d
+bn2d_4 14365 bn2d
+relures_4 18315 relu
+conv2dres_5 98794 conv2d
+bn2d_5 16960 bn2d
+conv2dres_6 49611 conv2d
+bn2d_6 15107 bn2d
+relures_5 15751 relu
+conv2dres_7 58179 conv2d
+bn2d_7 12430 bn2d
+relures_6 14513 relu
+conv2dres_8 80111 conv2d
+bn2d_8 13661 bn2d
+conv2dres_9 41101 conv2d
+bn2d_9 12734 bn2d
+relures_7 15653 relu
+adaptive_avg_pool2d 13135 adaptive_avg_pool2d
+linear 23588 linear
+conv2ddscnn_1 72071 conv2d
+bn2ddscnn_1 13320 bn2d
+reludscnn_1 14608 relu
+conv2ddscnn_2 30936 conv2d
+bn2ddscnn_2 13069 bn2d
+reludscnn_2 14110 relu
+conv2ddscnn_3 41958 conv2d
+bn2ddscnn_3 19811 bn2d
+reludscnn_3 14157 relu
+conv2ddscnn_4 30581 conv2d
+bn2ddscnn_4 13953 bn2d
+reludscnn_4 16486 relu
+conv2ddscnn_5 37262 conv2d
+bn2ddscnn_5 13020 bn2d
+reludscnn_5 14293 relu
+conv2ddscnn_6 27925 conv2d
+bn2ddscnn_6 14468 bn2d
+reludscnn_6 13996 relu
+conv2ddscnn_7 40038 conv2d
+bn2ddscnn_7 14901 bn2d
+reludscnn_7 13750 relu
+conv2ddscnn_8 29192 conv2d
+bn2ddscnn_8 14579 bn2d
+reludscnn_8 14157 relu
+conv2ddscnn_9 40083 conv2d
+bn2ddscnn_9 14154 bn2d
+reludscnn_9 14298 relu
+adaptive_avg_pool_2ddscnn 12229 adaptive_avg_pool2d
+lineardscnn 25309 linear
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# Bandwidth between memory and CPU
+comm_band 0 2 546
+comm_band 2 0 546
+
+# Bandwidth between memory and GPU    
+comm_band 1 2 546
+comm_band 2 1 546

@@ -1,0 +1,63 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16, compiled statically with PyTorch
+job_name ResNet_PyTorch_16 27892956
+add_new_tasks 18
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_1 1 0
+conv2dres_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_1_relures_1 2 1
+bn2d_1_relures_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_2 3 2
+conv2dres_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_2_relures_2 4 3
+bn2d_2_relures_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_3 5 4
+conv2dres_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_3_summation_1_relures_3 6 5 2
+bn2d_3_summation_1_relures_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_4 7 6
+conv2dres_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_4_relures_4 8 7
+bn2d_4_relures_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_5 9 8
+conv2dres_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_6 10 6
+conv2dres_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_5_bn2d_6_summation_2_relures_5 11 10 9
+bn2d_5_bn2d_6_summation_2_relures_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_7 12 11
+conv2dres_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_7_relures_6 13 12
+bn2d_7_relures_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_8 14 13
+conv2dres_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_9 15 11
+conv2dres_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2d_8_bn2d_9_summation_3_relures_7_adaptive_avg_pool2d 16 15 14
+bn2d_8_bn2d_9_summation_3_relures_7_adaptive_avg_pool2d earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linear 17 16 
+linear TAIL
+linear earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 526517628
+comm_vol 1 2 432881904
+comm_vol 2 3 1035983130
+comm_vol 3 4 613092480
+comm_vol 4 5 881637666
+comm_vol 5 6 417936246
+comm_vol 2 6 507414180
+comm_vol 6 7 304643976
+comm_vol 7 8 189882966
+comm_vol 8 9 398312460
+comm_vol 6 10 168698657
+comm_vol 9 11 253052436
+comm_vol 10 11 157941966
+comm_vol 11 12 152515272
+comm_vol 12 13 129792718
+comm_vol 13 14 214408576
+comm_vol 11 15 96369000
+comm_vol 14 16 162477752
+comm_vol 15 16 105227741
+comm_vol 16 17 36276240

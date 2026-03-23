@@ -1,0 +1,102 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 64, tasks are compiled with TVM
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 23 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+ST 0
+conv2dalex_1_relualex_1 103991600
+maxpool2dalex_1 128390
+conv2dalex_2_relualex_2 183680910
+maxpool2dalex_2 8335
+conv2dalex_3_relualex_3 92871760
+conv2dalex_4_relualex_4 121475660
+conv2dalex_5_relualex_5 85424230
+maxpool2dalex_3 2165
+adaptive_avg_pool_2dalex 24204700
+linearalex_1_relualex_6 44909902
+linearalex_2_relualex_7 21057249
+linearalex_3 6094970
+linearautoen_1_reluautoen_1 5372382
+linearautoen_2_reluautoen_2 5372382
+linearautoen_3_reluautoen_3 5372382
+linearautoen_4_reluautoen_4 5372382
+linearautoen_5_reluautoen_5 878099
+linearautoen_6_reluautoen_6 1325332
+linearautoen_7_reluautoen_7 5372382
+linearautoen_8_reluautoen_8 5372382
+linearautoen_9_reluautoen_9 5372382
+linearautoen_10 5062780
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 4 num_supported_functionalities 22 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d linear linear_relu conv2d_relu
+opp 1000 900
+trip_freq -1 -1 -1
+conv2dalex_1_relualex_1 253794 conv2d_relu
+maxpool2dalex_1 14459 maxpool2d
+conv2dalex_2_relualex_2 216547 conv2d_relu
+maxpool2dalex_2 11185 maxpool2d
+conv2dalex_3_relualex_3 225668 conv2d_relu
+conv2dalex_4_relualex_4 228753 conv2d_relu
+conv2dalex_5_relualex_5 222036 conv2d_relu
+maxpool2dalex_3 10698 maxpool2d
+adaptive_avg_pool_2dalex 29995 adaptive_avg_pool2d
+linearalex_1_relualex_6 167758 linear_relu
+linearalex_2_relualex_7 165716 linear_relu
+linearalex_3 169579 linear
+linearautoen_1_reluautoen_1 148552 linear_relu
+linearautoen_2_reluautoen_2 148552 linear_relu
+linearautoen_3_reluautoen_3 148552 linear_relu
+linearautoen_4_reluautoen_4 148552 linear_relu
+linearautoen_5_reluautoen_5 115104 linear_relu
+linearautoen_6_reluautoen_6 72479 linear_relu
+linearautoen_7_reluautoen_7 148552 linear_relu
+linearautoen_8_reluautoen_8 148552 linear_relu
+linearautoen_9_reluautoen_9 148552 linear_relu
+linearautoen_10 130468 linear
+
+add_new_resource resource_type ACC resource_name GPU_2 resource_ID 2 capacity 4 num_supported_functionalities 6 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+maxpool2dalex_1 14459 maxpool2d
+maxpool2dalex_2 11185 maxpool2d
+maxpool2dalex_3 10698 maxpool2d
+adaptive_avg_pool_2dalex 29995 adaptive_avg_pool2d
+linearalex_3 169579 linear
+linearautoen_10 130468 linear
+
+add_new_resource resource_type ACC resource_name GPU_3 resource_ID 3 capacity 4 num_supported_functionalities 9 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d conv2d_relu
+opp 1000 900
+trip_freq -1 -1 -1
+conv2dalex_1_relualex_1 253794 conv2d_relu
+maxpool2dalex_1 14459 maxpool2d
+conv2dalex_2_relualex_2 216547 conv2d_relu
+maxpool2dalex_2 11185 maxpool2d
+conv2dalex_3_relualex_3 225668 conv2d_relu
+conv2dalex_4_relualex_4 228753 conv2d_relu
+conv2dalex_5_relualex_5 222036 conv2d_relu
+maxpool2dalex_3 10698 maxpool2d
+adaptive_avg_pool_2dalex 29995 adaptive_avg_pool2d
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 4 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# Bandwidth between memory and CPU
+comm_band 0 4 273
+comm_band 4 0 273
+
+# Bandwidth between memory and GPU    
+comm_band 1 4 273
+comm_band 4 1 273
+
+# Bandwidth between memory and GPU    
+comm_band 2 4 273
+comm_band 4 2 273
+
+# Bandwidth between memory and GPU    
+comm_band 3 4 273
+comm_band 4 3 273
