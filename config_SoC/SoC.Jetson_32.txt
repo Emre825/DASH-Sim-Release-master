@@ -1,372 +1,196 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
 # execution times are in nanoseconds
-add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 187 DVFS_mode performance
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 4 DVFS_mode performance
 opp 2300 30000
 trip_freq -1 -1 -1
 power_profile 2300 30
 PG_profile 2300 30
 ST 0
-conv2dalex_1 41573600
-relualex_1 6729470
-maxpool2dalex_1 86083
-conv2dalex_2 91682900
-relualex_2 4934510
-maxpool2dalex_2 8239
-conv2dalex_3 46652800
-relualex_3 2261420
-conv2dalex_4 62818600
-relualex_4 1860450
-conv2dalex_5 43435700
-relualex_5 1869850
-maxpool2dalex_3 2487
-adaptive_avg_pool_2dalex 7751050
-linearalex_1 36387500
-relualex_6 185678
-linearalex_2 15659200
-relualex_7 186142
-linearalex_3 5181670
-linearautoen_1 4457160
-reluautoen_1 116903
-linearautoen_2 4457160
-reluautoen_2 116903
-linearautoen_3 4457160
-reluautoen_3 116903
-linearautoen_4 4457160
-reluautoen_4 116903
-linearautoen_5 857817
-reluautoen_5 14538
-linearautoen_6 779790
-reluautoen_6 100747
-linearautoen_7 4457160
-reluautoen_7 116903
-linearautoen_8 4457160
-reluautoen_8 116903
-linearautoen_9 4457160
-reluautoen_9 116903
-linearautoen_10 4318510
-conv2dres_1 441396
-bn2d_1 1094530
-relures_1 785427
-conv2dres_2 3135710
-bn2d_2 838735
-relures_2 771177
-conv2dres_3 2902200
-bn2d_3 799896
 summation_1 0
-relures_3 832780
-conv2dres_4 1365070
-bn2d_4 428655
-relures_4 391585
-conv2dres_5 1417320
-bn2d_5 439856
-conv2dres_6 263058
-bn2d_6 435318
 summation_2 0
-relures_5 373561
-conv2dres_7 630029
-bn2d_7 231359
-relures_6 213426
-conv2dres_8 1151790
-bn2d_8 249119
-conv2dres_9 189155
-bn2d_9 232760
 summation_3 0
-relures_7 196487
-adaptive_avg_pool2d 599100
-linear 4652
-conv2ddscnn_1 353122 
-bn2ddscnn_1 334579 
-reludscnn_1 126915 
-conv2ddscnn_2 245559 
-bn2ddscnn_2 212203 
-reludscnn_2 125491 
-conv2ddscnn_3 185477 
-bn2ddscnn_3 212359 
-reludscnn_3 136918 
-conv2ddscnn_4 213960 
-bn2ddscnn_4 211315 
-reludscnn_4 117741 
-conv2ddscnn_5 194211 
-bn2ddscnn_5 246040 
-reludscnn_5 116742 
-conv2ddscnn_6 158813 
-bn2ddscnn_6 212795
-reludscnn_6 133922 
-conv2ddscnn_7 290403 
-bn2ddscnn_7 251226 
-reludscnn_7 118478 
-conv2ddscnn_8 274767 
-bn2ddscnn_8 216126 
-reludscnn_8 113611 
-conv2ddscnn_9 192943 
-bn2ddscnn_9 231408 
-reludscnn_9 113739 
-adaptive_avg_pool_2ddscnn 782552
-lineardscnn 3515
-embed_tok 13070200
-embed_pos 646522
-summation_llm_1 0
-layernorm_1 106693000
-linearllm_1 206693000
-linearllm_2 208383000
-linearllm_3 201033000
-batchedgemm_1 473347
-softmax_1 2743050000
-batchedgemm_2 1729390
-linearllm_4 205520000
-summation_llm_2 0
-layernorm_2 101607000
-linearllm_5 794026000
-gelu_1 1921700000
-linearllm_6 875857000
-summation_llm_3 0
-layernorm_3 100570000
-linearllm_7 200459000
-linearllm_8 199543000
-linearllm_9 205060000
-batchedgemm_3 392579
-softmax_2 2731810000
-batchedgemm_4 799386
-linearllm_10 204870000
-summation_llm_4 0
-layernorm_4 100266000
-linearllm_11 806811000
-gelu_2 1920780000
-linearllm_12 875983000
-summation_llm_5 0
-layernorm_5 101247000
-linearllm_13 200728000
-linearllm_14 200239000
-linearllm_15 205450000
-batchedgemm_5 382598
-softmax_3 2729720000
-batchedgemm_6 505043
-linearllm_16 204284000
-summation_llm_6 0
-layernorm_6 100413000
-linearllm_17 793368000
-gelu_3 1917330000
-linearllm_18 875079000
-summation_llm_7 0
-layernorm_7 86530600
-linearllm_19 199944000
-linearllm_20 199449000
-linearllm_21 204892000
-batchedgemm_7 519046
-softmax_4 2725740000
-batchedgemm_8 475894
-linearllm_22 204552000
-summation_llm_8 0
-layernorm_8 86854600
-linearllm_23 794044000
-gelu_4 1918390000
-linearllm_24 875221000
-summation_llm_9 0
-layernorm_9 88361800
-linearllm_25 200549000
-linearllm_26 199494000
-linearllm_27 207520000
-batchedgemm_9 541875
-softmax_5 2729780000
-batchedgemm_10 773312
-linearllm_28 204803000
-summation_llm_10 0
-layernorm_10 86582500
-linearllm_29 793158000
-gelu_5 1917850000
-linearllm_30 874896000
-summation_llm_11 0
-layernorm_11 100713000
-linearllm_31 201591000
-linearllm_32 198533000
-linearllm_33 206644000
-batchedgemm_11 415341
-softmax_6 2729500000
-batchedgemm_12 427437
-linearllm_34 205904000
-summation_llm_12 0
-layernorm_12 101142000
-linearllm_35 795043000
-gelu_6 1916880000
-linearllm_36 876429000
-summation_llm_13 0
-layernorm_13 100366000
-linearllm_37 6215460000
 
-add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 16 num_supported_functionalities 170 DVFS_mode performance
-acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear gelu softmax embedding layernorm batchedgemm
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 16 num_supported_functionalities 177 DVFS_mode performance
+acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear
 opp 1000 900
 trip_freq -1 -1 -1
-conv2dalex_1 172687 conv2d
-relualex_1 43997 relu
-maxpool2dalex_1 14644 maxpool2d
-conv2dalex_2 161587 conv2d
-relualex_2 43677 relu
-maxpool2dalex_2 12106 maxpool2d
-conv2dalex_3 152621 conv2d
-relualex_3 47718 relu
-conv2dalex_4 158367 conv2d
-relualex_4 36967 relu
-conv2dalex_5 154693 conv2d
-relualex_5 36752 relu
-maxpool2dalex_3 13563 maxpool2d
-adaptive_avg_pool_2dalex 20848 adaptive_avg_pool2d
-linearalex_1 154512 linear
-relualex_6 18988 relu
-linearalex_2 138388 linear
-relualex_7 17380 relu
-linearalex_3 153942 linear
-linearautoen_1 128167 linear
-reluautoen_1 18107 relu
-linearautoen_2 128167 linear
-reluautoen_2 18107 relu
-linearautoen_3 128167 linear
-reluautoen_3 18107 relu
-linearautoen_4 128167 linear
-reluautoen_4 18107 relu
-linearautoen_5 99715 linear
-reluautoen_5 13183 relu
-linearautoen_6 60835 linear
-reluautoen_6 14814 relu
-linearautoen_7 128167 linear
-reluautoen_7 18107 relu
-linearautoen_8 128167 linear
-reluautoen_8 18107 relu
-linearautoen_9 128167 linear
-reluautoen_9 18107 relu
-linearautoen_10 120393 linear
-conv2dres_1 84323 conv2d
-bn2d_1 23007 bn2d
-relures_1 26140 relu
-conv2dres_2 123061 conv2d
-bn2d_2 21818 bn2d
-relures_2 29004 relu
-conv2dres_3 121730 conv2d
-bn2d_3 23072 bn2d
-relures_3 25564 relu
-conv2dres_4 82895 conv2d
-bn2d_4 14365 bn2d
-relures_4 18315 relu
-conv2dres_5 98794 conv2d
-bn2d_5 16960 bn2d
-conv2dres_6 49611 conv2d
-bn2d_6 15107 bn2d
-relures_5 15751 relu
-conv2dres_7 58179 conv2d
-bn2d_7 12430 bn2d
-relures_6 14513 relu
-conv2dres_8 80111 conv2d
-bn2d_8 13661 bn2d
-conv2dres_9 41101 conv2d
-bn2d_9 12734 bn2d
-relures_7 15653 relu
-adaptive_avg_pool2d 13135 adaptive_avg_pool2d
-linear 23588 linear
-conv2ddscnn_1 72071 conv2d
-bn2ddscnn_1 13320 bn2d
-reludscnn_1 14608 relu
-conv2ddscnn_2 30936 conv2d
-bn2ddscnn_2 13069 bn2d
-reludscnn_2 14110 relu
-conv2ddscnn_3 41958 conv2d
-bn2ddscnn_3 19811 bn2d
-reludscnn_3 14157 relu
-conv2ddscnn_4 30581 conv2d
-bn2ddscnn_4 13953 bn2d
-reludscnn_4 16486 relu
-conv2ddscnn_5 37262 conv2d
-bn2ddscnn_5 13020 bn2d
-reludscnn_5 14293 relu
-conv2ddscnn_6 27925 conv2d
-bn2ddscnn_6 14468 bn2d
-reludscnn_6 13996 relu
-conv2ddscnn_7 40038 conv2d
-bn2ddscnn_7 14901 bn2d
-reludscnn_7 13750 relu
-conv2ddscnn_8 29192 conv2d
-bn2ddscnn_8 14579 bn2d
-reludscnn_8 14157 relu
-conv2ddscnn_9 40083 conv2d
-bn2ddscnn_9 14154 bn2d
-reludscnn_9 14298 relu
-adaptive_avg_pool_2ddscnn 12229 adaptive_avg_pool2d
-lineardscnn 25309 linear
-embed_tok 65628 embedding
-embed_pos 51679 embedding
-layernorm_1 45053 layernorm
-linearllm_1 179894 linear
-linearllm_2 167805 linear
-linearllm_3 168560 linear
-batchedgemm_1 186172 batchedgemm
-softmax_1 78829 softmax
-batchedgemm_2 195161 batchedgemm
-linearllm_4 180754 linear
-layernorm_2 43614 layernorm
-linearllm_5 259995 linear
-gelu_1 76605 gelu
-linearllm_6 190551 linear
-layernorm_3 43558 layernorm
-linearllm_7 182174 linear
-linearllm_8 173615 linear
-linearllm_9 177827 linear
-batchedgemm_3 192164 batchedgemm
-softmax_2 77772 softmax
-batchedgemm_4 187202 batchedgemm
-linearllm_10 177675 linear
-layernorm_4 44864 layernorm
-linearllm_11 264109 linear
-gelu_2 80588 gelu
-linearllm_12 188605 linear
-layernorm_5 45298 layernorm
-linearllm_13 178548 linear
-linearllm_14 179103 linear
-linearllm_15 171906 linear
-batchedgemm_5 192839 batchedgemm
-softmax_3 71497 softmax
-batchedgemm_6 191422 batchedgemm
-linearllm_16 181720 linear
-layernorm_6 47256 layernorm
-linearllm_17 248349 linear
-gelu_3 67314 gelu
-linearllm_18 184881 linear
-layernorm_7 45106 layernorm
-linearllm_19 178380 linear
-linearllm_20 179018 linear
-linearllm_21 177207 linear
-batchedgemm_7 188332 batchedgemm
-softmax_4 80711 softmax
-batchedgemm_8 199053 batchedgemm
-linearllm_22 180678 linear
-layernorm_8 45962 layernorm
-linearllm_23 249648 linear
-gelu_4 82847 gelu
-linearllm_24 189908 linear
-layernorm_9 43193 layernorm
-linearllm_25 174978 linear
-linearllm_26 177570 linear
-linearllm_27 182613 linear
-batchedgemm_9 192158 batchedgemm
-softmax_5 75928 softmax
-batchedgemm_10 198100 batchedgemm
-linearllm_28 184772 linear
-layernorm_10 43834 layernorm
-linearllm_29 251961 linear
-gelu_5 82490 gelu
-linearllm_30 186933 linear
-layernorm_11 46571 layernorm
-linearllm_31 179034 linear
-linearllm_32 174348 linear
-linearllm_33 176899 linear
-batchedgemm_11 189556 batchedgemm
-softmax_6 78005 softmax
-batchedgemm_12 192063 batchedgemm
-linearllm_34 174828 linear
-layernorm_12 43677 layernorm
-linearllm_35 254350 linear
-gelu_6 76956 gelu
-linearllm_36 178243 linear
-layernorm_13 45385 layernorm
-linearllm_37 653009 linear
+conv2dalex_1 4909350 conv2d
+relualex_1 1077010 relu
+maxpool2dalex_1 15087 maxpool2d
+conv2dalex_2 16205900 conv2d
+relualex_2 721611 relu
+maxpool2dalex_2 11040 maxpool2d
+conv2dalex_3 6727760 conv2d
+relualex_3 466564 relu
+conv2dalex_4 7857750 conv2d
+relualex_4 394205 relu
+conv2dalex_5 5363830 conv2d
+relualex_5 395384 relu
+maxpool2dalex_3 11231 maxpool2d
+adaptive_avg_pool_2dalex 275461 adaptive_avg_pool2d
+linearalex_1 4541970 linear
+relualex_6 296550 relu
+linearalex_2 2192990 linear
+relualex_7 283375 relu
+linearalex_3 738325 linear
+linearautoen_1 24933 linear
+reluautoen_1 10639 relu
+linearautoen_2 24277 linear
+reluautoen_2 10629 relu
+linearautoen_3 23841 linear
+reluautoen_3 10172 relu
+linearautoen_4 23984 linear
+reluautoen_4 10525 relu
+linearautoen_5 22569 linear
+reluautoen_5 10177 relu
+linearautoen_6 17517 linear
+reluautoen_6 10534 relu
+linearautoen_7 25461 linear
+reluautoen_7 11687 relu
+linearautoen_8 24212 linear
+reluautoen_8 10250 relu
+linearautoen_9 24305 linear
+reluautoen_9 10316 relu
+linearautoen_10 23985 linear
+conv2ddscnn_1 77851 conv2d
+bn2ddscnn_1 19768 bn2d
+reludscnn_1 15002 relu
+conv2ddscnn_2 25275 conv2d
+bn2ddscnn_2 19381 bn2d
+reludscnn_2 14637 relu
+conv2ddscnn_3 41656 conv2d
+bn2ddscnn_3 19394 bn2d
+reludscnn_3 14180 relu
+conv2ddscnn_4 24586 conv2d
+bn2ddscnn_4 19321 bn2d
+reludscnn_4 13619 relu
+conv2ddscnn_5 41296 conv2d
+bn2ddscnn_5 19444 bn2d
+reludscnn_5 13549 relu
+conv2ddscnn_6 24067 conv2d
+bn2ddscnn_6 19424 bn2d
+reludscnn_6 16208 relu
+conv2ddscnn_7 40734 conv2d
+bn2ddscnn_7 19662 bn2d
+reludscnn_7 15524 relu
+conv2ddscnn_8 24779 conv2d
+bn2ddscnn_8 19308 bn2d
+reludscnn_8 16346 relu
+conv2ddscnn_9 43135 conv2d
+bn2ddscnn_9 19322 bn2d
+reludscnn_9 13612 relu
+adaptive_avg_pool_2ddscnn 12151 adaptive_avg_pool2d
+lineardscnn 21094 linear
+conv2dmobile_1 575757 conv2d
+bn2dmobile_1 116715 bn2d
+relumobile_1 100504 relu
+conv2dmobile_2 262067 conv2d
+bn2dmobile_2 117232 bn2d
+relumobile_2 98968 relu
+conv2dmobile_3 283022 conv2d
+bn2dmobile_3 205989 bn2d
+relumobile_3 177745 relu
+conv2dmobile_4 75220 conv2d
+bn2dmobile_4 62878 bn2d
+relumobile_4 50607 relu
+conv2dmobile_5 107361 conv2d
+bn2dmobile_5 114945 bn2d
+relumobile_5 101794 relu
+conv2dmobile_6 93373 conv2d
+bn2dmobile_6 114807 bn2d
+relumobile_6 101467 relu
+conv2dmobile_7 155457 conv2d
+bn2dmobile_7 115825 bn2d
+relumobile_7 99634 relu
+conv2dmobile_8 30861 conv2d
+bn2dmobile_8 29543 bn2d
+relumobile_8 21492 relu
+conv2dmobile_9 58446 conv2d
+bn2dmobile_9 63132 bn2d
+relumobile_9 47992 relu
+conv2dmobile_10 49455 conv2d
+bn2dmobile_10 62702 bn2d
+relumobile_10 47426 relu
+conv2dmobile_11 91441 conv2d
+bn2dmobile_11 65031 bn2d
+relumobile_11 49267 relu
+conv2dmobile_12 22718 conv2d
+bn2dmobile_12 18887 bn2d
+relumobile_12 15192 relu
+conv2dmobile_13 57941 conv2d
+bn2dmobile_13 29926 bn2d
+relumobile_13 20938 relu
+conv2dmobile_14 30360 conv2d
+bn2dmobile_14 29264 bn2d
+relumobile_14 21207 relu
+conv2dmobile_15 75054 conv2d
+bn2dmobile_15 29343 bn2d
+relumobile_15 21366 relu
+conv2dmobile_16 29929 conv2d
+bn2dmobile_16 29859 bn2d
+relumobile_16 21222 relu
+conv2dmobile_17 74633 conv2d
+bn2dmobile_17 29329 bn2d
+relumobile_17 21852 relu
+conv2dmobile_18 30301 conv2d
+bn2dmobile_18 29478 bn2d
+relumobile_18 22180 relu
+conv2dmobile_19 75926 conv2d
+bn2dmobile_19 29208 bn2d
+relumobile_19 21293 relu
+conv2dmobile_20 30691 conv2d
+bn2dmobile_20 29260 bn2d
+relumobile_20 20972 relu
+conv2dmobile_21 74796 conv2d
+bn2dmobile_21 29280 bn2d
+relumobile_21 21865 relu
+conv2dmobile_22 30052 conv2d
+bn2dmobile_22 29309 bn2d
+relumobile_22 20958 relu
+conv2dmobile_23 74724 conv2d
+bn2dmobile_23 29534 bn2d
+relumobile_23 21122 relu
+conv2dmobile_24 20026 conv2d
+bn2dmobile_24 12681 bn2d
+relumobile_24 11641 relu
+conv2dmobile_25 64122 conv2d
+bn2dmobile_25 18553 bn2d
+relumobile_25 13863 relu
+conv2dmobile_26 22852 conv2d
+bn2dmobile_26 17890 bn2d
+relumobile_26 13766 relu
+conv2dmobile_27 90405 conv2d
+bn2dmobile_27 18221 bn2d
+relumobile_27 14157 relu
+adaptive_avg_pool_2dmobile 8421 adaptive_avg_pool2d
+linearmobile 29348 linear
+conv2dres_1 240552 conv2d
+bn2dres_1 104500 bn2d
+relures_1 78312 relu
+conv2dres_2 638471 conv2d
+bn2dres_2 105359 bn2d
+relures_2 80784 relu
+conv2dres_3 644945 conv2d
+bn2dres_3 103236 bn2d
+relures_3 79018 relu
+conv2dres_4 247350 conv2d
+bn2dres_4 58800 bn2d
+relures_4 42705 relu
+conv2dres_5 367556 conv2d
+bn2dres_5 57008 bn2d
+conv2dres_6 20775 conv2d
+bn2dres_6 56562 bn2d
+relures_5 42457 relu
+conv2dres_7 62578 conv2d
+bn2dres_7 27730 bn2d
+relures_6 19224 relu
+conv2dres_8 93848 conv2d
+bn2dres_8 27394 bn2d
+conv2dres_9 18660 conv2d
+bn2dres_9 27684 bn2d
+relures_7 20535 relu
+adaptive_avg_pool_2dres 10432 adaptive_avg_pool2d
+linearres 19753 linear
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0

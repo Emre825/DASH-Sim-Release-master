@@ -1,5 +1,5 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16
-job_name AlexNet_Jetson_16 467144496
+job_name AlexNet_16 153111504
 add_new_tasks 20
 ST 0
 ST HEAD
@@ -45,22 +45,22 @@ linearalex_3 TAIL
 linearalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 9484904520
-comm_vol 1 2 3192511140
-comm_vol 2 3 1248057119
-comm_vol 3 4 4864196610
-comm_vol 4 5 5219143020
-comm_vol 5 6 904217671
-comm_vol 6 7 1495918733
-comm_vol 7 8 2298738078
-comm_vol 8 9 3063010314
-comm_vol 9 10 2975780808
-comm_vol 10 11 2030624778
-comm_vol 11 12 2150358210
-comm_vol 12 13 402906439
-comm_vol 13 14 52168607
-comm_vol 14 15 9625515900
-comm_vol 15 16 1610062818
-comm_vol 16 17 4468085076
-comm_vol 17 18 739652332
-comm_vol 18 19 1264864801
+comm_vol 0 1 8944703040
+comm_vol 1 2 1695930600
+comm_vol 2 3 902205923
+comm_vol 3 4 4569845389
+comm_vol 4 5 1241642220
+comm_vol 5 6 648273608
+comm_vol 6 7 1219495859
+comm_vol 7 8 610118418
+comm_vol 8 9 2677244388
+comm_vol 9 10 445630458
+comm_vol 10 11 1851841992
+comm_vol 11 12 432255096
+comm_vol 12 13 242486845
+comm_vol 13 14 60370838
+comm_vol 14 15 164014578
+comm_vol 15 16 138818480
+comm_vol 16 17 132680621
+comm_vol 17 18 126097335
+comm_vol 18 19 154820866

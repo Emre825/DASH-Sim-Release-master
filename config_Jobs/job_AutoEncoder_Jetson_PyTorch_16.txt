@@ -1,5 +1,5 @@
-# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
-job_name AutoEncoder_32 26011222
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16, compiled statically with PyTorch
+job_name AutoEncoder_PyTorch_16 28169778
 add_new_tasks 20
 ST 0
 ST HEAD
@@ -45,22 +45,22 @@ linearautoen_10 TAIL
 linearautoen_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 22190860
-comm_vol 1 2 19499789
-comm_vol 2 3 24898474
-comm_vol 3 4 19523923
-comm_vol 4 5 24068554
-comm_vol 5 6 19031376
-comm_vol 6 7 24267352
-comm_vol 7 8 19268122
-comm_vol 8 9 18692201
-comm_vol 9 10 18815608
-comm_vol 10 11 18163367
-comm_vol 11 12 20757773
-comm_vol 12 13 24866150
-comm_vol 13 14 20540793
-comm_vol 14 15 25674230
-comm_vol 15 16 19563071
-comm_vol 16 17 23840216
-comm_vol 17 18 19217617
-comm_vol 18 19 24661892
+comm_vol 0 1 21284063
+comm_vol 1 2 22595336
+comm_vol 2 3 24443110
+comm_vol 3 4 19993373
+comm_vol 4 5 24352146
+comm_vol 5 6 20094875
+comm_vol 6 7 24041636
+comm_vol 7 8 20275710
+comm_vol 8 9 18272414
+comm_vol 9 10 19737081
+comm_vol 10 11 17301987
+comm_vol 11 12 20455344
+comm_vol 12 13 23643438
+comm_vol 13 14 20025915
+comm_vol 14 15 23576935
+comm_vol 15 16 20060313
+comm_vol 16 17 23651683
+comm_vol 17 18 20225587
+comm_vol 18 19 23167162

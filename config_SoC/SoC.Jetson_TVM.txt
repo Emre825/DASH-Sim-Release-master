@@ -1,4 +1,4 @@
-# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1, compiled statically with PyTorch
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1, compiled statically with TVM
 # execution times are in nanoseconds
 add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 1 DVFS_mode performance
 opp 2300 30000
@@ -7,43 +7,31 @@ power_profile 2300 30
 PG_profile 2300 30
 ST 0
 
-add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 512 num_supported_functionalities 125 DVFS_mode performance
-acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear relu_maxpool2d relu_maxpool2d_adaptive_avg_pool2d bn2d_relu bn2d_relu_adaptive_avg_pool2d bn2d_add_relu bn2d_bn2d_add_relu bn2d_bn2d_add_relu_adaptive_avg_pool2d
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 512 num_supported_functionalities 116 DVFS_mode performance
+acc_supported_configs conv2d maxpool2d adaptive_avg_pool2d linear conv2d_relu linear_relu bn2d_relu bn2d_add_relu bn2d_bn2d_add_relu
 opp 1000 900
 trip_freq -1 -1 -1
-conv2dalex_1 264246 conv2d
-relualex_1_maxpool2dalex_1 35858 relu_maxpool2d
-conv2dalex_2 556210 conv2d
-relualex_2_maxpool2dalex_2 29782 relu_maxpool2d
-conv2dalex_3 381640 conv2d
-relualex_3 11242 relu
-conv2dalex_4 463125 conv2d
-relualex_4 8614 relu
-conv2dalex_5 344311 conv2d
-relualex_5_maxpool2dalex_3_adaptive_avg_pool_2dalex 29833 relu_maxpool2d_adaptive_avg_pool2d
-linearalex_1 2023920 linear
-relualex_6 9442 relu
-linearalex_2 965723 linear
-relualex_7 9389 relu
+conv2dalex_1_relualex_1 289393 conv2d_relu
+maxpool2dalex_1 10711 maxpool2d
+conv2dalex_2_relualex_2 575775 conv2d_relu
+maxpool2dalex_2 10217 maxpool2d
+conv2dalex_3_relualex_3 392882 conv2d_relu
+conv2dalex_4_relualex_4 471739 conv2d_relu
+conv2dalex_5_relualex_5 353311 conv2d_relu
+maxpool2dalex_3 10040 maxpool2d
+adaptive_avg_pool_2dalex 10793 adaptive_avg_pool2d
+linearalex_1_relualex_6 2033362 linear_relu
+linearalex_2_relualex_7 975112 linear_relu
 linearalex_3 312642 linear
-linearautoen_1 15812 linear
-reluautoen_1 8929 relu
-linearautoen_2 15883 linear
-reluautoen_2 9087 relu
-linearautoen_3 15963 linear
-reluautoen_3 9156 relu
-linearautoen_4 15767 linear
-reluautoen_4 8919 relu
-linearautoen_5 22754 linear
-reluautoen_5 8950 relu
-linearautoen_6 14918 linear
-reluautoen_6 8886 relu
-linearautoen_7 15999 linear
-reluautoen_7 8945 relu
-linearautoen_8 15970 linear
-reluautoen_8 8936 relu
-linearautoen_9 15863 linear
-reluautoen_9 8891 relu
+linearautoen_1_reluautoen_1 24741 linear_relu
+linearautoen_2_reluautoen_2 24970 linear_relu
+linearautoen_3_reluautoen_3 25119 linear_relu
+linearautoen_4_reluautoen_4 24686 linear_relu
+linearautoen_5_reluautoen_5 31704 linear_relu
+linearautoen_6_reluautoen_6 23804 linear_relu
+linearautoen_7_reluautoen_7 24944 linear_relu
+linearautoen_8_reluautoen_8 24906 linear_relu
+linearautoen_9_reluautoen_9 24754 linear_relu
 linearautoen_10 15889 linear
 conv2ddscnn_1 21952 conv2d
 bn2ddscnn_1_reludscnn_1 19465 bn2d_relu
@@ -62,7 +50,8 @@ bn2ddscnn_7_reludscnn_7 19109 bn2d_relu
 conv2ddscnn_8 16931 conv2d
 bn2ddscnn_8_reludscnn_8 19086 bn2d_relu
 conv2ddscnn_9 19676 conv2d
-bn2ddscnn_9_reludscnn_9_adaptive_avg_pool_2ddscnn 30306 bn2d_relu_adaptive_avg_pool2d
+bn2ddscnn_9_reludscnn_9 18904 bn2d_relu
+adaptive_avg_pool_2ddscnn 11402 adaptive_avg_pool2d
 lineardscnn 15367 linear
 conv2dmobile_1 18260 conv2d
 bn2dmobile_1_relumobile_1 20851 bn2d_relu
@@ -117,7 +106,8 @@ bn2dmobile_25_relumobile_25 18514 bn2d_relu
 conv2dmobile_26 16299 conv2d
 bn2dmobile_26_relumobile_26 18513 bn2d_relu
 conv2dmobile_27 21035 conv2d
-bn2dmobile_27_relumobile_27_adaptive_avg_pool_2dmobile 28725 bn2d_relu_adaptive_avg_pool2d
+bn2dmobile_27_relumobile_27 18598 bn2d_relu
+adaptive_avg_pool_2dmobile 10127 adaptive_avg_pool2d
 linearmobile 22822 linear
 conv2dres_1 17043 conv2d
 bn2dres_1_relures_1 16626 bn2d_relu
@@ -134,7 +124,8 @@ conv2dres_7 17909 conv2d
 bn2dres_7_relures_6 18865 bn2d_relu
 conv2dres_8 19656 conv2d
 conv2dres_9 14927 conv2d
-bn2dres_8_bn2dres_9_summation_3_relures_7_adaptive_avg_pool_2dres 38171 bn2d_bn2d_add_relu_adaptive_avg_pool2d
+bn2dres_8_bn2dres_9_summation_3_relures_7 28682 bn2d_bn2d_add_relu
+adaptive_avg_pool_2dres 9489 adaptive_avg_pool2d
 linearres 14860 linear
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
@@ -147,6 +138,6 @@ None 0
 comm_band 0 2 546
 comm_band 2 0 546
 
-# Bandwidth between memory and GPU
+# Bandwidth between memory and GPU    
 comm_band 1 2 546
 comm_band 2 1 546

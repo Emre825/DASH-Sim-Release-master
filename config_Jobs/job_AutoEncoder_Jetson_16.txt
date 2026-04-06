@@ -1,5 +1,5 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16
-job_name AutoEncoder_Jetson_16 479840088
+job_name AutoEncoder_16 28169778
 add_new_tasks 20
 ST 0
 ST HEAD
@@ -45,22 +45,22 @@ linearautoen_10 TAIL
 linearautoen_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 2438960160
-comm_vol 1 2 251750390
-comm_vol 2 3 1240239601
-comm_vol 3 4 251750390
-comm_vol 4 5 1240239601
-comm_vol 5 6 251750390
-comm_vol 6 7 1240239601
-comm_vol 7 8 251750390
-comm_vol 8 9 202845607
-comm_vol 9 10 59277626
-comm_vol 10 11 186541883
-comm_vol 11 12 76743303
-comm_vol 12 13 1239597013
-comm_vol 13 14 251750390
-comm_vol 14 15 1240239601
-comm_vol 15 16 251750390
-comm_vol 16 17 1240239601
-comm_vol 17 18 251750390
-comm_vol 18 19 1124766061
+comm_vol 0 1 21284063
+comm_vol 1 2 22595336
+comm_vol 2 3 24443110
+comm_vol 3 4 19993373
+comm_vol 4 5 24352146
+comm_vol 5 6 20094875
+comm_vol 6 7 24041636
+comm_vol 7 8 20275710
+comm_vol 8 9 18272414
+comm_vol 9 10 19737081
+comm_vol 10 11 17301987
+comm_vol 11 12 20455344
+comm_vol 12 13 23643438
+comm_vol 13 14 20025915
+comm_vol 14 15 23576935
+comm_vol 15 16 20060313
+comm_vol 16 17 23651683
+comm_vol 17 18 20225587
+comm_vol 18 19 23167162

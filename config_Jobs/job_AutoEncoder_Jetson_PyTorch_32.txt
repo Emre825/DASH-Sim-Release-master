@@ -1,5 +1,5 @@
-# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
-job_name AutoEncoder_32 26011222
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with PyTorch
+job_name AutoEncoder_PyTorch_32 26011222
 add_new_tasks 20
 ST 0
 ST HEAD

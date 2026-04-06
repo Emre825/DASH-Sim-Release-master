@@ -1,5 +1,5 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
-job_name DSCNN_Jetson 26956457
+job_name DSCNN 25553346
 add_new_tasks 30 
 ST 0
 ST HEAD
@@ -65,32 +65,32 @@ lineardscnn TAIL
 lineardscnn earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 35516426
-comm_vol 1 2 41062858
-comm_vol 2 3 18561925
-comm_vol 3 4 24198338
-comm_vol 4 5 40906702
-comm_vol 5 6 19117666
-comm_vol 6 7 31976599
-comm_vol 7 8 40091633
-comm_vol 8 9 19137093
-comm_vol 9 10 26349359
-comm_vol 10 11 45375985
-comm_vol 11 12 18200571
-comm_vol 12 13 31767044
-comm_vol 13 14 45019884
-comm_vol 14 15 17834566
-comm_vol 15 16 26248186
-comm_vol 16 17 44855702
-comm_vol 17 18 17842570
-comm_vol 18 19 29664180
-comm_vol 19 20 47210709
-comm_vol 20 21 17599207
-comm_vol 21 22 28117307
-comm_vol 22 23 44527938
-comm_vol 23 24 17651437
-comm_vol 24 25 29239556
-comm_vol 25 26 44886278
-comm_vol 26 27 17389336
-comm_vol 27 28 17906529
-comm_vol 28 29 27872918
+comm_vol 0 1 23406256
+comm_vol 1 2 17266977
+comm_vol 2 3 18940249
+comm_vol 3 4 17300409
+comm_vol 4 5 19008226
+comm_vol 5 6 18636891
+comm_vol 6 7 17464558
+comm_vol 7 8 18119774
+comm_vol 8 9 18672872
+comm_vol 9 10 16877581
+comm_vol 10 11 18589771
+comm_vol 11 12 18643880
+comm_vol 12 13 17475314
+comm_vol 13 14 18076040
+comm_vol 14 15 18694276
+comm_vol 15 16 16954627
+comm_vol 16 17 18605933
+comm_vol 17 18 18612812
+comm_vol 18 19 17459235
+comm_vol 19 20 17987588
+comm_vol 20 21 18748057
+comm_vol 21 22 17092202
+comm_vol 22 23 18599490
+comm_vol 23 24 18716389
+comm_vol 24 25 17680496
+comm_vol 25 26 18030285
+comm_vol 26 27 18560451
+comm_vol 27 28 17661418
+comm_vol 28 29 16220415

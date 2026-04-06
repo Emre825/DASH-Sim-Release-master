@@ -1,0 +1,66 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1, compiled statically with TVM
+job_name ResNet_TVM 25215918
+add_new_tasks 19
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_1 1 0
+conv2dres_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_1_relures_1 2 1
+bn2dres_1_relures_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_2 3 2
+conv2dres_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_2_relures_2 4 3
+bn2dres_2_relures_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_3 5 4
+conv2dres_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_3_summation_1_relures_3 6 5 2
+bn2dres_3_summation_1_relures_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_4 7 6
+conv2dres_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_4_relures_4 8 7
+bn2dres_4_relures_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_5 9 8
+conv2dres_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_6 10 6
+conv2dres_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_5_bn2dres_6_summation_2_relures_5 11 9 10
+bn2dres_5_bn2dres_6_summation_2_relures_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_7 12 11
+conv2dres_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_7_relures_6 13 12
+bn2dres_7_relures_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_8 14 13
+conv2dres_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dres_9 15 11
+conv2dres_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+bn2dres_8_bn2dres_9_summation_3_relures_7 16 14 15
+bn2dres_8_bn2dres_9_summation_3_relures_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+adaptive_avg_pool_2dres 17 16
+adaptive_avg_pool_2dres earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearres 18 17 
+linearres TAIL
+linearres earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 22272650
+comm_vol 1 2 24969781
+comm_vol 2 3 53322032
+comm_vol 3 4 49258700
+comm_vol 4 5 53235055
+comm_vol 5 6 48981660
+comm_vol 2 6 28188888
+comm_vol 6 7 27198553
+comm_vol 7 8 20613302
+comm_vol 8 9 38952950
+comm_vol 6 10 18872048
+comm_vol 9 11 19553570
+comm_vol 10 11 19912729
+comm_vol 11 12 24391513
+comm_vol 12 13 17684066
+comm_vol 13 14 23939042
+comm_vol 11 15 17869488
+comm_vol 14 16 16640770
+comm_vol 15 16 18468286
+comm_vol 16 17 17284214
+comm_vol 17 18 6455080
