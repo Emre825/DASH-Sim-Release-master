@@ -213,7 +213,7 @@ class JobGenerator:
                                     # Config is new — add it to ACC_model.csv and resource_matrix_Acc.
                                     temp_resource = self.resource_matrix.list[cluster.PE_list[0]]
                                     import csv
-                                    acc_csv_path = r"/home/emre/Desktop/DASH-Sim-Release-master/ACC_model.csv"
+                                    acc_csv_path = r"ACC_model.csv"
                                     dynamic_power_curr = None
                                     dynamic_power_succ = None
                                     curr_task_config = temp_resource.DAP_config_list[temp_resource.supported_functionalities.index(curr_task.name)]
@@ -496,14 +496,14 @@ class JobGenerator:
                     next_task.ID = ii + self.offset                             # and change the ID of the task accordingly
                     # Ensure all tasks have fused and kernel_count attributes.
                     if not hasattr(next_task, 'fused'):
-                        # _kernel_types_pattern = r'adaptive_avg_pool|maxpool2d|conv2d|linear|bn2d|summation|relu'
-                        # _kernel_matches = re.findall(_kernel_types_pattern, next_task.name)
-                        # _kcount = len(_kernel_matches) if _kernel_matches else 1  # default to 1 for unknown/special tasks (e.g. ST)
-                        # next_task.fused = (_kcount > 1)
-                        next_task.fused = False
+                        _kernel_types_pattern = r'adaptive_avg_pool|maxpool2d|conv2d|linear|bn2d|summation|relu'
+                        _kernel_matches = re.findall(_kernel_types_pattern, next_task.name)
+                        _kcount = len(_kernel_matches) if _kernel_matches else 1  # default to 1 for unknown/special tasks (e.g. ST)
+                        next_task.fused = (_kcount > 1)
+                        # next_task.fused = False
                     if not hasattr(next_task, 'kernel_count'):
-                        # next_task.kernel_count = _kcount
-                        next_task.kernel_count = 1
+                        next_task.kernel_count = _kcount
+                        # next_task.kernel_count = 1
                     #### ACUMEN ###
                     if 'ACUMEN' in self.generated_job_list[i].name:
                         if i > 0 and (next_task.ID % 9 == 4):
