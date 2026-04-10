@@ -1,0 +1,32 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 1 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+ST 0
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 512 num_supported_functionalities 5 DVFS_mode performance
+acc_supported_configs conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu conv2d_bn2d_relu_conv2d_bn2d conv2d_bn2d_add_relu conv2d_bn2d_relu_pool2d_linear_add
+opp 1000 900
+trip_freq -1 -1 -1
+fused_conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu_res1 1215369 conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu
+fused_conv2d_bn2d_relu_conv2d_bn2d_res1 468761 conv2d_bn2d_relu_conv2d_bn2d
+fused_conv2d_bn2d_add_relu_res1 66321 conv2d_bn2d_add_relu
+fused_conv2d_bn2d_relu_conv2d_bn2d_res2 152995 conv2d_bn2d_relu_conv2d_bn2d
+fused_conv2d_bn2d_relu_pool2d_linear_add_res1 81051 conv2d_bn2d_relu_pool2d_linear_add
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# NVIDIA Jetson AGX Xavier has a maximum theoretical bandwidth of 1092 Gb/s. This is shared between CPU and GPU because it has a Unified Memory Architecture.
+# We can assume the maximum bandwidth is divided by CPU and GPU, which gives us 546 Gb/s for both.
+# Bandwidth between memory and CPU
+comm_band 0 2 546
+comm_band 2 0 546
+
+# Bandwidth between memory and GPU    
+comm_band 1 2 546
+comm_band 2 1 546

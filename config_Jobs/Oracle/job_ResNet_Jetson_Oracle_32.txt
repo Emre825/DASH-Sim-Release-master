@@ -1,0 +1,29 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
+job_name ResNet_Oracle 25215918
+add_new_tasks 6
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+fused_conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu_res1 1 0
+fused_conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu_res1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+fused_conv2d_bn2d_relu_conv2d_bn2d_res1 2 1
+fused_conv2d_bn2d_relu_conv2d_bn2d_res1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+fused_conv2d_bn2d_add_relu_res1 3 2
+fused_conv2d_bn2d_add_relu_res1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+fused_conv2d_bn2d_relu_conv2d_bn2d_res2 4 3
+fused_conv2d_bn2d_relu_conv2d_bn2d_res2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+fused_conv2d_bn2d_relu_pool2d_linear_add_res1 5 4 
+fused_conv2d_bn2d_relu_pool2d_linear_add_res1 TAIL
+fused_conv2d_bn2d_relu_pool2d_linear_add_res1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 430446744
+comm_vol 1 2 466703874
+comm_vol 2 3 135762136
+comm_vol 3 4 173646673
+comm_vol 4 5 112581214
