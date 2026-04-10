@@ -81,6 +81,9 @@ GPU_1,conv2d_bn2d_relu_conv2d_bn2d,1,1,0,1,0,0,0
 GPU_1,conv2d_bn2d_add_relu,1,1,0,1,0,0,0
 GPU_1,conv2d_bn2d_relu_pool2d_linear_add,1,1,0,1,0,0,0
 GPU_1,relu_maxpool2d_adaptive_avg_pool2d,1,1,0,1,0,0,0
+GPU_1,relu_adaptive_avg_pool2d,1,1,0,1,0,0,0
+GPU_1,relu_relu_add,1,1,0,1,0,0,0
+GPU_1,maxpool2d_adaptive_avg_pool2d,1,1,0,1,0,0,0
 GPU_2,conv2d,1,1,0,1,0,0,0
 GPU_2,relu,1,1,0,1,0,0,0
 GPU_2,maxpool2d,1,1,0,1,0,0,0

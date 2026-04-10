@@ -1,0 +1,117 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with PyTorch
+job_name VGG_PyTorch_32 145843152
+add_new_tasks 37 
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_1 1 0
+conv2dvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_1 2 1
+reluvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_2 3 2
+conv2dvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_2 4 3
+reluvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_1 5 4
+maxpool2dvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_3 6 5
+conv2dvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_3 7 6
+reluvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_4 8 7
+conv2dvgg_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_4 9 8
+reluvgg_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_2 10 9
+maxpool2dvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_5 11 10
+conv2dvgg_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_5 12 11
+reluvgg_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_6 13 12
+conv2dvgg_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_6 14 13
+reluvgg_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_7 15 14
+conv2dvgg_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_7 16 15
+reluvgg_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_3 17 16
+maxpool2dvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_8 18 17
+conv2dvgg_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_8 19 18
+reluvgg_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_9 20 19
+conv2dvgg_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_9 21 20
+reluvgg_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_10 22 21
+conv2dvgg_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_10 23 22
+reluvgg_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_4 24 23
+maxpool2dvgg_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_11 25 24
+conv2dvgg_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_11 26 25
+reluvgg_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_12 27 26
+conv2dvgg_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_12 28 27
+reluvgg_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_13 29 28
+conv2dvgg_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_13 30 29
+reluvgg_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_5_adaptive_avg_pool_2dvgg 31 30
+maxpool2dvgg_5_adaptive_avg_pool_2dvgg earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_1 32 31
+linearvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_14 33 32
+reluvgg_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_2 34 33
+linearvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+reluvgg_15 35 34
+reluvgg_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_3 36 35
+linearvgg_3 TAIL
+linearvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 21829626000
+comm_vol 1 2 51462629400
+comm_vol 2 3 252825846000
+comm_vol 3 4 51181712400
+comm_vol 4 5 25788188353
+comm_vol 5 6 56999394980
+comm_vol 6 7 25776277800
+comm_vol 7 8 126478989000
+comm_vol 8 9 25721787000
+comm_vol 9 10 12993857113
+comm_vol 10 11 28686391406
+comm_vol 11 12 12973560600
+comm_vol 12 13 63486859800
+comm_vol 13 14 12933921000
+comm_vol 14 15 63487678800
+comm_vol 15 16 12953249400
+comm_vol 16 17 6508763680
+comm_vol 17 18 14410664759
+comm_vol 18 19 6561615060
+comm_vol 19 20 31992056460
+comm_vol 20 21 6546201480
+comm_vol 21 22 32009222700
+comm_vol 22 23 6541445820
+comm_vol 23 24 3292008283
+comm_vol 24 25 7107182683
+comm_vol 25 26 1700893740
+comm_vol 26 27 7983868620
+comm_vol 27 28 1692512640
+comm_vol 28 29 7938299460
+comm_vol 29 30 1683126900
+comm_vol 30 31 843068226
+comm_vol 31 32 498350580
+comm_vol 32 33 151921006
+comm_vol 33 34 178610250
+comm_vol 34 35 132603471
+comm_vol 35 36 111074145
