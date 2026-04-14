@@ -1,0 +1,75 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with TVM
+job_name VGG_TVM_32 145843152
+add_new_tasks 23 
+ST 0
+ST HEAD
+ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_1_reluvgg_1 1 0
+conv2dvgg_1_reluvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_2_reluvgg_2 2 1
+conv2dvgg_2_reluvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_1 3 2
+maxpool2dvgg_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_3_reluvgg_3 4 3
+conv2dvgg_3_reluvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_4_reluvgg_4 5 4
+conv2dvgg_4_reluvgg_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_2 6 5
+maxpool2dvgg_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_5_reluvgg_5 7 6
+conv2dvgg_5_reluvgg_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_6_reluvgg_6 8 7
+conv2dvgg_6_reluvgg_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_7_reluvgg_7 9 8
+conv2dvgg_7_reluvgg_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_3 10 9
+maxpool2dvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_8_reluvgg_8 11 10
+conv2dvgg_8_reluvgg_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_9_reluvgg_9 12 11
+conv2dvgg_9_reluvgg_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_10_reluvgg_10 13 12
+conv2dvgg_10_reluvgg_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_4 14 13
+maxpool2dvgg_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_11_reluvgg_11 15 14
+conv2dvgg_11_reluvgg_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_12_reluvgg_12 16 15
+conv2dvgg_12_reluvgg_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+conv2dvgg_13_reluvgg_13 17 16
+conv2dvgg_13_reluvgg_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+maxpool2dvgg_5 18 17
+maxpool2dvgg_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+adaptive_avg_pool_2dvgg 19 18
+adaptive_avg_pool_2dvgg earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_1_reluvgg_14 20 19
+linearvgg_1_reluvgg_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_2_reluvgg_15 21 20
+linearvgg_2_reluvgg_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+linearvgg_3 22 21
+linearvgg_3 TAIL
+linearvgg_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
+
+# unit is bits
+comm_vol 0 1 21829626000
+comm_vol 1 2 252825846000
+comm_vol 2 3 25788188353
+comm_vol 3 4 56999394980
+comm_vol 4 5 126478989000
+comm_vol 5 6 12993857113
+comm_vol 6 7 28686391406
+comm_vol 7 8 63486859800
+comm_vol 8 9 63487678800
+comm_vol 9 10 6508763680
+comm_vol 10 11 14410664759
+comm_vol 11 12 31992056460
+comm_vol 12 13 32009222700
+comm_vol 13 14 3292008283
+comm_vol 14 15 7107182683
+comm_vol 15 16 7983868620
+comm_vol 16 17 7938299460
+comm_vol 17 18 843068226
+comm_vol 18 19 226789290
+comm_vol 19 20 498350580
+comm_vol 20 21 178610250
+comm_vol 21 22 111074145

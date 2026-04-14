@@ -7,8 +7,8 @@ power_profile 2300 30
 PG_profile 2300 30
 ST 0
 
-add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 32 num_supported_functionalities 125 DVFS_mode performance
-acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear relu_maxpool2d relu_maxpool2d_adaptive_avg_pool2d bn2d_relu bn2d_relu_adaptive_avg_pool2d bn2d_add_relu bn2d_bn2d_add_relu bn2d_bn2d_add_relu_adaptive_avg_pool2d
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 32 num_supported_functionalities 208 DVFS_mode performance
+acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear relu_maxpool2d relu_maxpool2d_adaptive_avg_pool2d bn2d_relu bn2d_relu_adaptive_avg_pool2d bn2d_add_relu bn2d_bn2d_add_relu bn2d_bn2d_add_relu_adaptive_avg_pool2d maxpool2d_adaptive_avg_pool2d relu_relu_add relu_adaptive_avg_pool2d
 opp 1000 900
 trip_freq -1 -1 -1
 conv2dalex_1 2653120 conv2d
@@ -136,6 +136,89 @@ conv2dres_8 61213 conv2d
 conv2dres_9 20507 conv2d
 bn2dres_8_bn2dres_9_summation_3_relures_7_adaptive_avg_pool_2dres 58325 bn2d_bn2d_add_relu_adaptive_avg_pool2d
 linearres 19904 linear
+conv2dvgg_1 8276730 conv2d
+reluvgg_1 6672400 relu
+conv2dvgg_2 53614700 conv2d
+reluvgg_2 6667820 relu
+maxpool2dvgg_1 14175 maxpool2d
+conv2dvgg_3 22873800 conv2d
+reluvgg_3 3479220 relu
+conv2dvgg_4 61752200 conv2d
+reluvgg_4 3479540 relu
+maxpool2dvgg_2 14387 maxpool2d
+conv2dvgg_5 23514900 conv2d
+reluvgg_5 1869490 relu
+conv2dvgg_6 51348000 conv2d
+reluvgg_6 1865140 relu
+conv2dvgg_7 49475700 conv2d
+reluvgg_7 1863880 relu
+maxpool2dvgg_3 13852 maxpool2d
+conv2dvgg_8 24930200 conv2d
+reluvgg_8 1070420 relu
+conv2dvgg_9 52885700 conv2d
+reluvgg_9 1062950 relu
+conv2dvgg_10 53240700 conv2d
+reluvgg_10 1070650 relu
+maxpool2dvgg_4 16806 maxpool2d
+conv2dvgg_11 13159700 conv2d
+reluvgg_11 445697 relu
+conv2dvgg_12 13041000 conv2d
+reluvgg_12 442248 relu
+conv2dvgg_13 12995600 conv2d
+reluvgg_13 442451 relu
+maxpool2dvgg_5_adaptive_avg_pool_2dvgg 320009 maxpool2d_adaptive_avg_pool2d
+linearvgg_1 7118400 linear
+reluvgg_14 21051 relu
+linearvgg_2 1486120 linear
+reluvgg_15 24601 relu
+linearvgg_3 640553 linear
+conv2dsqueeze_1 2268220 conv2d
+relusqueeze_1 1871800 relu
+maxpool2dsqueeze_1 16436 maxpool2d
+conv2dsqueeze_2 750017 conv2d
+relusqueeze_2 253312 relu
+conv2dsqueeze_3 342764 conv2d
+conv2dsqueeze_4 1304750 conv2d
+relusqueeze_3_relusqueeze_4_summationsqueeze_1 1324423 relu_relu_add
+conv2dsqueeze_5 1066920 conv2d
+relusqueeze_5 145908 relu
+conv2dsqueeze_6 326836 conv2d
+conv2dsqueeze_7 1306840 conv2d
+relusqueeze_6_relusqueeze_7_summationsqueeze_2 1101548 relu_relu_add
+maxpool2dsqueeze_2 12838 maxpool2d
+conv2dsqueeze_8 394461 conv2d
+relusqueeze_8 65942 relu
+conv2dsqueeze_9 237352 conv2d
+conv2dsqueeze_10 903705 conv2d
+relusqueeze_9_relusqueeze_10_summationsqueeze_3 681130 relu_relu_add
+conv2dsqueeze_11 484182 conv2d
+relusqueeze_11 64848 relu
+conv2dsqueeze_12 235285 conv2d
+conv2dsqueeze_13 867880 conv2d
+relusqueeze_12_relusqueeze_13_summationsqueeze_4 470366 relu_relu_add
+maxpool2dsqueeze_3 15579 maxpool2d
+conv2dsqueeze_14 158523 conv2d
+relusqueeze_14 23718 relu
+conv2dsqueeze_15 128895 conv2d
+conv2dsqueeze_16 535557 conv2d
+relusqueeze_15_relusqueeze_16_summationsqueeze_5 173078 relu_relu_add
+conv2dsqueeze_17 207182 conv2d
+relusqueeze_17 22420 relu
+conv2dsqueeze_18 122310 conv2d
+conv2dsqueeze_19 519702 conv2d
+relusqueeze_18_relusqueeze_19_summationsqueeze_6 174499 relu_relu_add
+conv2dsqueeze_20 218660 conv2d
+relusqueeze_20 24456 relu
+conv2dsqueeze_21 165771 conv2d
+conv2dsqueeze_22 801045 conv2d
+relusqueeze_21_relusqueeze_22_summationsqueeze_7 245219 relu_relu_add
+conv2dsqueeze_23 314105 conv2d
+relusqueeze_23 27066 relu
+conv2dsqueeze_24 176836 conv2d
+conv2dsqueeze_25 804364 conv2d
+relusqueeze_24_relusqueeze_25_summationsqueeze_8 244241 relu_relu_add
+conv2dsqueeze_26 2515140 conv2d
+relusqueeze_26_adaptive_avg_pool_2dsqueeze 1126192 relu_adaptive_avg_pool2d
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0

@@ -1,6 +1,6 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
 # execution times are in nanoseconds
-add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 4 DVFS_mode performance
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 12 DVFS_mode performance
 opp 2300 30000
 trip_freq -1 -1 -1
 power_profile 2300 30
@@ -9,8 +9,16 @@ ST 0
 summation_1 0
 summation_2 0
 summation_3 0
+summationsqueeze_1 0
+summationsqueeze_2 0
+summationsqueeze_3 0
+summationsqueeze_4 0
+summationsqueeze_5 0
+summationsqueeze_6 0
+summationsqueeze_7 0
+summationsqueeze_8 0
 
-add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 16 num_supported_functionalities 177 DVFS_mode performance
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 16 num_supported_functionalities 270 DVFS_mode performance
 acc_supported_configs conv2d relu maxpool2d bn2d adaptive_avg_pool2d linear
 opp 1000 900
 trip_freq -1 -1 -1
@@ -191,6 +199,99 @@ bn2dres_9 27684 bn2d
 relures_7 20535 relu
 adaptive_avg_pool_2dres 10432 adaptive_avg_pool2d
 linearres 19753 linear
+conv2dvgg_1 13928900 conv2d
+reluvgg_1 13077800 relu
+conv2dvgg_2 110010000 conv2d
+reluvgg_2 13099500 relu
+maxpool2dvgg_1 20519 maxpool2d
+conv2dvgg_3 45211800 conv2d
+reluvgg_3 6668570 relu
+conv2dvgg_4 124106000 conv2d
+reluvgg_4 6668230 relu
+maxpool2dvgg_2 12258 maxpool2d
+conv2dvgg_5 46208400 conv2d
+reluvgg_5 3468870 relu
+conv2dvgg_6 102898000 conv2d
+reluvgg_6 3470570 relu
+conv2dvgg_7 102618000 conv2d
+reluvgg_7 3469880 relu
+maxpool2dvgg_3 13996 maxpool2d
+conv2dvgg_8 53459600 conv2d
+reluvgg_8 1861680 relu
+conv2dvgg_9 106063000 conv2d
+reluvgg_9 1862980 relu
+conv2dvgg_10 108301000 conv2d
+reluvgg_10 1862780 relu
+maxpool2dvgg_4 16828 maxpool2d
+conv2dvgg_11 26124400 conv2d
+reluvgg_11 658749 relu
+conv2dvgg_12 25997000 conv2d
+reluvgg_12 659446 relu
+conv2dvgg_13 26078500 conv2d
+reluvgg_13 651433 relu
+maxpool2dvgg_5 10467 maxpool2d
+adaptive_avg_pool_2dvgg 386374 adaptive_avg_pool2d
+linearvgg_1 8135970 linear
+reluvgg_14 245716 relu
+linearvgg_2 2154530 linear
+reluvgg_15 18297 relu
+linearvgg_3 778708 linear
+conv2dsqueeze_1 2704610 conv2d
+relusqueeze_1 3465230 relu
+maxpool2dsqueeze_1 13253 maxpool2d
+conv2dsqueeze_2 1142220 conv2d
+relusqueeze_2 447624 relu
+conv2dsqueeze_3 654200 conv2d
+relusqueeze_3 1066890 relu
+conv2dsqueeze_4 2059650 conv2d
+relusqueeze_4 1069530 relu
+conv2dsqueeze_5 1831410 conv2d
+relusqueeze_5 449803 relu
+conv2dsqueeze_6 717060 conv2d
+relusqueeze_6 1072740 relu
+conv2dsqueeze_7 2064480 conv2d
+relusqueeze_7 1068930 relu
+maxpool2dsqueeze_2 14596 maxpool2d
+conv2dsqueeze_8 722719 conv2d
+relusqueeze_8 337695 relu
+conv2dsqueeze_9 468922 conv2d
+relusqueeze_9 443054 relu
+conv2dsqueeze_10 1712430 conv2d
+relusqueeze_10 653971 relu
+conv2dsqueeze_11 1046590 conv2d
+relusqueeze_11 337709 relu
+conv2dsqueeze_12 387212 conv2d
+relusqueeze_12 439528 relu
+conv2dsqueeze_13 1726960 conv2d
+relusqueeze_13 653558 relu
+maxpool2dsqueeze_3 11661 maxpool2d
+conv2dsqueeze_14 513106 conv2d
+relusqueeze_14 217511 relu
+conv2dsqueeze_15 261622 conv2d
+relusqueeze_15 370041 relu
+conv2dsqueeze_16 985605 conv2d
+relusqueeze_16 155811 relu
+conv2dsqueeze_17 370772 conv2d
+relusqueeze_17 49658 relu
+conv2dsqueeze_18 224761 conv2d
+relusqueeze_18 154914 relu
+conv2dsqueeze_19 899613 conv2d
+relusqueeze_19 157067 relu
+conv2dsqueeze_20 378994 conv2d
+relusqueeze_20 70870 relu
+conv2dsqueeze_21 282840 conv2d
+relusqueeze_21 229364 relu
+conv2dsqueeze_22 1408510 conv2d
+relusqueeze_22 230622 relu
+conv2dsqueeze_23 483913 conv2d
+relusqueeze_23 71494 relu
+conv2dsqueeze_24 282933 conv2d
+relusqueeze_24 229341 relu
+conv2dsqueeze_25 1412380 conv2d
+relusqueeze_25 230131 relu
+conv2dsqueeze_26 5178700 conv2d
+relusqueeze_26 944584 relu
+adaptive_avg_pool_2dsqueeze 1159430 adaptive_avg_pool2d
 
 add_new_resource resource_type MEM resource_name MEMORY resource_ID 2 capacity 1 num_supported_functionalities 1 DVFS_mode none
 None 0

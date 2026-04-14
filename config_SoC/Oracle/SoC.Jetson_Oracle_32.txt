@@ -1,4 +1,4 @@
-# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32
 # execution times are in nanoseconds
 add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 1 DVFS_mode performance
 opp 2300 30000
@@ -11,9 +11,9 @@ add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 51
 acc_supported_configs conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu conv2d_bn2d_relu_conv2d_bn2d conv2d_bn2d_add_relu conv2d_bn2d_relu_pool2d_linear_add dscnn_single_fusion mobilenetv1_single_fusion alexnet_single_fusion
 opp 1000 900
 trip_freq -1 -1 -1
-fused_conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu_res1 2075176 conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu
-fused_conv2d_bn2d_relu_conv2d_bn2d_res1 773418 conv2d_bn2d_relu_conv2d_bn2d
-fused_conv2d_bn2d_add_relu_res1 119793 conv2d_bn2d_add_relu
+fused_conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu_res1 2075177 conv2d_bn2d_relu_conv2d_bn2d_relu_conv2d_bn2d_relu
+fused_conv2d_bn2d_relu_conv2d_bn2d_res1 773419 conv2d_bn2d_relu_conv2d_bn2d
+fused_conv2d_bn2d_add_relu_res1 119794 conv2d_bn2d_add_relu
 fused_conv2d_bn2d_relu_conv2d_bn2d_res2 230774 conv2d_bn2d_relu_conv2d_bn2d
 fused_conv2d_bn2d_relu_pool2d_linear_add_res1 97064 conv2d_bn2d_relu_pool2d_linear_add
 fused_dscnn_single_fusion 684326 dscnn_single_fusion
