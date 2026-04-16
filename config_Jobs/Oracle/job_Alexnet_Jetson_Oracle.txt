@@ -1,13 +1,12 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
-job_name Alexnet_Oracle 25215918
+job_name AlexNet_Oracle 578435676
 add_new_tasks 2
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-
+DummyTask 0
+DummyTask HEAD
+DummyTask earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 fused_alexnet_single_fusion 1 0
 fused_alexnet_single_fusion TAIL
 fused_alexnet_single_fusion earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 578435676
+comm_vol 0 1 0
