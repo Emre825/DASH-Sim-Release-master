@@ -1,69 +1,66 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1, compiled statically with TVM
-job_name DSCNN_TVM 25553346
-add_new_tasks 21
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_1 1 0
+job_name DSCNN_TVM 23406256
+add_new_tasks 20
+conv2ddscnn_1 0
+conv2ddscnn_1 HEAD
 conv2ddscnn_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_1_reludscnn_1 2 1
+bn2ddscnn_1_reludscnn_1 1 0
 bn2ddscnn_1_reludscnn_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_2 3 2
+conv2ddscnn_2 2 1
 conv2ddscnn_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_2_reludscnn_2 4 3
+bn2ddscnn_2_reludscnn_2 3 2
 bn2ddscnn_2_reludscnn_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_3 5 4
+conv2ddscnn_3 4 3
 conv2ddscnn_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_3_reludscnn_3 6 5
+bn2ddscnn_3_reludscnn_3 5 4
 bn2ddscnn_3_reludscnn_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_4 7 6
+conv2ddscnn_4 6 5
 conv2ddscnn_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_4_reludscnn_4 8 7
+bn2ddscnn_4_reludscnn_4 7 6
 bn2ddscnn_4_reludscnn_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_5 9 8
+conv2ddscnn_5 8 7
 conv2ddscnn_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_5_reludscnn_5 10 9
+bn2ddscnn_5_reludscnn_5 9 8
 bn2ddscnn_5_reludscnn_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_6 11 10
+conv2ddscnn_6 10 9
 conv2ddscnn_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_6_reludscnn_6 12 11
+bn2ddscnn_6_reludscnn_6 11 10
 bn2ddscnn_6_reludscnn_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_7 13 12
+conv2ddscnn_7 12 11
 conv2ddscnn_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_7_reludscnn_7 14 13
+bn2ddscnn_7_reludscnn_7 13 12
 bn2ddscnn_7_reludscnn_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_8 15 14
+conv2ddscnn_8 14 13
 conv2ddscnn_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_8_reludscnn_8 16 15
+bn2ddscnn_8_reludscnn_8 15 14
 bn2ddscnn_8_reludscnn_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2ddscnn_9 17 16
+conv2ddscnn_9 16 15
 conv2ddscnn_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2ddscnn_9_reludscnn_9 18 17
+bn2ddscnn_9_reludscnn_9 17 16
 bn2ddscnn_9_reludscnn_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-adaptive_avg_pool_2ddscnn 19 18
+adaptive_avg_pool_2ddscnn 18 17
 adaptive_avg_pool_2ddscnn earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-lineardscnn 20 19
+lineardscnn 19 18
 lineardscnn TAIL
 lineardscnn earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 23406256
-comm_vol 1 2 17266977
-comm_vol 2 3 17300409
-comm_vol 3 4 19008226
-comm_vol 4 5 17464558
-comm_vol 5 6 18119774
-comm_vol 6 7 16877581
-comm_vol 7 8 18589771
-comm_vol 8 9 17475314
-comm_vol 9 10 18076040
-comm_vol 10 11 16954627
-comm_vol 11 12 18605933
-comm_vol 12 13 17459235
-comm_vol 13 14 17987588
-comm_vol 14 15 17092202
-comm_vol 15 16 18599490
-comm_vol 16 17 17680496
-comm_vol 17 18 18030285
-comm_vol 18 19 17661418
-comm_vol 19 20 16220415
+comm_vol 0 1 17266977
+comm_vol 1 2 17300409
+comm_vol 2 3 19008226
+comm_vol 3 4 17464558
+comm_vol 4 5 18119774
+comm_vol 5 6 16877581
+comm_vol 6 7 18589771
+comm_vol 7 8 17475314
+comm_vol 8 9 18076040
+comm_vol 9 10 16954627
+comm_vol 10 11 18605933
+comm_vol 11 12 17459235
+comm_vol 12 13 17987588
+comm_vol 13 14 17092202
+comm_vol 14 15 18599490
+comm_vol 15 16 17680496
+comm_vol 16 17 18030285
+comm_vol 17 18 17661418
+comm_vol 18 19 16220415

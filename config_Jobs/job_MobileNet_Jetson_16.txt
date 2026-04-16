@@ -1,258 +1,255 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16
-job_name MobileNet_16 27583374
-add_new_tasks 84
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_1 1 0
+job_name MobileNet_16 567037380
+add_new_tasks 83
+conv2dmobile_1 0
+conv2dmobile_1 HEAD
 conv2dmobile_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_1 2 1
+bn2dmobile_1 1 0
 bn2dmobile_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_1 3 2
+relumobile_1 2 1
 relumobile_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_2 4 3
+conv2dmobile_2 3 2
 conv2dmobile_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_2 5 4
+bn2dmobile_2 4 3
 bn2dmobile_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_2 6 5
+relumobile_2 5 4
 relumobile_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_3 7 6
+conv2dmobile_3 6 5
 conv2dmobile_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_3 8 7
+bn2dmobile_3 7 6
 bn2dmobile_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_3 9 8
+relumobile_3 8 7
 relumobile_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_4 10 9
+conv2dmobile_4 9 8
 conv2dmobile_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_4 11 10
+bn2dmobile_4 10 9
 bn2dmobile_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_4 12 11
+relumobile_4 11 10
 relumobile_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_5 13 12
+conv2dmobile_5 12 11
 conv2dmobile_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_5 14 13
+bn2dmobile_5 13 12
 bn2dmobile_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_5 15 14
+relumobile_5 14 13
 relumobile_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_6 16 15
+conv2dmobile_6 15 14
 conv2dmobile_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_6 17 16
+bn2dmobile_6 16 15
 bn2dmobile_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_6 18 17
+relumobile_6 17 16
 relumobile_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_7 19 18
+conv2dmobile_7 18 17
 conv2dmobile_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_7 20 19
+bn2dmobile_7 19 18
 bn2dmobile_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_7 21 20
+relumobile_7 20 19
 relumobile_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_8 22 21
+conv2dmobile_8 21 20
 conv2dmobile_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_8 23 22
+bn2dmobile_8 22 21
 bn2dmobile_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_8 24 23
+relumobile_8 23 22
 relumobile_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_9 25 24
+conv2dmobile_9 24 23
 conv2dmobile_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_9 26 25
+bn2dmobile_9 25 24
 bn2dmobile_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_9 27 26
+relumobile_9 26 25
 relumobile_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_10 28 27
+conv2dmobile_10 27 26
 conv2dmobile_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_10 29 28
+bn2dmobile_10 28 27
 bn2dmobile_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_10 30 29
+relumobile_10 29 28
 relumobile_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_11 31 30
+conv2dmobile_11 30 29
 conv2dmobile_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_11 32 31
+bn2dmobile_11 31 30
 bn2dmobile_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_11 33 32
+relumobile_11 32 31
 relumobile_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_12 34 33
+conv2dmobile_12 33 32
 conv2dmobile_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_12 35 34
+bn2dmobile_12 34 33
 bn2dmobile_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_12 36 35
+relumobile_12 35 34
 relumobile_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_13 37 36
+conv2dmobile_13 36 35
 conv2dmobile_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_13 38 37
+bn2dmobile_13 37 36
 bn2dmobile_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_13 39 38
+relumobile_13 38 37
 relumobile_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_14 40 39
+conv2dmobile_14 39 38
 conv2dmobile_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_14 41 40
+bn2dmobile_14 40 39
 bn2dmobile_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_14 42 41
+relumobile_14 41 40
 relumobile_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_15 43 42
+conv2dmobile_15 42 41
 conv2dmobile_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_15 44 43
+bn2dmobile_15 43 42
 bn2dmobile_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_15 45 44
+relumobile_15 44 43
 relumobile_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_16 46 45
+conv2dmobile_16 45 44
 conv2dmobile_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_16 47 46
+bn2dmobile_16 46 45
 bn2dmobile_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_16 48 47
+relumobile_16 47 46
 relumobile_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_17 49 48
+conv2dmobile_17 48 47
 conv2dmobile_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_17 50 49
+bn2dmobile_17 49 48
 bn2dmobile_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_17 51 50
+relumobile_17 50 49
 relumobile_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_18 52 51
+conv2dmobile_18 51 50
 conv2dmobile_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_18 53 52
+bn2dmobile_18 52 51
 bn2dmobile_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_18 54 53
+relumobile_18 53 52
 relumobile_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_19 55 54
+conv2dmobile_19 54 53
 conv2dmobile_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_19 56 55
+bn2dmobile_19 55 54
 bn2dmobile_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_19 57 56
+relumobile_19 56 55
 relumobile_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_20 58 57
+conv2dmobile_20 57 56
 conv2dmobile_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_20 59 58
+bn2dmobile_20 58 57
 bn2dmobile_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_20 60 59
+relumobile_20 59 58
 relumobile_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_21 61 60
+conv2dmobile_21 60 59
 conv2dmobile_21 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_21 62 61
+bn2dmobile_21 61 60
 bn2dmobile_21 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_21 63 62
+relumobile_21 62 61
 relumobile_21 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_22 64 63
+conv2dmobile_22 63 62
 conv2dmobile_22 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_22 65 64
+bn2dmobile_22 64 63
 bn2dmobile_22 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_22 66 65
+relumobile_22 65 64
 relumobile_22 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_23 67 66
+conv2dmobile_23 66 65
 conv2dmobile_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_23 68 67
+bn2dmobile_23 67 66
 bn2dmobile_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_23 69 68
+relumobile_23 68 67
 relumobile_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_24 70 69
+conv2dmobile_24 69 68
 conv2dmobile_24 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_24 71 70
+bn2dmobile_24 70 69
 bn2dmobile_24 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_24 72 71
+relumobile_24 71 70
 relumobile_24 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_25 73 72
+conv2dmobile_25 72 71
 conv2dmobile_25 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_25 74 73
+bn2dmobile_25 73 72
 bn2dmobile_25 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_25 75 74
+relumobile_25 74 73
 relumobile_25 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_26 76 75
+conv2dmobile_26 75 74
 conv2dmobile_26 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_26 77 76
+bn2dmobile_26 76 75
 bn2dmobile_26 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_26 78 77
+relumobile_26 77 76
 relumobile_26 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dmobile_27 79 78
+conv2dmobile_27 78 77
 conv2dmobile_27 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-bn2dmobile_27 80 79
+bn2dmobile_27 79 78
 bn2dmobile_27 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relumobile_27 81 80
+relumobile_27 80 79
 relumobile_27 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-adaptive_avg_pool_2dmobile 82 81
+adaptive_avg_pool_2dmobile 81 80
 adaptive_avg_pool_2dmobile earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearmobile 83 82
+linearmobile 82 81
 linearmobile TAIL
 linearmobile earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 567037380
-comm_vol 1 2 226687188
-comm_vol 2 3 208500474
-comm_vol 3 4 224891394
-comm_vol 4 5 226736874
-comm_vol 5 6 219844716
-comm_vol 6 7 210353052
-comm_vol 7 8 379284360
-comm_vol 8 9 379639260
-comm_vol 9 10 233309349
-comm_vol 10 11 118469387
-comm_vol 11 12 126182784
-comm_vol 12 13 126268451
-comm_vol 13 14 216647886
-comm_vol 14 15 221658528
-comm_vol 15 16 152268644
-comm_vol 16 17 212470986
-comm_vol 17 18 220801308
-comm_vol 18 19 208169598
-comm_vol 19 20 225833244
-comm_vol 20 21 223397538
-comm_vol 21 22 137575183
-comm_vol 22 23 75811172
-comm_vol 23 24 76530854
-comm_vol 24 25 77423674
-comm_vol 25 26 119287459
-comm_vol 26 27 126384040
-comm_vol 27 28 97642927
-comm_vol 28 29 116237339
-comm_vol 29 30 132075107
-comm_vol 30 31 126924907
-comm_vol 31 32 133509831
-comm_vol 32 33 126415489
-comm_vol 33 34 97900148
-comm_vol 34 35 34234964
-comm_vol 35 36 35804496
-comm_vol 36 37 37589425
-comm_vol 37 38 74602819
-comm_vol 38 39 73505086
-comm_vol 39 40 58183180
-comm_vol 40 41 73659495
-comm_vol 41 42 73784802
-comm_vol 42 43 82162571
-comm_vol 43 44 75306613
-comm_vol 44 45 76018215
-comm_vol 45 46 59371385
-comm_vol 46 47 72708691
-comm_vol 47 48 74189388
-comm_vol 48 49 81351161
-comm_vol 49 50 78517858
-comm_vol 50 51 76548818
-comm_vol 51 52 58790332
-comm_vol 52 53 73372463
-comm_vol 53 54 73282810
-comm_vol 54 55 82136909
-comm_vol 55 56 80134181
-comm_vol 56 57 74155864
-comm_vol 57 58 57722028
-comm_vol 58 59 77447588
-comm_vol 59 60 77047480
-comm_vol 60 61 79799210
-comm_vol 61 62 75913055
-comm_vol 62 63 73422586
-comm_vol 63 64 57745124
-comm_vol 64 65 72833288
-comm_vol 65 66 73450868
-comm_vol 66 67 82067021
-comm_vol 67 68 75862223
-comm_vol 68 69 75986765
-comm_vol 69 70 56322215
-comm_vol 70 71 27485695
-comm_vol 71 72 26087607
-comm_vol 72 73 30503109
-comm_vol 73 74 55696696
-comm_vol 74 75 32086618
-comm_vol 75 76 22931858
-comm_vol 76 77 32271985
-comm_vol 77 78 32888965
-comm_vol 78 79 36072582
-comm_vol 79 80 60010205
-comm_vol 80 81 32988829
-comm_vol 81 82 31783752
-comm_vol 82 83 18750241
+comm_vol 0 1 226687188
+comm_vol 1 2 208500474
+comm_vol 2 3 224891394
+comm_vol 3 4 226736874
+comm_vol 4 5 219844716
+comm_vol 5 6 210353052
+comm_vol 6 7 379284360
+comm_vol 7 8 379639260
+comm_vol 8 9 233309349
+comm_vol 9 10 118469387
+comm_vol 10 11 126182784
+comm_vol 11 12 126268451
+comm_vol 12 13 216647886
+comm_vol 13 14 221658528
+comm_vol 14 15 152268644
+comm_vol 15 16 212470986
+comm_vol 16 17 220801308
+comm_vol 17 18 208169598
+comm_vol 18 19 225833244
+comm_vol 19 20 223397538
+comm_vol 20 21 137575183
+comm_vol 21 22 75811172
+comm_vol 22 23 76530854
+comm_vol 23 24 77423674
+comm_vol 24 25 119287459
+comm_vol 25 26 126384040
+comm_vol 26 27 97642927
+comm_vol 27 28 116237339
+comm_vol 28 29 132075107
+comm_vol 29 30 126924907
+comm_vol 30 31 133509831
+comm_vol 31 32 126415489
+comm_vol 32 33 97900148
+comm_vol 33 34 34234964
+comm_vol 34 35 35804496
+comm_vol 35 36 37589425
+comm_vol 36 37 74602819
+comm_vol 37 38 73505086
+comm_vol 38 39 58183180
+comm_vol 39 40 73659495
+comm_vol 40 41 73784802
+comm_vol 41 42 82162571
+comm_vol 42 43 75306613
+comm_vol 43 44 76018215
+comm_vol 44 45 59371385
+comm_vol 45 46 72708691
+comm_vol 46 47 74189388
+comm_vol 47 48 81351161
+comm_vol 48 49 78517858
+comm_vol 49 50 76548818
+comm_vol 50 51 58790332
+comm_vol 51 52 73372463
+comm_vol 52 53 73282810
+comm_vol 53 54 82136909
+comm_vol 54 55 80134181
+comm_vol 55 56 74155864
+comm_vol 56 57 57722028
+comm_vol 57 58 77447588
+comm_vol 58 59 77047480
+comm_vol 59 60 79799210
+comm_vol 60 61 75913055
+comm_vol 61 62 73422586
+comm_vol 62 63 57745124
+comm_vol 63 64 72833288
+comm_vol 64 65 73450868
+comm_vol 65 66 82067021
+comm_vol 66 67 75862223
+comm_vol 67 68 75986765
+comm_vol 68 69 56322215
+comm_vol 69 70 27485695
+comm_vol 70 71 26087607
+comm_vol 71 72 30503109
+comm_vol 72 73 55696696
+comm_vol 73 74 32086618
+comm_vol 74 75 22931858
+comm_vol 75 76 32271985
+comm_vol 76 77 32888965
+comm_vol 77 78 36072582
+comm_vol 78 79 60010205
+comm_vol 79 80 32988829
+comm_vol 80 81 31783752
+comm_vol 81 82 18750241

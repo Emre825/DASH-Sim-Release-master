@@ -1,158 +1,155 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16, compiled statically with PyTorch
-job_name SqueezeNet_PyTorch_16 143974740
-add_new_tasks 48 
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_1 1 0
+job_name SqueezeNet_PyTorch_16 2775591000
+add_new_tasks 47
+conv2dsqueeze_1 0
+conv2dsqueeze_1 HEAD
 conv2dsqueeze_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_1 2 1
+relusqueeze_1 1 0
 relusqueeze_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dsqueeze_1 3 2
+maxpool2dsqueeze_1 2 1
 maxpool2dsqueeze_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_2 4 3
+conv2dsqueeze_2 3 2
 conv2dsqueeze_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_2 5 4
+relusqueeze_2 4 3
 relusqueeze_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_3 6 5
+conv2dsqueeze_3 5 4
 conv2dsqueeze_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_4 7 5
+conv2dsqueeze_4 6 4
 conv2dsqueeze_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_3_relusqueeze_4_summationsqueeze_1 8 6 7
+relusqueeze_3_relusqueeze_4_summationsqueeze_1 7 5 6
 relusqueeze_3_relusqueeze_4_summationsqueeze_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_5 9 8
+conv2dsqueeze_5 8 7
 conv2dsqueeze_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_5 10 9
+relusqueeze_5 9 8
 relusqueeze_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_6 11 10
+conv2dsqueeze_6 10 9
 conv2dsqueeze_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_7 12 10
+conv2dsqueeze_7 11 9
 conv2dsqueeze_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_6_relusqueeze_7_summationsqueeze_2 13 11 12
+relusqueeze_6_relusqueeze_7_summationsqueeze_2 12 10 11
 relusqueeze_6_relusqueeze_7_summationsqueeze_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dsqueeze_2 14 13
+maxpool2dsqueeze_2 13 12
 maxpool2dsqueeze_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_8 15 14
+conv2dsqueeze_8 14 13
 conv2dsqueeze_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_8 16 15
+relusqueeze_8 15 14
 relusqueeze_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_9 17 16
+conv2dsqueeze_9 16 15
 conv2dsqueeze_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_10 18 16
+conv2dsqueeze_10 17 15
 conv2dsqueeze_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_9_relusqueeze_10_summationsqueeze_3 19 17 18
+relusqueeze_9_relusqueeze_10_summationsqueeze_3 18 16 17
 relusqueeze_9_relusqueeze_10_summationsqueeze_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_11 20 19
+conv2dsqueeze_11 19 18
 conv2dsqueeze_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_11 21 20
+relusqueeze_11 20 19
 relusqueeze_11 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_12 22 21
+conv2dsqueeze_12 21 20
 conv2dsqueeze_12 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_13 23 21
+conv2dsqueeze_13 22 20
 conv2dsqueeze_13 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_12_relusqueeze_13_summationsqueeze_4 24 22 23
+relusqueeze_12_relusqueeze_13_summationsqueeze_4 23 21 22
 relusqueeze_12_relusqueeze_13_summationsqueeze_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dsqueeze_3 25 24
+maxpool2dsqueeze_3 24 23
 maxpool2dsqueeze_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_14 26 25
+conv2dsqueeze_14 25 24
 conv2dsqueeze_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_14 27 26
+relusqueeze_14 26 25
 relusqueeze_14 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_15 28 27
+conv2dsqueeze_15 27 26
 conv2dsqueeze_15 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_16 29 27
+conv2dsqueeze_16 28 26
 conv2dsqueeze_16 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_15_relusqueeze_16_summationsqueeze_5 30 28 29
+relusqueeze_15_relusqueeze_16_summationsqueeze_5 29 27 28
 relusqueeze_15_relusqueeze_16_summationsqueeze_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_17 31 30
+conv2dsqueeze_17 30 29
 conv2dsqueeze_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_17 32 31
+relusqueeze_17 31 30
 relusqueeze_17 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_18 33 32
+conv2dsqueeze_18 32 31
 conv2dsqueeze_18 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_19 34 32
+conv2dsqueeze_19 33 31
 conv2dsqueeze_19 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_18_relusqueeze_19_summationsqueeze_6 35 33 34
+relusqueeze_18_relusqueeze_19_summationsqueeze_6 34 32 33
 relusqueeze_18_relusqueeze_19_summationsqueeze_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_20 36 35
+conv2dsqueeze_20 35 34
 conv2dsqueeze_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_20 37 36
+relusqueeze_20 36 35
 relusqueeze_20 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_21 38 37
+conv2dsqueeze_21 37 36
 conv2dsqueeze_21 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_22 39 37
+conv2dsqueeze_22 38 36
 conv2dsqueeze_22 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_21_relusqueeze_22_summationsqueeze_7 40 38 39
+relusqueeze_21_relusqueeze_22_summationsqueeze_7 39 37 38
 relusqueeze_21_relusqueeze_22_summationsqueeze_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_23 41 40
+conv2dsqueeze_23 40 39
 conv2dsqueeze_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_23 42 41
+relusqueeze_23 41 40
 relusqueeze_23 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_24 43 42
+conv2dsqueeze_24 42 41
 conv2dsqueeze_24 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_25 44 42
+conv2dsqueeze_25 43 41
 conv2dsqueeze_25 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_24_relusqueeze_25_summationsqueeze_8 45 43 44
+relusqueeze_24_relusqueeze_25_summationsqueeze_8 44 42 43
 relusqueeze_24_relusqueeze_25_summationsqueeze_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dsqueeze_26 46 45
+conv2dsqueeze_26 45 44
 conv2dsqueeze_26 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relusqueeze_26_adaptive_avg_pool_2dsqueeze 47 46
+relusqueeze_26_adaptive_avg_pool_2dsqueeze 46 45
 relusqueeze_26_adaptive_avg_pool_2dsqueeze TAIL
 relusqueeze_26_adaptive_avg_pool_2dsqueeze earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 2775591000
-comm_vol 1 2 6373032120
-comm_vol 2 3 3204759503
-comm_vol 3 4 927495114
-comm_vol 4 5 476480004
-comm_vol 5 6 490791756
-comm_vol 6 8 1621445280
-comm_vol 5 7 1968221346
-comm_vol 7 8 1600522560
-comm_vol 8 9 3115770840
-comm_vol 9 10 468225030
-comm_vol 10 11 450081450
-comm_vol 11 13 1588772640
-comm_vol 10 12 1989907920
-comm_vol 12 13 1595919780
-comm_vol 13 14 15275114
-comm_vol 14 15 406569618
-comm_vol 15 16 264971616
-comm_vol 16 17 280804524
-comm_vol 17 19 818269452
-comm_vol 16 18 978232710
-comm_vol 18 19 849120090
-comm_vol 19 20 1466741640
-comm_vol 20 21 276164070
-comm_vol 21 22 244446384
-comm_vol 22 24 832723164
-comm_vol 21 23 975843414
-comm_vol 23 24 844196262
-comm_vol 24 25 13326986
-comm_vol 25 26 183315623
-comm_vol 26 27 128806205
-comm_vol 27 28 127537082
-comm_vol 28 30 330618288
-comm_vol 27 29 378229488
-comm_vol 29 30 330573516
-comm_vol 30 31 508092312
-comm_vol 31 32 127757339
-comm_vol 32 33 130679258
-comm_vol 33 35 325081848
-comm_vol 32 34 366711618
-comm_vol 34 35 328983564
-comm_vol 35 36 521236716
-comm_vol 36 37 156861978
-comm_vol 37 38 166323066
-comm_vol 38 40 430665690
-comm_vol 37 39 506863266
-comm_vol 39 40 450641646
-comm_vol 40 41 680822688
-comm_vol 41 42 166681788
-comm_vol 42 43 171511158
-comm_vol 43 45 441205674
-comm_vol 42 44 502088496
-comm_vol 44 45 457908906
-comm_vol 45 46 700311612
-comm_vol 46 47 1504672260
+comm_vol 0 1 6373032120
+comm_vol 1 2 3204759503
+comm_vol 2 3 927495114
+comm_vol 3 4 476480004
+comm_vol 4 5 490791756
+comm_vol 5 7 1621445280
+comm_vol 4 6 1968221346
+comm_vol 6 7 1600522560
+comm_vol 7 8 3115770840
+comm_vol 8 9 468225030
+comm_vol 9 10 450081450
+comm_vol 10 12 1588772640
+comm_vol 9 11 1989907920
+comm_vol 11 12 1595919780
+comm_vol 12 13 15275114
+comm_vol 13 14 406569618
+comm_vol 14 15 264971616
+comm_vol 15 16 280804524
+comm_vol 16 18 818269452
+comm_vol 15 17 978232710
+comm_vol 17 18 849120090
+comm_vol 18 19 1466741640
+comm_vol 19 20 276164070
+comm_vol 20 21 244446384
+comm_vol 21 23 832723164
+comm_vol 20 22 975843414
+comm_vol 22 23 844196262
+comm_vol 23 24 13326986
+comm_vol 24 25 183315623
+comm_vol 25 26 128806205
+comm_vol 26 27 127537082
+comm_vol 27 29 330618288
+comm_vol 26 28 378229488
+comm_vol 28 29 330573516
+comm_vol 29 30 508092312
+comm_vol 30 31 127757339
+comm_vol 31 32 130679258
+comm_vol 32 34 325081848
+comm_vol 31 33 366711618
+comm_vol 33 34 328983564
+comm_vol 34 35 521236716
+comm_vol 35 36 156861978
+comm_vol 36 37 166323066
+comm_vol 37 39 430665690
+comm_vol 36 38 506863266
+comm_vol 38 39 450641646
+comm_vol 39 40 680822688
+comm_vol 40 41 166681788
+comm_vol 41 42 171511158
+comm_vol 42 44 441205674
+comm_vol 41 43 502088496
+comm_vol 43 44 457908906
+comm_vol 44 45 700311612
+comm_vol 45 46 1504672260

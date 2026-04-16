@@ -1,0 +1,192 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with PyTorch
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 0 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 5 num_supported_functionalities 74 DVFS_mode performance
+acc_supported_configs conv2d linear bn2d_relu bn2d_relu_adaptive_avg_pool2d
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 77851 conv2d
+bn2ddscnn_1_reludscnn_1 34770 bn2d_relu
+conv2ddscnn_2 25275 conv2d
+bn2ddscnn_2_reludscnn_2 34018 bn2d_relu
+conv2ddscnn_3 41656 conv2d
+bn2ddscnn_3_reludscnn_3 33574 bn2d_relu
+conv2ddscnn_4 24586 conv2d
+bn2ddscnn_4_reludscnn_4 32940 bn2d_relu
+conv2ddscnn_5 41296 conv2d
+bn2ddscnn_5_reludscnn_5 32993 bn2d_relu
+conv2ddscnn_6 24067 conv2d
+bn2ddscnn_6_reludscnn_6 35632 bn2d_relu
+conv2ddscnn_7 40734 conv2d
+bn2ddscnn_7_reludscnn_7 35186 bn2d_relu
+conv2ddscnn_8 24779 conv2d
+bn2ddscnn_8_reludscnn_8 35654 bn2d_relu
+conv2ddscnn_9 43135 conv2d
+bn2ddscnn_9_reludscnn_9_adaptive_avg_pool_2ddscnn 45085 bn2d_relu_adaptive_avg_pool2d
+lineardscnn 21094 linear
+conv2dmobile_1 575757 conv2d
+bn2dmobile_1_relumobile_1 217219 bn2d_relu
+conv2dmobile_2 262067 conv2d
+bn2dmobile_2_relumobile_2 216200 bn2d_relu
+conv2dmobile_3 283022 conv2d
+bn2dmobile_3_relumobile_3 383734 bn2d_relu
+conv2dmobile_4 75220 conv2d
+bn2dmobile_4_relumobile_4 113485 bn2d_relu
+conv2dmobile_5 107361 conv2d
+bn2dmobile_5_relumobile_5 216739 bn2d_relu
+conv2dmobile_6 93373 conv2d
+bn2dmobile_6_relumobile_6 216274 bn2d_relu
+conv2dmobile_7 155457 conv2d
+bn2dmobile_7_relumobile_7 215459 bn2d_relu
+conv2dmobile_8 30861 conv2d
+bn2dmobile_8_relumobile_8 51035 bn2d_relu
+conv2dmobile_9 58446 conv2d
+bn2dmobile_9_relumobile_9 111124 bn2d_relu
+conv2dmobile_10 49455 conv2d
+bn2dmobile_10_relumobile_10 110128 bn2d_relu
+conv2dmobile_11 91441 conv2d
+bn2dmobile_11_relumobile_11 114298 bn2d_relu
+conv2dmobile_12 22718 conv2d
+bn2dmobile_12_relumobile_12 34079 bn2d_relu
+conv2dmobile_13 57941 conv2d
+bn2dmobile_13_relumobile_13 50864 bn2d_relu
+conv2dmobile_14 30360 conv2d
+bn2dmobile_14_relumobile_14 50471 bn2d_relu
+conv2dmobile_15 75054 conv2d
+bn2dmobile_15_relumobile_15 50709 bn2d_relu
+conv2dmobile_16 29929 conv2d
+bn2dmobile_16_relumobile_16 51081 bn2d_relu
+conv2dmobile_17 74633 conv2d
+bn2dmobile_17_relumobile_17 51181 bn2d_relu
+conv2dmobile_18 30301 conv2d
+bn2dmobile_18_relumobile_18 51658 bn2d_relu
+conv2dmobile_19 75926 conv2d
+bn2dmobile_19_relumobile_19 50501 bn2d_relu
+conv2dmobile_20 30691 conv2d
+bn2dmobile_20_relumobile_20 50232 bn2d_relu
+conv2dmobile_21 74796 conv2d
+bn2dmobile_21_relumobile_21 51145 bn2d_relu
+conv2dmobile_22 30052 conv2d
+bn2dmobile_22_relumobile_22 50267 bn2d_relu
+conv2dmobile_23 74724 conv2d
+bn2dmobile_23_relumobile_23 50656 bn2d_relu
+conv2dmobile_24 20026 conv2d
+bn2dmobile_24_relumobile_24 24322 bn2d_relu
+conv2dmobile_25 64122 conv2d
+bn2dmobile_25_relumobile_25 32416 bn2d_relu
+conv2dmobile_26 22852 conv2d
+bn2dmobile_26_relumobile_26 31656 bn2d_relu
+conv2dmobile_27 90405 conv2d
+bn2dmobile_27_relumobile_27_adaptive_avg_pool_2dmobile 40799 bn2d_relu_adaptive_avg_pool2d
+linearmobile 29348 linear
+
+add_new_resource resource_type ACC resource_name GPU_2 resource_ID 2 capacity 5 num_supported_functionalities 38 DVFS_mode performance
+acc_supported_configs conv2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 77851 conv2d
+conv2ddscnn_2 25275 conv2d
+conv2ddscnn_3 41656 conv2d
+conv2ddscnn_4 24586 conv2d
+conv2ddscnn_5 41296 conv2d
+conv2ddscnn_6 24067 conv2d
+conv2ddscnn_7 40734 conv2d
+conv2ddscnn_8 24779 conv2d
+conv2ddscnn_9 43135 conv2d
+lineardscnn 21094 linear
+conv2dmobile_1 575757 conv2d
+conv2dmobile_2 262067 conv2d
+conv2dmobile_3 283022 conv2d
+conv2dmobile_4 75220 conv2d
+conv2dmobile_5 107361 conv2d
+conv2dmobile_6 93373 conv2d
+conv2dmobile_7 155457 conv2d
+conv2dmobile_8 30861 conv2d
+conv2dmobile_9 58446 conv2d
+conv2dmobile_10 49455 conv2d
+conv2dmobile_11 91441 conv2d
+conv2dmobile_12 22718 conv2d
+conv2dmobile_13 57941 conv2d
+conv2dmobile_14 30360 conv2d
+conv2dmobile_15 75054 conv2d
+conv2dmobile_16 29929 conv2d
+conv2dmobile_17 74633 conv2d
+conv2dmobile_18 30301 conv2d
+conv2dmobile_19 75926 conv2d
+conv2dmobile_20 30691 conv2d
+conv2dmobile_21 74796 conv2d
+conv2dmobile_22 30052 conv2d
+conv2dmobile_23 74724 conv2d
+conv2dmobile_24 20026 conv2d
+conv2dmobile_25 64122 conv2d
+conv2dmobile_26 22852 conv2d
+conv2dmobile_27 90405 conv2d
+linearmobile 29348 linear
+
+add_new_resource resource_type ACC resource_name GPU_3 resource_ID 3 capacity 5 num_supported_functionalities 38 DVFS_mode performance
+acc_supported_configs conv2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 77851 conv2d
+conv2ddscnn_2 25275 conv2d
+conv2ddscnn_3 41656 conv2d
+conv2ddscnn_4 24586 conv2d
+conv2ddscnn_5 41296 conv2d
+conv2ddscnn_6 24067 conv2d
+conv2ddscnn_7 40734 conv2d
+conv2ddscnn_8 24779 conv2d
+conv2ddscnn_9 43135 conv2d
+lineardscnn 21094 linear
+conv2dmobile_1 575757 conv2d
+conv2dmobile_2 262067 conv2d
+conv2dmobile_3 283022 conv2d
+conv2dmobile_4 75220 conv2d
+conv2dmobile_5 107361 conv2d
+conv2dmobile_6 93373 conv2d
+conv2dmobile_7 155457 conv2d
+conv2dmobile_8 30861 conv2d
+conv2dmobile_9 58446 conv2d
+conv2dmobile_10 49455 conv2d
+conv2dmobile_11 91441 conv2d
+conv2dmobile_12 22718 conv2d
+conv2dmobile_13 57941 conv2d
+conv2dmobile_14 30360 conv2d
+conv2dmobile_15 75054 conv2d
+conv2dmobile_16 29929 conv2d
+conv2dmobile_17 74633 conv2d
+conv2dmobile_18 30301 conv2d
+conv2dmobile_19 75926 conv2d
+conv2dmobile_20 30691 conv2d
+conv2dmobile_21 74796 conv2d
+conv2dmobile_22 30052 conv2d
+conv2dmobile_23 74724 conv2d
+conv2dmobile_24 20026 conv2d
+conv2dmobile_25 64122 conv2d
+conv2dmobile_26 22852 conv2d
+conv2dmobile_27 90405 conv2d
+linearmobile 29348 linear
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 4 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# Bandwidth between memory and CPU
+comm_band 0 4 273
+comm_band 4 0 273
+
+# Bandwidth between memory and GPU    
+comm_band 1 4 273
+comm_band 4 1 273
+
+# Bandwidth between memory and GPU    
+comm_band 2 4 273
+comm_band 4 2 273
+
+# Bandwidth between memory and GPU    
+comm_band 3 4 273
+comm_band 4 3 273

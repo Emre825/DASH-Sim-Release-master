@@ -1,0 +1,126 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with TVM
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 8 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+summationsqueeze_1 0
+summationsqueeze_2 0
+summationsqueeze_3 0
+summationsqueeze_4 0
+summationsqueeze_5 0
+summationsqueeze_6 0
+summationsqueeze_7 0
+summationsqueeze_8 0
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 4 num_supported_functionalities 52 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d linear conv2d_relu linear_relu
+opp 1000 900
+trip_freq -1 -1 -1
+conv2dvgg_1_reluvgg_1 27006700 conv2d_relu
+conv2dvgg_2_reluvgg_2 123109500 conv2d_relu
+maxpool2dvgg_1 20519 maxpool2d
+conv2dvgg_3_reluvgg_3 51880370 conv2d_relu
+conv2dvgg_4_reluvgg_4 130774230 conv2d_relu
+maxpool2dvgg_2 12258 maxpool2d
+conv2dvgg_5_reluvgg_5 49677270 conv2d_relu
+conv2dvgg_6_reluvgg_6 106368570 conv2d_relu
+conv2dvgg_7_reluvgg_7 106087880 conv2d_relu
+maxpool2dvgg_3 13996 maxpool2d
+conv2dvgg_8_reluvgg_8 55321280 conv2d_relu
+conv2dvgg_9_reluvgg_9 107925980 conv2d_relu
+conv2dvgg_10_reluvgg_10 110163780 conv2d_relu
+maxpool2dvgg_4 16828 maxpool2d
+conv2dvgg_11_reluvgg_11 26783149 conv2d_relu
+conv2dvgg_12_reluvgg_12 26656446 conv2d_relu
+conv2dvgg_13_reluvgg_13 26729933 conv2d_relu
+maxpool2dvgg_5 10467 maxpool2d
+adaptive_avg_pool_2dvgg 386374 adaptive_avg_pool2d
+linearvgg_1_reluvgg_14 8381686 linear_relu
+linearvgg_2_reluvgg_15 2172827 linear_relu
+linearvgg_3 778708 linear
+conv2dsqueeze_1_relusqueeze_1 6169840 conv2d_relu
+maxpool2dsqueeze_1 13253 maxpool2d
+conv2dsqueeze_2_relusqueeze_2 1589844 conv2d_relu
+conv2dsqueeze_3_relusqueeze_3 1721090 conv2d_relu
+conv2dsqueeze_4_relusqueeze_4 3129180 conv2d_relu
+conv2dsqueeze_5_relusqueeze_5 2281213 conv2d_relu
+conv2dsqueeze_6_relusqueeze_6 1789800 conv2d_relu
+conv2dsqueeze_7_relusqueeze_7 3133410 conv2d_relu
+maxpool2dsqueeze_2 14596 maxpool2d
+conv2dsqueeze_8_relusqueeze_8 1060414 conv2d_relu
+conv2dsqueeze_9_relusqueeze_9 911976 conv2d_relu
+conv2dsqueeze_10_relusqueeze_10 2366401 conv2d_relu
+conv2dsqueeze_11_relusqueeze_11 1384299 conv2d_relu
+conv2dsqueeze_12_relusqueeze_12 826740 conv2d_relu
+conv2dsqueeze_13_relusqueeze_13 2380518 conv2d_relu
+maxpool2dsqueeze_3 11661 maxpool2d
+conv2dsqueeze_14_relusqueeze_14 730617 conv2d_relu
+conv2dsqueeze_15_relusqueeze_15 631663 conv2d_relu
+conv2dsqueeze_16_relusqueeze_16 1141416 conv2d_relu
+conv2dsqueeze_17_relusqueeze_17 420430 conv2d_relu
+conv2dsqueeze_18_relusqueeze_18 379675 conv2d_relu
+conv2dsqueeze_19_relusqueeze_19 1056680 conv2d_relu
+conv2dsqueeze_20_relusqueeze_20 449864 conv2d_relu
+conv2dsqueeze_21_relusqueeze_21 512204 conv2d_relu
+conv2dsqueeze_22_relusqueeze_22 1639132 conv2d_relu
+conv2dsqueeze_23_relusqueeze_23 555407 conv2d_relu
+conv2dsqueeze_24_relusqueeze_24 512274 conv2d_relu
+conv2dsqueeze_25_relusqueeze_25 1642511 conv2d_relu
+conv2dsqueeze_26_relusqueeze_26 6123284 conv2d_relu
+adaptive_avg_pool_2dsqueeze 1159430 adaptive_avg_pool2d
+
+add_new_resource resource_type ACC resource_name GPU_2 resource_ID 2 capacity 4 num_supported_functionalities 11 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+maxpool2dvgg_1 20519 maxpool2d
+maxpool2dvgg_2 12258 maxpool2d
+maxpool2dvgg_3 13996 maxpool2d
+maxpool2dvgg_4 16828 maxpool2d
+maxpool2dvgg_5 10467 maxpool2d
+adaptive_avg_pool_2dvgg 386374 adaptive_avg_pool2d
+linearvgg_3 778708 linear
+maxpool2dsqueeze_1 13253 maxpool2d
+maxpool2dsqueeze_2 14596 maxpool2d
+maxpool2dsqueeze_3 11661 maxpool2d
+adaptive_avg_pool_2dsqueeze 1159430 adaptive_avg_pool2d
+
+add_new_resource resource_type ACC resource_name GPU_3 resource_ID 3 capacity 4 num_supported_functionalities 13 DVFS_mode performance
+acc_supported_configs maxpool2d adaptive_avg_pool2d linear linear_relu
+opp 1000 900
+trip_freq -1 -1 -1
+maxpool2dvgg_1 20519 maxpool2d
+maxpool2dvgg_2 12258 maxpool2d
+maxpool2dvgg_3 13996 maxpool2d
+maxpool2dvgg_4 16828 maxpool2d
+maxpool2dvgg_5 10467 maxpool2d
+adaptive_avg_pool_2dvgg 386374 adaptive_avg_pool2d
+linearvgg_1_reluvgg_14 8381686 linear_relu
+linearvgg_2_reluvgg_15 2172827 linear_relu
+linearvgg_3 778708 linear
+maxpool2dsqueeze_1 13253 maxpool2d
+maxpool2dsqueeze_2 14596 maxpool2d
+maxpool2dsqueeze_3 11661 maxpool2d
+adaptive_avg_pool_2dsqueeze 1159430 adaptive_avg_pool2d
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 4 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# Bandwidth between memory and CPU
+comm_band 0 4 273
+comm_band 4 0 273
+
+# Bandwidth between memory and GPU    
+comm_band 1 4 273
+comm_band 4 1 273
+
+# Bandwidth between memory and GPU    
+comm_band 2 4 273
+comm_band 4 2 273
+
+# Bandwidth between memory and GPU    
+comm_band 3 4 273
+comm_band 4 3 273

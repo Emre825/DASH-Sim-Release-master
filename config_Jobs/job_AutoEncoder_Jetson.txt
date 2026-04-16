@@ -1,66 +1,63 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 1
-job_name AutoEncoder 24885260
-add_new_tasks 20
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_1 1 0
+job_name AutoEncoder 18812212
+add_new_tasks 19
+linearautoen_1 0
+linearautoen_1 HEAD
 linearautoen_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_1 2 1
+reluautoen_1 1 0
 reluautoen_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_2 3 2
+linearautoen_2 2 1
 linearautoen_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_2 4 3
+reluautoen_2 3 2
 reluautoen_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_3 5 4
+linearautoen_3 4 3
 linearautoen_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_3 6 5
+reluautoen_3 5 4
 reluautoen_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_4 7 6
+linearautoen_4 6 5
 linearautoen_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_4 8 7
+reluautoen_4 7 6
 reluautoen_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_5 9 8
+linearautoen_5 8 7
 linearautoen_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_5 10 9
+reluautoen_5 9 8
 reluautoen_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_6 11 10
+linearautoen_6 10 9
 linearautoen_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_6 12 11
+reluautoen_6 11 10
 reluautoen_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_7 13 12
+linearautoen_7 12 11
 linearautoen_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_7 14 13
+reluautoen_7 13 12
 reluautoen_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_8 15 14
+linearautoen_8 14 13
 linearautoen_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_8 16 15
+reluautoen_8 15 14
 reluautoen_8 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_9 17 16
+linearautoen_9 16 15
 linearautoen_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-reluautoen_9 18 17
+reluautoen_9 17 16
 reluautoen_9 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearautoen_10 19 18
+linearautoen_10 18 17
 linearautoen_10 TAIL
 linearautoen_10 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 18812212
-comm_vol 1 2 17784656
-comm_vol 2 3 21368420
-comm_vol 3 4 17864427
-comm_vol 4 5 21502354
-comm_vol 5 6 17774446
-comm_vol 6 7 21255125
-comm_vol 7 8 17643684
-comm_vol 8 9 16556593
-comm_vol 9 10 17631175
-comm_vol 10 11 16517084
-comm_vol 11 12 17756892
-comm_vol 12 13 21086192
-comm_vol 13 14 17637258
-comm_vol 14 15 21142048
-comm_vol 15 16 17601216
-comm_vol 16 17 21040929
-comm_vol 17 18 17599398
-comm_vol 18 19 20952586
+comm_vol 0 1 17784656
+comm_vol 1 2 21368420
+comm_vol 2 3 17864427
+comm_vol 3 4 21502354
+comm_vol 4 5 17774446
+comm_vol 5 6 21255125
+comm_vol 6 7 17643684
+comm_vol 7 8 16556593
+comm_vol 8 9 17631175
+comm_vol 9 10 16517084
+comm_vol 10 11 17756892
+comm_vol 11 12 21086192
+comm_vol 12 13 17637258
+comm_vol 13 14 21142048
+comm_vol 14 15 17601216
+comm_vol 15 16 21040929
+comm_vol 16 17 17599398
+comm_vol 17 18 20952586

@@ -1,11 +1,10 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 32, compiled statically with TVM
 # execution times are in nanoseconds
-add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 9 DVFS_mode performance
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 8 DVFS_mode performance
 opp 2300 30000
 trip_freq -1 -1 -1
 power_profile 2300 30
 PG_profile 2300 30
-ST 0
 summationsqueeze_1 0
 summationsqueeze_2 0
 summationsqueeze_3 0

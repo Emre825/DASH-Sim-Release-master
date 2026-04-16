@@ -1,0 +1,306 @@
+# Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16
+# execution times are in nanoseconds
+add_new_resource resource_type CPU resource_name P1 resource_ID 0 capacity 8 num_supported_functionalities 0 DVFS_mode performance
+opp 2300 30000
+trip_freq -1 -1 -1
+power_profile 2300 30
+PG_profile 2300 30
+
+add_new_resource resource_type ACC resource_name GPU_1 resource_ID 1 capacity 5 num_supported_functionalities 112 DVFS_mode performance
+acc_supported_configs conv2d relu bn2d adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 50580 conv2d
+bn2ddscnn_1 17728 bn2d
+reludscnn_1 15001 relu
+conv2ddscnn_2 26272 conv2d
+bn2ddscnn_2 16893 bn2d
+reludscnn_2 14344 relu
+conv2ddscnn_3 50951 conv2d
+bn2ddscnn_3 16732 bn2d
+reludscnn_3 15573 relu
+conv2ddscnn_4 24444 conv2d
+bn2ddscnn_4 16532 bn2d
+reludscnn_4 15959 relu
+conv2ddscnn_5 49692 conv2d
+bn2ddscnn_5 16744 bn2d
+reludscnn_5 13402 relu
+conv2ddscnn_6 24678 conv2d
+bn2ddscnn_6 17176 bn2d
+reludscnn_6 13475 relu
+conv2ddscnn_7 49410 conv2d
+bn2ddscnn_7 16115 bn2d
+reludscnn_7 13112 relu
+conv2ddscnn_8 23758 conv2d
+bn2ddscnn_8 15868 bn2d
+reludscnn_8 13097 relu
+conv2ddscnn_9 49635 conv2d
+bn2ddscnn_9 15850 bn2d
+reludscnn_9 13373 relu
+adaptive_avg_pool_2ddscnn 14782 adaptive_avg_pool2d
+lineardscnn 21617 linear
+conv2dmobile_1 268801 conv2d
+bn2dmobile_1 66821 bn2d
+relumobile_1 314114 relu
+conv2dmobile_2 286756 conv2d
+bn2dmobile_2 64562 bn2d
+relumobile_2 47809 relu
+conv2dmobile_3 163840 conv2d
+bn2dmobile_3 120822 bn2d
+relumobile_3 108652 relu
+conv2dmobile_4 44806 conv2d
+bn2dmobile_4 30762 bn2d
+relumobile_4 20026 relu
+conv2dmobile_5 47286 conv2d
+bn2dmobile_5 65155 bn2d
+relumobile_5 47161 relu
+conv2dmobile_6 51119 conv2d
+bn2dmobile_6 65395 bn2d
+relumobile_6 48996 relu
+conv2dmobile_7 91636 conv2d
+bn2dmobile_7 64155 bn2d
+relumobile_7 50853 relu
+conv2dmobile_8 25823 conv2d
+bn2dmobile_8 19322 bn2d
+relumobile_8 15592 relu
+conv2dmobile_9 41852 conv2d
+bn2dmobile_9 30381 bn2d
+relumobile_9 20658 relu
+conv2dmobile_10 34133 conv2d
+bn2dmobile_10 30710 bn2d
+relumobile_10 20720 relu
+conv2dmobile_11 49936 conv2d
+bn2dmobile_11 30949 bn2d
+relumobile_11 20190 relu
+conv2dmobile_12 21791 conv2d
+bn2dmobile_12 13738 bn2d
+relumobile_12 12085 relu
+conv2dmobile_13 46402 conv2d
+bn2dmobile_13 19053 bn2d
+relumobile_13 15076 relu
+conv2dmobile_14 26049 conv2d
+bn2dmobile_14 19075 bn2d
+relumobile_14 15307 relu
+conv2dmobile_15 50019 conv2d
+bn2dmobile_15 19943 bn2d
+relumobile_15 16387 relu
+conv2dmobile_16 25351 conv2d
+bn2dmobile_16 18979 bn2d
+relumobile_16 15833 relu
+conv2dmobile_17 50493 conv2d
+bn2dmobile_17 19720 bn2d
+relumobile_17 15885 relu
+conv2dmobile_18 26459 conv2d
+bn2dmobile_18 19545 bn2d
+relumobile_18 15251 relu
+conv2dmobile_19 50838 conv2d
+bn2dmobile_19 19327 bn2d
+relumobile_19 15582 relu
+conv2dmobile_20 25958 conv2d
+bn2dmobile_20 19733 bn2d
+relumobile_20 15713 relu
+conv2dmobile_21 49797 conv2d
+bn2dmobile_21 19290 bn2d
+relumobile_21 15101 relu
+conv2dmobile_22 25630 conv2d
+bn2dmobile_22 19435 bn2d
+relumobile_22 15510 relu
+conv2dmobile_23 49927 conv2d
+bn2dmobile_23 19159 bn2d
+relumobile_23 15737 relu
+conv2dmobile_24 20339 conv2d
+bn2dmobile_24 11932 bn2d
+relumobile_24 11855 relu
+conv2dmobile_25 45653 conv2d
+bn2dmobile_25 13812 bn2d
+relumobile_25 12450 relu
+conv2dmobile_26 20652 conv2d
+bn2dmobile_26 14555 bn2d
+relumobile_26 11419 relu
+conv2dmobile_27 74621 conv2d
+bn2dmobile_27 14061 bn2d
+relumobile_27 11666 relu
+adaptive_avg_pool_2dmobile 13085 adaptive_avg_pool2d
+linearmobile 18695 linear
+
+add_new_resource resource_type ACC resource_name GPU_2 resource_ID 2 capacity 5 num_supported_functionalities 76 DVFS_mode performance
+acc_supported_configs conv2d bn2d adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 50580 conv2d
+bn2ddscnn_1 17728 bn2d
+conv2ddscnn_2 26272 conv2d
+bn2ddscnn_2 16893 bn2d
+conv2ddscnn_3 50951 conv2d
+bn2ddscnn_3 16732 bn2d
+conv2ddscnn_4 24444 conv2d
+bn2ddscnn_4 16532 bn2d
+conv2ddscnn_5 49692 conv2d
+bn2ddscnn_5 16744 bn2d
+conv2ddscnn_6 24678 conv2d
+bn2ddscnn_6 17176 bn2d
+conv2ddscnn_7 49410 conv2d
+bn2ddscnn_7 16115 bn2d
+conv2ddscnn_8 23758 conv2d
+bn2ddscnn_8 15868 bn2d
+conv2ddscnn_9 49635 conv2d
+bn2ddscnn_9 15850 bn2d
+adaptive_avg_pool_2ddscnn 14782 adaptive_avg_pool2d
+lineardscnn 21617 linear
+conv2dmobile_1 268801 conv2d
+bn2dmobile_1 66821 bn2d
+conv2dmobile_2 286756 conv2d
+bn2dmobile_2 64562 bn2d
+conv2dmobile_3 163840 conv2d
+bn2dmobile_3 120822 bn2d
+conv2dmobile_4 44806 conv2d
+bn2dmobile_4 30762 bn2d
+conv2dmobile_5 47286 conv2d
+bn2dmobile_5 65155 bn2d
+conv2dmobile_6 51119 conv2d
+bn2dmobile_6 65395 bn2d
+conv2dmobile_7 91636 conv2d
+bn2dmobile_7 64155 bn2d
+conv2dmobile_8 25823 conv2d
+bn2dmobile_8 19322 bn2d
+conv2dmobile_9 41852 conv2d
+bn2dmobile_9 30381 bn2d
+conv2dmobile_10 34133 conv2d
+bn2dmobile_10 30710 bn2d
+conv2dmobile_11 49936 conv2d
+bn2dmobile_11 30949 bn2d
+conv2dmobile_12 21791 conv2d
+bn2dmobile_12 13738 bn2d
+conv2dmobile_13 46402 conv2d
+bn2dmobile_13 19053 bn2d
+conv2dmobile_14 26049 conv2d
+bn2dmobile_14 19075 bn2d
+conv2dmobile_15 50019 conv2d
+bn2dmobile_15 19943 bn2d
+conv2dmobile_16 25351 conv2d
+bn2dmobile_16 18979 bn2d
+conv2dmobile_17 50493 conv2d
+bn2dmobile_17 19720 bn2d
+conv2dmobile_18 26459 conv2d
+bn2dmobile_18 19545 bn2d
+conv2dmobile_19 50838 conv2d
+bn2dmobile_19 19327 bn2d
+conv2dmobile_20 25958 conv2d
+bn2dmobile_20 19733 bn2d
+conv2dmobile_21 49797 conv2d
+bn2dmobile_21 19290 bn2d
+conv2dmobile_22 25630 conv2d
+bn2dmobile_22 19435 bn2d
+conv2dmobile_23 49927 conv2d
+bn2dmobile_23 19159 bn2d
+conv2dmobile_24 20339 conv2d
+bn2dmobile_24 11932 bn2d
+conv2dmobile_25 45653 conv2d
+bn2dmobile_25 13812 bn2d
+conv2dmobile_26 20652 conv2d
+bn2dmobile_26 14555 bn2d
+conv2dmobile_27 74621 conv2d
+bn2dmobile_27 14061 bn2d
+adaptive_avg_pool_2dmobile 13085 adaptive_avg_pool2d
+linearmobile 18695 linear
+
+add_new_resource resource_type ACC resource_name GPU_3 resource_ID 3 capacity 5 num_supported_functionalities 76 DVFS_mode performance
+acc_supported_configs conv2d relu adaptive_avg_pool2d linear
+opp 1000 900
+trip_freq -1 -1 -1
+conv2ddscnn_1 50580 conv2d
+reludscnn_1 15001 relu
+conv2ddscnn_2 26272 conv2d
+reludscnn_2 14344 relu
+conv2ddscnn_3 50951 conv2d
+reludscnn_3 15573 relu
+conv2ddscnn_4 24444 conv2d
+reludscnn_4 15959 relu
+conv2ddscnn_5 49692 conv2d
+reludscnn_5 13402 relu
+conv2ddscnn_6 24678 conv2d
+reludscnn_6 13475 relu
+conv2ddscnn_7 49410 conv2d
+reludscnn_7 13112 relu
+conv2ddscnn_8 23758 conv2d
+reludscnn_8 13097 relu
+conv2ddscnn_9 49635 conv2d
+reludscnn_9 13373 relu
+adaptive_avg_pool_2ddscnn 14782 adaptive_avg_pool2d
+lineardscnn 21617 linear
+conv2dmobile_1 268801 conv2d
+relumobile_1 314114 relu
+conv2dmobile_2 286756 conv2d
+relumobile_2 47809 relu
+conv2dmobile_3 163840 conv2d
+relumobile_3 108652 relu
+conv2dmobile_4 44806 conv2d
+relumobile_4 20026 relu
+conv2dmobile_5 47286 conv2d
+relumobile_5 47161 relu
+conv2dmobile_6 51119 conv2d
+relumobile_6 48996 relu
+conv2dmobile_7 91636 conv2d
+relumobile_7 50853 relu
+conv2dmobile_8 25823 conv2d
+relumobile_8 15592 relu
+conv2dmobile_9 41852 conv2d
+relumobile_9 20658 relu
+conv2dmobile_10 34133 conv2d
+relumobile_10 20720 relu
+conv2dmobile_11 49936 conv2d
+relumobile_11 20190 relu
+conv2dmobile_12 21791 conv2d
+relumobile_12 12085 relu
+conv2dmobile_13 46402 conv2d
+relumobile_13 15076 relu
+conv2dmobile_14 26049 conv2d
+relumobile_14 15307 relu
+conv2dmobile_15 50019 conv2d
+relumobile_15 16387 relu
+conv2dmobile_16 25351 conv2d
+relumobile_16 15833 relu
+conv2dmobile_17 50493 conv2d
+relumobile_17 15885 relu
+conv2dmobile_18 26459 conv2d
+relumobile_18 15251 relu
+conv2dmobile_19 50838 conv2d
+relumobile_19 15582 relu
+conv2dmobile_20 25958 conv2d
+relumobile_20 15713 relu
+conv2dmobile_21 49797 conv2d
+relumobile_21 15101 relu
+conv2dmobile_22 25630 conv2d
+relumobile_22 15510 relu
+conv2dmobile_23 49927 conv2d
+relumobile_23 15737 relu
+conv2dmobile_24 20339 conv2d
+relumobile_24 11855 relu
+conv2dmobile_25 45653 conv2d
+relumobile_25 12450 relu
+conv2dmobile_26 20652 conv2d
+relumobile_26 11419 relu
+conv2dmobile_27 74621 conv2d
+relumobile_27 11666 relu
+adaptive_avg_pool_2dmobile 13085 adaptive_avg_pool2d
+linearmobile 18695 linear
+
+add_new_resource resource_type MEM resource_name MEMORY resource_ID 4 capacity 1 num_supported_functionalities 1 DVFS_mode none
+None 0
+
+# Unit is Gb/s
+# Bandwidth between memory and CPU
+comm_band 0 4 273
+comm_band 4 0 273
+
+# Bandwidth between memory and GPU    
+comm_band 1 4 273
+comm_band 4 1 273
+
+# Bandwidth between memory and GPU    
+comm_band 2 4 273
+comm_band 4 2 273
+
+# Bandwidth between memory and GPU    
+comm_band 3 4 273
+comm_band 4 3 273

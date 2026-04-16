@@ -1,66 +1,63 @@
 # Profiled on NVIDIA Jetson AGX Xavier with a Batch Size of 16
-job_name AlexNet_16 153111504
-add_new_tasks 20
-ST 0
-ST HEAD
-ST earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dalex_1 1 0
+job_name AlexNet_16 8944703040
+add_new_tasks 19
+conv2dalex_1 0
+conv2dalex_1 HEAD
 conv2dalex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_1 2 1 
+relualex_1 1 0
 relualex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dalex_1 3 2
+maxpool2dalex_1 2 1
 maxpool2dalex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dalex_2 4 3
+conv2dalex_2 3 2
 conv2dalex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_2 5 4 
+relualex_2 4 3
 relualex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dalex_2 6 5
+maxpool2dalex_2 5 4
 maxpool2dalex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dalex_3 7 6
+conv2dalex_3 6 5
 conv2dalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_3 8 7 
+relualex_3 7 6
 relualex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dalex_4 9 8
+conv2dalex_4 8 7
 conv2dalex_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_4 10 9 
+relualex_4 9 8
 relualex_4 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-conv2dalex_5 11 10
+conv2dalex_5 10 9
 conv2dalex_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_5 12 11 
+relualex_5 11 10
 relualex_5 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-maxpool2dalex_3 13 12
+maxpool2dalex_3 12 11
 maxpool2dalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-adaptive_avg_pool_2dalex 14 13
+adaptive_avg_pool_2dalex 13 12
 adaptive_avg_pool_2dalex earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearalex_1 15 14
+linearalex_1 14 13
 linearalex_1 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_6 16 15 
+relualex_6 15 14
 relualex_6 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearalex_2 17 16
+linearalex_2 16 15
 linearalex_2 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-relualex_7 18 17 
+relualex_7 17 16
 relualex_7 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
-linearalex_3 19 18
+linearalex_3 18 17
 linearalex_3 TAIL
 linearalex_3 earliest_start 0 deadline 100000 input_vol 0 output_vol 0
 
 # unit is bits
-comm_vol 0 1 8944703040
-comm_vol 1 2 1695930600
-comm_vol 2 3 902205923
-comm_vol 3 4 4569845389
-comm_vol 4 5 1241642220
-comm_vol 5 6 648273608
-comm_vol 6 7 1219495859
-comm_vol 7 8 610118418
-comm_vol 8 9 2677244388
-comm_vol 9 10 445630458
-comm_vol 10 11 1851841992
-comm_vol 11 12 432255096
-comm_vol 12 13 242486845
-comm_vol 13 14 60370838
-comm_vol 14 15 164014578
-comm_vol 15 16 138818480
-comm_vol 16 17 132680621
-comm_vol 17 18 126097335
-comm_vol 18 19 154820866
+comm_vol 0 1 1695930600
+comm_vol 1 2 902205923
+comm_vol 2 3 4569845389
+comm_vol 3 4 1241642220
+comm_vol 4 5 648273608
+comm_vol 5 6 1219495859
+comm_vol 6 7 610118418
+comm_vol 7 8 2677244388
+comm_vol 8 9 445630458
+comm_vol 9 10 1851841992
+comm_vol 10 11 432255096
+comm_vol 11 12 242486845
+comm_vol 12 13 60370838
+comm_vol 13 14 164014578
+comm_vol 14 15 138818480
+comm_vol 15 16 132680621
+comm_vol 16 17 126097335
+comm_vol 17 18 154820866
