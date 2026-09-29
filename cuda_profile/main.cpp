@@ -389,16 +389,16 @@ int batchnorm2d_pass(const BatchNorm2DParams& p, int trial) {
 
 int main(){
   LinearParams lp;
-  lp.N = 64;
-  lp.Fin = 64; // input features are equal to C x H x W
-  lp.Fout = 10; // output features are equal to num_classes parameter
+  lp.N = 16;
+  lp.Fin = 1024; // input features are equal to C x H x W
+  lp.Fout = 32000; // output features
 
   ConvParams p;
   p.N = 64;       
-  p.Cin = 64;     
-  p.Cout = 64;    
-  p.Hin = 8;  
-  p.Win = 8;   
+  p.Cin = 256;     
+  p.Cout = 256;    
+  p.Hin = 13;  
+  p.Win = 13;   
   p.Kh = 3;     
   p.Kw = 3;      
   p.Ph = 1;      
@@ -406,23 +406,23 @@ int main(){
   p.Sh = 1;      
   p.Sw = 1;      
   p.Dh = 1;      
-  p.Dw = 1;      
+  p.Dw = 1;   
 
   MaxPoolParams maxp;
-  maxp.N = 1;
-  maxp.C = 64;
-  maxp.Hin = 64;
-  maxp.Win = 64;
-  maxp.pool_size = 2;
+  maxp.N = 64;
+  maxp.C = 256;
+  maxp.Hin = 13;
+  maxp.Win = 13;
+  maxp.pool_size = 3;
   maxp.stride = 2;
 
   AdaptiveAvgPoolParams ap;
   ap.N    = 64;
-  ap.C    = 64;
-  ap.Hin  = 8;
-  ap.Win  = 8;
-  ap.Hout = 1;   // global pool
-  ap.Wout = 1;
+  ap.C    = 256;
+  ap.Hin  = 6;
+  ap.Win  = 6;
+  ap.Hout = 6;   // global pool
+  ap.Wout = 6;
 
   BatchNorm2DParams bnp;
   bnp.N = 64;
@@ -443,6 +443,8 @@ int main(){
   std::cout << "A_Frows = " << A_Frows << "\n";
   std::cout << "A_Fcols = " << A_Fcols << "\n";
   std::cout << "B_Fcols = " << B_Fcols << "\n";
+  std::cout << "C_Frows = " << C_Frows << "\n";
+  std::cout << "C_Fcols = " << C_Fcols << "\n";
 
   printf("----------------Profiling for CONV2D----------------\n");
   gemm_pass(A_rows, A_cols, B_cols, 100);

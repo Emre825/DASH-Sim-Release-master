@@ -125,15 +125,25 @@ def trace_tasks(task, PE, task_time, total_energy):
     @param total_energy: Task's total energy consumption
     '''
     if (common.TRACE_TASKS):
+        # Determine whether this task should be traced
+        task_name_lower = task.name.lower()
+        if not task.fused:
+            # Only trace non-fused tasks that are BN2D or Relu
+            if 'bn2d' not in task_name_lower and 'relu' not in task_name_lower:
+                return
+        else:
+            # Only trace fused tasks that contain both BN2D and Relu
+            if 'bn2d' not in task_name_lower or 'relu' not in task_name_lower:
+                return
+
         create_header = False
         if not (os.path.exists(common.TRACE_FILE_TASKS.split(".")[0] + "__" + str(common.trace_file_num) + ".csv")):
-            # Create the CSV header
             create_header = True
         with open(common.TRACE_FILE_TASKS.split(".")[0] + "__" + str(common.trace_file_num) + ".csv", 'a', newline='') as csvfile:
             trace = csv.writer(csvfile, delimiter=',')
             if create_header == True:
-                trace.writerow(['DVFS policy', 'Task ID', 'PE', 'Exec. Time (us)', 'Energy (J)'])
-            trace.writerow([common.ClusterManager.cluster_list[PE.cluster_ID].DVFS, task.ID, common.ClusterManager.cluster_list[PE.cluster_ID].name, task_time, total_energy])
+                trace.writerow(['App Name', 'Job ID', 'Task Name', 'Task ID', 'Fused', 'PE', 'Start Time (ns)', 'Finish Time (ns)', 'Exec. Time (ns)'])
+            trace.writerow([task.jobname, task.jobID, task.name, task.ID, task.fused, common.ClusterManager.cluster_list[PE.cluster_ID].name, task.start_time, task.finish_time, task_time])
 
 def trace_system():
     '''!

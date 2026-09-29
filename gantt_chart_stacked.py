@@ -18,7 +18,7 @@ ScheduleEvent = namedtuple('ScheduleEvent', 'app_name job_id task_name task_id f
 # ── Appearance config ──────────────────────────────────────────────────────────
 # Task-type based colors
 TASK_TYPE_COLORS = {
-    'Conv2d':  '#4363d8',  # blue
+    'BN2D':    '#4363d8',  # blue
     'Relu':    '#e6194b',  # red
     'Fused':   '#3cb44b',  # green
 }
@@ -27,12 +27,16 @@ UNFUSED_HATCH = ''
 
 # Fixed PE list and capacity
 TRACKED_PES      = ['GPU_1', 'GPU_2', 'GPU_3']
-LANES_PER_PE     = 4   # each PE has 4 capacity slots
+DISPLAY_PE_NAMES = {'GPU_1': 'PE1', 'GPU_2': 'PE2', 'GPU_3': 'PE3'}
+LANES_PER_PE     = 5   
+MIN_VISIBLE_BAR_RATIO = 0.001
 # ──────────────────────────────────────────────────────────────────────────────
-
-
 def ns_to_ms(ns: int) -> float:
     return ns / 1_000_000.0
+
+
+def ms_to_ns(ms: float) -> int:
+    return int(ms * 1_000_000.0)
 
 
 def assign_lanes(events, n_lanes=LANES_PER_PE):
@@ -57,28 +61,33 @@ def assign_lanes(events, n_lanes=LANES_PER_PE):
 
 
 def get_task_type(ev):
-    """Return the task type for color coding: 'Conv2d', 'Relu', or 'Fused'."""
+    """Return the task type for color coding: 'BN2D', 'Relu', or 'Fused'."""
     if ev.fused:
         return 'Fused'
     name_lower = ev.task_name.lower()
-    if 'conv2d' in name_lower:
-        return 'Conv2d'
+    if 'bn2d' in name_lower:
+        return 'BN2D'
     if 'relu' in name_lower:
         return 'Relu'
-    return 'Conv2d'  # fallback
+    return 'BN2D'
 
 
-def show_gantt_chart(proc_schedules, time_offset: int = 0):
+def show_gantt_chart(
+    proc_schedules,
+    time_offset: int = 0,
+    window_start_ns: int | None = None,
+    window_end_ns: int | None = None,
+):
     processors = TRACKED_PES  # fixed list: GPU_1, GPU_2, GPU_3
 
-    # ── Assign lanes (fixed 4 per PE) ────────────────────────────────────────
+    # ── Assign lanes ────────────────────────────────────────
     lane_data = {}  # proc -> list of (event, lane_idx)
     for proc in processors:
         events = proc_schedules.get(proc, [])
         lane_data[proc] = assign_lanes(events) if events else []
 
     # ── Compute y-positions: each proc always gets LANES_PER_PE lanes ────────
-    ROW_HEIGHT   = 0.4   # height of a single lane bar
+    ROW_HEIGHT   = 0.15   # height of a single lane bar
     ROW_PADDING  = 0.25  # gap between processor groups
 
     proc_y_base = {}  # bottom y of each processor's block
@@ -97,7 +106,15 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
 
     # ── Determine global x-axis extent ───────────────────────────────────────
     all_ends = [ev.end for proc in processors for ev in proc_schedules.get(proc, [])]
-    global_end_ms = ns_to_ms(max(all_ends) - time_offset) * 1.05 if all_ends else 1.0
+    default_end_ms = ns_to_ms(max(all_ends) - time_offset) * 1.05 if all_ends else 1.0
+
+    x_min_ms = ns_to_ms(window_start_ns - time_offset) if window_start_ns is not None else 0.0
+    x_max_ms = ns_to_ms(window_end_ns - time_offset) if window_end_ns is not None else default_end_ms
+    if x_max_ms <= x_min_ms:
+        raise ValueError("Invalid time window: end time must be greater than start time.")
+
+    global_end_ms = x_max_ms
+    min_visible_bar_ms = (x_max_ms - x_min_ms) * MIN_VISIBLE_BAR_RATIO
 
     # ── Draw ─────────────────────────────────────────────────────────────────
     fig_height = max(5, total_height * 1.8)
@@ -107,7 +124,7 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
         y_base = proc_y_base[proc]
         band_h = LANES_PER_PE * ROW_HEIGHT
 
-        # Light background band spanning all 4 lanes (always visible)
+        # Light background band spanning all lanes (always visible)
         ax.barh(
             y_base + band_h / 2.0,
             global_end_ms,
@@ -121,32 +138,42 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
         )
 
         for ev, lane_idx in lane_data[proc]:
+            draw_start_ns = ev.start
+            draw_end_ns = ev.end
+            if window_start_ns is not None:
+                draw_start_ns = max(draw_start_ns, window_start_ns)
+            if window_end_ns is not None:
+                draw_end_ns = min(draw_end_ns, window_end_ns)
+            if draw_end_ns <= draw_start_ns:
+                continue
+
             task_type = get_task_type(ev)
             color    = TASK_TYPE_COLORS[task_type]
             hatch    = FUSED_HATCH if ev.fused else UNFUSED_HATCH
-            alpha    = 0.92 if ev.fused else 0.75
-            start_ms = ns_to_ms(ev.start - time_offset)
-            dur_ms   = ns_to_ms(ev.end   - ev.start)
+            alpha    = 1.0
+            start_ms = ns_to_ms(draw_start_ns - time_offset)
+            dur_ms   = ns_to_ms(draw_end_ns   - draw_start_ns)
+            draw_dur_ms = max(dur_ms, min_visible_bar_ms)
 
             # Lane center y
             y_center = y_base + lane_idx * ROW_HEIGHT + ROW_HEIGHT / 2.0
 
             # Colored bar
             ax.barh(
-                y_center, dur_ms,
+                y_center, draw_dur_ms,
                 left=start_ms,
                 height=ROW_HEIGHT * 0.85,
                 align='center',
                 color=color,
-                edgecolor='black',
-                linewidth=0.2,
+                edgecolor='none',
+                linewidth=0,
                 alpha=alpha,
                 zorder=2,
             )
             # Hatch overlay for fused
             if hatch:
                 ax.barh(
-                    y_center, dur_ms,
+                    y_center, draw_dur_ms,
                     left=start_ms,
                     height=ROW_HEIGHT * 0.85,
                     align='center',
@@ -160,10 +187,11 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
 
     # ── Axes formatting ───────────────────────────────────────────────────────
     ax.set_yticks(tick_positions)
-    ax.set_yticklabels(processors, fontsize=13)
+    ax.set_yticklabels([DISPLAY_PE_NAMES.get(proc, proc) for proc in processors], fontsize=13)
     plt.ylabel('Processors', fontsize=16)
     plt.xlabel('Time (ms)',   fontsize=16)
     ax.set_ylim(0, total_height)
+    ax.set_xlim(x_min_ms, x_max_ms)
     ax.tick_params(axis='x', labelsize=13)
     ax.grid(color='grey', linestyle=':', alpha=0.4, zorder=1)
 
@@ -173,12 +201,12 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
 
     # ── Legend ────────────────────────────────────────────────────────────────
     legend_elements = [
-        Patch(facecolor=TASK_TYPE_COLORS['Conv2d'], edgecolor='black',
-              linewidth=0.5, label='Conv2d (unfused)'),
+        Patch(facecolor=TASK_TYPE_COLORS['BN2D'], edgecolor='black',
+              linewidth=0.5, label='BN2D (unfused)'),
         Patch(facecolor=TASK_TYPE_COLORS['Relu'], edgecolor='black',
               linewidth=0.5, label='Relu (unfused)'),
         Patch(facecolor=TASK_TYPE_COLORS['Fused'], edgecolor='white',
-              linewidth=0.5, hatch=FUSED_HATCH, label='Fused (Conv2d+Relu)'),
+              linewidth=0.5, hatch=FUSED_HATCH, label='Fused (BN2D+Relu)'),
     ]
 
     ax.legend(
@@ -190,8 +218,8 @@ def show_gantt_chart(proc_schedules, time_offset: int = 0):
     )
 
     plt.tight_layout()
-    plt.savefig("gantt_output.png", dpi=150, bbox_inches='tight')
-    print("Saved → gantt_output.png")
+    plt.savefig("gantt_output.pdf", dpi=150, bbox_inches='tight')
+    print("Saved → gantt_output.pdf")
 
 
 def generate_argparser():
@@ -199,6 +227,18 @@ def generate_argparser():
         description="Gantt chart plotter for fused/unfused multi-app traces"
     )
     parser.add_argument("inputFile", help="CSV trace file to plot")
+    parser.add_argument(
+        "--start-ms",
+        type=float,
+        default=None,
+        help="Start of plotted time window in ms (relative to earliest trace start).",
+    )
+    parser.add_argument(
+        "--end-ms",
+        type=float,
+        default=None,
+        help="End of plotted time window in ms (relative to earliest trace start).",
+    )
     return parser
 
 
@@ -222,6 +262,16 @@ if __name__ == "__main__":
 
     if time_offset == sys.maxsize:
         time_offset = 0
+
+    if args.start_ms is not None and args.start_ms < 0:
+        raise ValueError("--start-ms must be >= 0")
+    if args.end_ms is not None and args.end_ms < 0:
+        raise ValueError("--end-ms must be >= 0")
+    if args.start_ms is not None and args.end_ms is not None and args.end_ms <= args.start_ms:
+        raise ValueError("--end-ms must be greater than --start-ms")
+
+    window_start_ns = time_offset + ms_to_ns(args.start_ms) if args.start_ms is not None else None
+    window_end_ns = time_offset + ms_to_ns(args.end_ms) if args.end_ms is not None else None
 
     with open(args.inputFile, newline='', encoding='utf-8') as f:
         reader = csv.reader(f)
@@ -258,4 +308,9 @@ if __name__ == "__main__":
             proc_schedules.setdefault(proc, []).append(ev)
 
     print(f"Total: {total} | Skipped (dummy): {skipped} | Plotted: {plotted}")
-    show_gantt_chart(proc_schedules, time_offset=time_offset)
+    show_gantt_chart(
+        proc_schedules,
+        time_offset=time_offset,
+        window_start_ns=window_start_ns,
+        window_end_ns=window_end_ns,
+    )

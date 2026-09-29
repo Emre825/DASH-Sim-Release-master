@@ -423,7 +423,7 @@ def run_simulator(scale_values=common.scale_values_list):
                     except ZeroDivisionError:
                         print('[I] No completed jobs')
                     print("[I] %-30s : %-20s" % ("Execution time(ns)", round(common.results.execution_time - common.warmup_period, 2)))
-                    print("[I] %-30s : %-20s" % ("Throughput (Gbps)",  round(common.results.bits_processed / (common.results.cumulative_exe_time - common.warmup_period), 2)))
+                    print("[I] %-30s : %-20s" % ("Throughput (Gbps)",  round(common.results.bits_processed / (common.results.execution_time - common.warmup_period), 2)))
                     print("[I] %-30s : %-20s" % ("Cumulative Execution time(ns)", round(common.results.cumulative_exe_time, 2)))
                     print("[I] %-30s : %-20s" % ("Total energy consumption(J)",
                                                  round(common.results.cumulative_energy_consumption, 6)))
@@ -505,13 +505,13 @@ def run_simulator(scale_values=common.scale_values_list):
                         common.report_fp.write('[I] No completed jobs\n')
                     common.report_fp.write("[I] %-30s : %-20s\n" % ("Average concurrent jobs", round(common.results.average_job_number, 2)))
                     common.report_fp.write("[I] %-30s : %-20s\n" % ("Execution time(ns)", round(common.results.execution_time - common.warmup_period, 2)))
-                    common.report_fp.write("[I] %-30s : %-20s\n" % ("Throughput (Gbps)",  round(common.results.bits_processed / (common.results.cumulative_exe_time - common.warmup_period), 2)))
+                    common.report_fp.write("[I] %-30s : %-20s\n" % ("Throughput (Gbps)",  round(common.results.bits_processed / (common.results.execution_time - common.warmup_period), 2)))
                     common.report_fp.write("[I] %-30s : %-20s\n" % ("Cumulative Execution time(ns)", round(common.results.cumulative_exe_time, 2)))
 
                 # Add the results obtained for this iteration into a list
-                job_injection_rate += common.results.injected_jobs / (common.results.cumulative_exe_time - common.warmup_period)      
-                total_throughput   += common.results.bits_processed / (common.results.cumulative_exe_time - common.warmup_period)       
-                job_completion_rate += common.results.completed_jobs / (common.results.cumulative_exe_time - common.warmup_period)    
+                job_injection_rate += common.results.injected_jobs / (common.results.execution_time - common.warmup_period)      
+                total_throughput   += common.results.bits_processed / (common.results.execution_time - common.warmup_period)       
+                job_completion_rate += common.results.completed_jobs / (common.results.execution_time - common.warmup_period)    
                 concurrent_jobs += common.results.average_job_number
                 for i, resource in enumerate(DASH_resources):
                     active_time[i] += resource.active/common.results.execution_time
